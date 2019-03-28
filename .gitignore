@@ -70,3 +70,5 @@ create.bat
 create.sh
 merge.bat
 themes/**/readme.txt
+
+target/
