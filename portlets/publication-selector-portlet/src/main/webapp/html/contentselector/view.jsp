@@ -15,11 +15,16 @@ Also needs to return the most recent articleId which will pop
  -->
 
 <!-- note: in current set up, articleObjs var has to be called first -->
-<c:set var="articleObjs" scope="session" value="${cs.getArticleObjs(renderRequest) }" />
-<c:set var="articleId" scope="session" value="${cs.fetchCurrentArticleId(renderRequest)}" />
-<c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" />
-<c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" />
-<c:set var="archiveUrl" scope="session" value="${cs.getArchiveUrl()}" />
+<%-- <c:set var="articleObjs" scope="session" value="${cs.getArticleObjs(renderRequest) }" /> --%>
+<%-- <c:set var="articleId" scope="session" value="${cs.fetchCurrentArticleId(renderRequest)}" /> --%>
+<%-- <c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" /> --%>
+<%-- <c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" /> --%>
+<%-- <c:set var="archiveUrl" scope="session" value="${cs.getArchiveUrl()}" /> --%>
+
+<c:set var="volumeSet" value="${cs.setVolumes(renderRequest) }" />
+<c:set var="volumes" value="${cs.getVolumes() }" />
+
+<p><c:out value="${volumes }"/></p>
 
 
 
@@ -37,9 +42,13 @@ Also needs to return the most recent articleId which will pop
 
 			<aui:option value="selectAnIssue">Select a volume</aui:option>
 
-		    <c:forEach items="${articleObjs}" var = "articleObj" varStatus="i">
-		    	<aui:option value="${articleObj.getQueryString()}">Volume ${articleObj.getVolume()}</aui:option>
-	        </c:forEach>
+			<c:forEach items="${volumes}" var = "volume" varStatus="i"> --%>
+		    	<aui:option value="?${volume.getQueryString().getQueryString()}">Volume ${volume.getVolumeNumber()}</aui:option> --%>
+ 	        </c:forEach>
+
+<%-- 		    <c:forEach items="${articleObjs}" var = "articleObj" varStatus="i"> --%>
+<%-- 		    	<aui:option value="${articleObj.getQueryString()}">Volume ${articleObj.getVolume()}</aui:option> --%>
+<%-- 	        </c:forEach> --%>
 	        
 	        <aui:option value="browseArchive">Browse archived issues</aui:option>
 			
@@ -69,20 +78,20 @@ Also needs to return the most recent articleId which will pop
 
 
 <aui:script use="event, node">
-    var btn = A.one('#btnSubmit');       
-    var option = A.one('#<portlet:namespace/>options');
+     var btn = A.one('#btnSubmit');       
+     var option = A.one('#<portlet:namespace/>options');
 
-    btn.on('click', function(event){
-    	if(option.val()=="browseArchive"){
+     btn.on('click', function(event){
+     	if(option.val()=="browseArchive"){
         	var url = "${archiveUrl }";
-        } else if(option.val()=="selectAnIssue") {
-        	return false;
-        } else {
-        	var url = window.location.href.split('?')[0] + option.val();
-        }
+         } else if(option.val()=="selectAnIssue") {
+         	return false;
+         } else {
+         	var url = window.location.href.split('?')[0] + option.val();
+         }
 
-        window.location.href = url;
-    });
+         window.location.href = url;
+     });
 
 </aui:script>
 
