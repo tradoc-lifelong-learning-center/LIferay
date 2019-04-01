@@ -9,7 +9,7 @@ public class QueryString {
 	int volumeNumber;
 	
 	public QueryString(String queryString) {
-		this.queryString = queryString;
+		this.queryString = "?" + queryString;
 		this.volumeNumber = Integer.parseInt(this.extractQueryStringVals(queryString, "vol"));
 		setArticleIds(queryString);
 	}
