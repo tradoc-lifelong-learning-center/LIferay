@@ -35,10 +35,10 @@ Also needs to return the most recent articleId which will pop
     <aui:fieldset cssClass="selector-fieldset">
         <aui:select label="" id="options" name="articleId" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue.">
 
-			<aui:option value="selectAnIssue">Select an issue</aui:option>
+			<aui:option value="selectAnIssue">Select a volume</aui:option>
 
 		    <c:forEach items="${articleObjs}" var = "articleObj" varStatus="i">
-		    	<aui:option value="${articleObj.getQueryString()}">Volume ${articleObj.getVolume()}, Issue ${articleObj.getIssue()}</aui:option>
+		    	<aui:option value="${articleObj.getQueryString()}">Volume ${articleObj.getVolume()}</aui:option>
 	        </c:forEach>
 	        
 	        <aui:option value="browseArchive">Browse archived issues</aui:option>
