@@ -17,14 +17,17 @@ Also needs to return the most recent articleId which will pop
 <!-- note: in current set up, articleObjs var has to be called first -->
 <%-- <c:set var="articleObjs" scope="session" value="${cs.getArticleObjs(renderRequest) }" /> --%>
 <%-- <c:set var="articleId" scope="session" value="${cs.fetchCurrentArticleId(renderRequest)}" /> --%>
-<%-- <c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" /> --%>
+<c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" />
 <%-- <c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" /> --%>
-<%-- <c:set var="archiveUrl" scope="session" value="${cs.getArchiveUrl()}" /> --%>
+
+<%-- <c:set var="archiveUrl" value="${cs.getArchiveUrl()}" /> --%> 
 
 <c:set var="volumeSet" value="${cs.setVolumes(renderRequest) }" />
 <c:set var="volumes" value="${cs.getVolumes() }" />
 
-<p><c:out value="${volumes }"/></p>
+<c:set var="currentVolume" value="${cs.fetchCurrentVolume(renderRequest)}" />
+
+<p><c:out value="${volumes[1].getArticles()[0] }"/></p>
 
 
 
@@ -42,8 +45,8 @@ Also needs to return the most recent articleId which will pop
 
 			<aui:option value="selectAnIssue">Select a volume</aui:option>
 
-			<c:forEach items="${volumes}" var = "volume" varStatus="i"> --%>
-		    	<aui:option value="?${volume.getQueryString().getQueryString()}">Volume ${volume.getVolumeNumber()}</aui:option> --%>
+			<c:forEach items="${volumes}" var = "volume" varStatus="i"> 
+		    	<aui:option value="${volume.getQueryString().getQueryString()}">Volume ${volume.getVolumeNumber()}</aui:option> --%>
  	        </c:forEach>
 
 <%-- 		    <c:forEach items="${articleObjs}" var = "articleObj" varStatus="i"> --%>
@@ -59,6 +62,7 @@ Also needs to return the most recent articleId which will pop
     
 </aui:form>
 
+
 <c:choose>
 	<c:when test = "${articleId==0 || archiveUrl==''}">
        <p>Welcome to the content selector portlet. Please use the portlet configuration to add a list of articles for the selector, a fallback article, and a URL link to the PDF archive.</p>
@@ -66,7 +70,10 @@ Also needs to return the most recent articleId which will pop
     
     
     <c:otherwise>
-       <liferay-ui:journal-article showTitle="false" articleId="${articleId}" groupId="${groupId}" />
+    	<c:forEach items="${currentVolume.getArticles()}" var = "article" varStatus="i"> 
+    		<liferay-ui:journal-article showTitle="false" articleId="${article.getArticleId() }" groupId="${groupId}" />
+ 	    </c:forEach>
+
     </c:otherwise>
 </c:choose>
 
