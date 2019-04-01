@@ -40,10 +40,11 @@ public class ContentSelector extends MVCPortlet {
 			String volumeString = volumeConfigStrings[i];
 			
 			QueryString queryString = new QueryString(volumeString);
-		
+			
 			long[] articleIds = queryString.getArticleIds();
 			int volumeNumber = queryString.getVolumeNumber();
 			
+			//System.out.println("article IDs from main: " + articleIds.toString());
 			
 			
 			Volume volume = new Volume(articleIds,volumeNumber,queryString);
@@ -55,6 +56,12 @@ public class ContentSelector extends MVCPortlet {
 		this.globalReq = req;
 
 	}
+	
+	//need a fetch current volume, similar to how I used fetch current article id
+	public Volume fetchCurrentVolume(RenderRequest req) {
+		return this.volumes[0];
+	}
+	
 	
 	
 	
@@ -142,19 +149,19 @@ public class ContentSelector extends MVCPortlet {
 //		System.out.println("queryString: " + queryString);
 //		return queryString;
 //	}
-//	
-//	public long getGroupId(RenderRequest req) {
-//		ThemeDisplay themeDisplay = getThemeDisplay(req);
-//		long portletGroupId = themeDisplay.getScopeGroupId();
-//		
-//		return portletGroupId;
-//	}
-//	
-//	private ThemeDisplay getThemeDisplay(RenderRequest req) {
-//		return (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
-//	}
-//	
-//	
+	
+	public long getGroupId(RenderRequest req) {
+		ThemeDisplay themeDisplay = getThemeDisplay(req);
+		long portletGroupId = themeDisplay.getScopeGroupId();
+		
+		return portletGroupId;
+	}
+	
+	private ThemeDisplay getThemeDisplay(RenderRequest req) {
+		return (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+	
+	
 	private String getArticleIdsConfig(RenderRequest req) throws Exception {
 		PortletPreferences portletPreferences = req.getPreferences();
 		String articleIDs = GetterUtil.getString(portletPreferences.getValue("contentSelectorIncludeArticles", "-1"));

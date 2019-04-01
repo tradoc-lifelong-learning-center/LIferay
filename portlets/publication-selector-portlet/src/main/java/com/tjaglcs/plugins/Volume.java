@@ -28,8 +28,11 @@ public class Volume {
 	public void setArticles(long[] articleIds) {
 		
 		Article[] articles = new Article[articleIds.length];
+		//System.out.println("article ids: " + articleIds );
+		//System.out.println("article ids: " + articleIds.length );
 		
 		for(int i = 0; i<articleIds.length; i++) {
+			//System.out.println("adding " + articleIds[i] + " to array");
 			articles[i] = new Article(articleIds[i], this.volumeNumber);
 		}
 		
