@@ -39,19 +39,13 @@ public class ContentSelector extends MVCPortlet {
 			//using -1 to skip the last item, which is archive link
 			String volumeString = volumeConfigStrings[i];
 			
-			System.out.println("volumeString: " + volumeString);
 			QueryString queryString = new QueryString(volumeString);
-			System.out.println("queryString: " + queryString.getQueryString());
 			
 			long[] articleIds = queryString.getArticleIds();
 			int volumeNumber = queryString.getVolumeNumber();
 			
-			//System.out.println("article IDs from main: " + articleIds.toString());
-			
-			
 			Volume volume = new Volume(articleIds,volumeNumber,queryString);
 			volumeConfigs[i] = volume;
-			//System.out.println("ADDING volume " + volume.getVolumeNumber());
 		} 
 		
 		//update class variables for later use
@@ -62,14 +56,8 @@ public class ContentSelector extends MVCPortlet {
 	
 	//need a fetch current volume, similar to how I used fetch current article id
 	public Volume fetchCurrentVolume(RenderRequest req) {
-		System.out.println("vols: " + volumes.length);
-		
-		//for(int i=0; i<volumes.length; i++) {
-		//	System.out.println("volume number: " + volumes[i].getVolumeNumber());
-		//}
-		
+		//get the query string value from browser (not queryString object)
 		String queryStringValue = getQueryStringValue("vol");
-		System.out.println("string: " + queryStringValue);
 		
 		
 		if(volumes.length==0) {
@@ -89,18 +77,12 @@ public class ContentSelector extends MVCPortlet {
 			//System.out.println("Query string doesn't match. Article not found. Using: " + articleNotFound);
 			//return articleNotFound;
 		//} 
-	else if(queryStringValue=="browseArchive" || queryStringValue=="selectAnIssue") {
-			return null;
-		} else {
+		else {
 			System.out.println("Fetching volume: " + queryStringValue);
-			System.out.println("total volumes: " + this.volumes.length);
-			//Volume currentVolume = objects.stream().filter(v -> v.)
 			
 			Volume currentVolume = null;
 			
 			for(int i=0; i<this.volumes.length; i++) {
-				System.out.print("i: " + i);
-				System.out.print("volume: " + volumes[i].getVolumeNumber());
 				
 				if(this.volumes[i].getVolumeNumber()==Integer.parseInt(queryStringValue)) {
 					System.out.println("found volume " + volumes[i].getVolumeNumber());
@@ -108,16 +90,7 @@ public class ContentSelector extends MVCPortlet {
 				} else {
 					System.out.println("didn't find volume " + volumes[i].getVolumeNumber());
 				}
-				
-				//if(this.volumes[i].getVolumeNumber()==Integer.parseInt(queryStringValue)) {
-				//	return this.volumes[i];
-				//} else {
-				//	System.out.println("volume not found");
-				//	return null;
-				//}
 			}
-			
-			//return Long.parseLong(articleIdFromString);
 			return currentVolume;
 		}
 		
@@ -249,14 +222,14 @@ public class ContentSelector extends MVCPortlet {
 //		//System.out.println("emptyArticle: " + emptyArticle);
 //		return emptyArticle;
 //	}
-//
-//	public String getArchiveUrl() {
-//		PortletPreferences portletPreferences = globalReq.getPreferences();
-//		String archiveUrlString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArchiveUrl", "https://tjaglcspublic.army.mil/mlr-archives"));
-//		return archiveUrlString;
-//	}
-//	
-//	
+
+	public String getArchiveUrl() {
+		PortletPreferences portletPreferences = globalReq.getPreferences();
+		String archiveUrlString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArchiveUrl", "https://tjaglcspublic.army.mil/mlr-archives"));
+		return archiveUrlString;
+	}
+	
+	
 //	public String fetchArticleList() {
 //		String articleList = "";
 //		
