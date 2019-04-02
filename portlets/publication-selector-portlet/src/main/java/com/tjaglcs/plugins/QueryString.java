@@ -4,14 +4,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QueryString {
+	String configString;
 	String queryString;
+	String pub;
 	long[] articleIds;
 	int volumeNumber;
 	
-	public QueryString(String queryString) {
-		this.queryString = "?" + queryString;
-		this.volumeNumber = Integer.parseInt(this.extractQueryStringVals(queryString, "vol"));
-		setArticleIds(queryString);
+	public QueryString(String configString) {
+		//this.pub = this.extractQueryStringVals(configString, "pub");
+		this.pub = "mlr";
+		this.volumeNumber = Integer.parseInt(this.extractQueryStringVals(configString, "vol"));
+		setArticleIds(configString);
+		this.queryString = "?" + "pub=" + this.pub + "&vol=" + volumeNumber;
 	}
 	
 	private String extractQueryStringVals(String textToSearch, String paramName) {
