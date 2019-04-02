@@ -8,41 +8,25 @@
 
 <jsp:useBean id="cs" class="com.tjaglcs.plugins.ContentSelector" scope="session"/>
 
-<!-- 
-In class, need to be able to return the list of articles for the dropdown
-	-If nothing in config, do something to handle error
-Also needs to return the most recent articleId which will pop
- -->
-
-<!-- note: in current set up, articleObjs var has to be called first -->
-<%-- <c:set var="articleObjs" scope="session" value="${cs.getArticleObjs(renderRequest) }" /> --%>
-<%-- <c:set var="articleId" scope="session" value="${cs.fetchCurrentArticleId(renderRequest)}" /> --%>
+<!-- note: in current set up, volumeSet var has to be called first -->
 <c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" />
-
-
- 
-
 <c:set var="volumeSet" value="${cs.setVolumes(renderRequest) }" />
 <c:set var="volumes" value="${cs.getVolumes() }" />
-
 <c:set var="currentVolume" value="${cs.fetchCurrentVolume(renderRequest)}" />
 <c:set var="archiveUrl" value="${cs.getArchiveUrl()}" />
 <c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" />
 
-<p><c:out value="${currentVolume.getVolumeNumber() }"/></p>
-<p><c:out value="${cs.isMostRecent()}"/></p>
-
-
-
 <div class="mlr-selector-container">
 
-<c:if test="${isMostRecent}">
-	<h3 class="most-recent-title">Most Recent Issue</h3>
-</c:if>
+
 
 
 <aui:form cssClass="content-selector-form">
-	<!--  <p class="mlr-selector-title">Select an issue or <a>view the archive</a></p> -->
+
+	<c:if test="${isMostRecent}">
+		<h3 class="most-recent-title">Most Recent Issue</h3>
+	</c:if>
+
     <aui:fieldset cssClass="selector-fieldset">
         <aui:select label="" id="options" name="articleId" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue.">
 
@@ -51,10 +35,6 @@ Also needs to return the most recent articleId which will pop
 			<c:forEach items="${volumes}" var = "volume" varStatus="i"> 
 		    	<aui:option value="${volume.getQueryString().getQueryString()}">Volume ${volume.getVolumeNumber()}</aui:option> --%>
  	        </c:forEach>
-
-<%-- 		    <c:forEach items="${articleObjs}" var = "articleObj" varStatus="i"> --%>
-<%-- 		    	<aui:option value="${articleObj.getQueryString()}">Volume ${articleObj.getVolume()}</aui:option> --%>
-<%-- 	        </c:forEach> --%>
 	        
 	        <aui:option value="browseArchive">Browse archived issues</aui:option>
 			

@@ -7,19 +7,22 @@
 	font-family: Adobe Caslon Pro, Times New Roman;
 }
 
+.content-selector-portlet .content-selector-form{
+	background-color: #555;
+	box-sizing:border-box;
+	padding:12px;
+	width:100%;
+}
+
 .content-selector-portlet .mlr-selector-container .most-recent-title{
 	text-align: center; 
 	color:#D3D3D3;
 	text-transform:uppercase;
 	font-family: 'Open Sans';
 	letter-spacing: 2px;
-	background-color: #555;
-	padding:12px;
-	width:100%;
 	font-size: 14px;
     line-height: 20px;
-    margin-bottom:24px;
-    box-sizing:border-box;
+    margin:0 0 12px 0;
 }
 
 .content-selector-portlet form.content-selector-form{
