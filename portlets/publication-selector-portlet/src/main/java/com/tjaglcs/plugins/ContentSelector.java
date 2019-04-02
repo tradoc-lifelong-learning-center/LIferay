@@ -55,7 +55,7 @@ public class ContentSelector extends MVCPortlet {
 	}
 	
 	//need a fetch current volume, similar to how I used fetch current article id
-	public Volume fetchCurrentVolume(RenderRequest req) {
+	public Volume fetchCurrentVolume(RenderRequest req) throws Exception {
 		//get the query string value from browser (not queryString object)
 		String queryStringValue = getQueryStringValue("vol");
 		
@@ -80,7 +80,7 @@ public class ContentSelector extends MVCPortlet {
 		else {
 			System.out.println("Fetching volume: " + queryStringValue);
 			
-			Volume currentVolume = null;
+			Volume currentVolume = new Volume(getEmptyArticleIdConfig());
 			
 			for(int i=0; i<this.volumes.length; i++) {
 				
@@ -91,6 +91,8 @@ public class ContentSelector extends MVCPortlet {
 					System.out.println("didn't find volume " + volumes[i].getVolumeNumber());
 				}
 			}
+			System.out.print(currentVolume.getArticles());
+			//System.out.print(currentVolume.getArticles()[0].getArticleId());
 			return currentVolume;
 		}
 		
@@ -204,24 +206,24 @@ public class ContentSelector extends MVCPortlet {
 		
 		return articleIDs;
 	}
-//	
-//	private long getEmptyArticleIdConfig() throws Exception {
-//		PortletPreferences portletPreferences = globalReq.getPreferences();
-//		String emptyArticleString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArticleNotFound", "-1"));
-//		//System.out.println("emptyArticleString: " + emptyArticleString);
-//		
-//		long emptyArticle;
-//		
-//		try {
-//			emptyArticle = Long.parseLong(emptyArticleString);
-//		} catch (Exception e) {
-//			emptyArticle=-1;
-//			e.printStackTrace();
-//		}
-//		
-//		//System.out.println("emptyArticle: " + emptyArticle);
-//		return emptyArticle;
-//	}
+	
+	private long[] getEmptyArticleIdConfig() throws Exception {
+		PortletPreferences portletPreferences = globalReq.getPreferences();
+		String emptyArticleString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArticleNotFound", "-1"));
+		//System.out.println("emptyArticleString: " + emptyArticleString);
+		
+		long[] emptyArticle = new long[1];
+		
+		try {
+			emptyArticle[0] = Long.parseLong(emptyArticleString);
+		} catch (Exception e) {
+			emptyArticle[0]=-1;
+			e.printStackTrace();
+		}
+		
+		//System.out.println("emptyArticle: " + emptyArticle);
+		return emptyArticle;
+	}
 
 	public String getArchiveUrl() {
 		PortletPreferences portletPreferences = globalReq.getPreferences();

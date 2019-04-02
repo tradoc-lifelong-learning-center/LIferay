@@ -15,6 +15,10 @@ public class Volume {
 		System.out.println("new volume: " + this.volumeNumber + ", " + this.queryString.getQueryString());
 	}
 
+	public Volume(long[] articleIds) {
+		this.articleIds = articleIds;
+		setArticles(articleIds);
+	}
 
 
 	public Article[] getArticles() {
