@@ -54,7 +54,7 @@ public class ContentSelector extends MVCPortlet {
 
 	}
 	
-	//need a fetch current volume, similar to how I used fetch current article id
+	//fetch "current" volume (the volume the user has selected)
 	public Volume fetchCurrentVolume(RenderRequest req) throws Exception {
 		//get the query string value from browser (not queryString object)
 		String queryStringValue = getQueryStringValue("vol");
@@ -70,14 +70,7 @@ public class ContentSelector extends MVCPortlet {
 			//return most recent
 			System.out.println("No article in query string. Using most recent.");
 			return volumes[0];
-		} //else if(!isArticleListed) {
-			//if the query string doesn't match what's in the config, show a not found
-			//don't really intend for this to be able to view any article in the database
-			//long articleNotFound = getEmptyArticleIdConfig();
-			//System.out.println("Query string doesn't match. Article not found. Using: " + articleNotFound);
-			//return articleNotFound;
-		//} 
-		else {
+		} else {
 			System.out.println("Fetching volume: " + queryStringValue);
 			
 			Volume currentVolume = new Volume(getEmptyArticleIdConfig());
@@ -167,19 +160,19 @@ public class ContentSelector extends MVCPortlet {
 //		}
 //
 //	}
-//	
-// 
-//	public boolean isMostRecent() throws Exception {
-//		long articleId = fetchCurrentArticleId(globalReq);
-//		long mostRecentArticle = articles[0].getArticleId();
-//		
-//		if(mostRecentArticle==articleId) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//		
-//	}
+	
+ 
+	public boolean isMostRecent() throws Exception {
+		Volume currentVol = fetchCurrentVolume(globalReq);
+		Volume mostRecentVol = volumes[0];
+		
+		if(currentVol.equals(mostRecentVol)) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 	
 	private String getQueryStringValue(String stringParam) {
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(globalReq));
