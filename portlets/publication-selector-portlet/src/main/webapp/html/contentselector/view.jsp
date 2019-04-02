@@ -27,7 +27,8 @@ Also needs to return the most recent articleId which will pop
 
 <c:set var="currentVolume" value="${cs.fetchCurrentVolume(renderRequest)}" />
 
-<p><c:out value="${volumes[1].getArticles()[0] }"/></p>
+<p><c:out value="${currentVolume.getVolumeNumber() }"/></p>
+<p><c:out value="${currentVolume.getArticles()[1].getArticleId() }"/></p>
 
 
 
@@ -71,7 +72,12 @@ Also needs to return the most recent articleId which will pop
     
     <c:otherwise>
     	<c:forEach items="${currentVolume.getArticles()}" var = "article" varStatus="i"> 
+    	<div class="content-selector-toc">
     		<liferay-ui:journal-article showTitle="false" articleId="${article.getArticleId() }" groupId="${groupId}" />
+    		<hr class="content-selector-separator"/>
+    	</div>
+    		
+    		
  	    </c:forEach>
 
     </c:otherwise>

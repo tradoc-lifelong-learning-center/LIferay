@@ -39,7 +39,9 @@ public class ContentSelector extends MVCPortlet {
 			//using -1 to skip the last item, which is archive link
 			String volumeString = volumeConfigStrings[i];
 			
+			System.out.println("volumeString: " + volumeString);
 			QueryString queryString = new QueryString(volumeString);
+			System.out.println("queryString: " + queryString.getQueryString());
 			
 			long[] articleIds = queryString.getArticleIds();
 			int volumeNumber = queryString.getVolumeNumber();
@@ -49,6 +51,7 @@ public class ContentSelector extends MVCPortlet {
 			
 			Volume volume = new Volume(articleIds,volumeNumber,queryString);
 			volumeConfigs[i] = volume;
+			//System.out.println("ADDING volume " + volume.getVolumeNumber());
 		} 
 		
 		//update class variables for later use
@@ -59,7 +62,67 @@ public class ContentSelector extends MVCPortlet {
 	
 	//need a fetch current volume, similar to how I used fetch current article id
 	public Volume fetchCurrentVolume(RenderRequest req) {
-		return this.volumes[0];
+		System.out.println("vols: " + volumes.length);
+		
+		//for(int i=0; i<volumes.length; i++) {
+		//	System.out.println("volume number: " + volumes[i].getVolumeNumber());
+		//}
+		
+		String queryStringValue = getQueryStringValue("vol");
+		System.out.println("string: " + queryStringValue);
+		
+		
+		if(volumes.length==0) {
+			//if there are no articles in the config, return an error and prevent from crashing
+			System.out.println("no article in config. Please add using the article ID, volume, and issue number (separated by semi-colons): articleId=25147&vol=225&no=4;articleId=25167&vol=225&no=3.");
+			//TO DO: need to make this configurable
+			return null;
+		} else if(queryStringValue==null) {
+			//this is if there's no query string, so
+			//return most recent
+			System.out.println("No article in query string. Using most recent.");
+			return volumes[0];
+		} //else if(!isArticleListed) {
+			//if the query string doesn't match what's in the config, show a not found
+			//don't really intend for this to be able to view any article in the database
+			//long articleNotFound = getEmptyArticleIdConfig();
+			//System.out.println("Query string doesn't match. Article not found. Using: " + articleNotFound);
+			//return articleNotFound;
+		//} 
+	else if(queryStringValue=="browseArchive" || queryStringValue=="selectAnIssue") {
+			return null;
+		} else {
+			System.out.println("Fetching volume: " + queryStringValue);
+			System.out.println("total volumes: " + this.volumes.length);
+			//Volume currentVolume = objects.stream().filter(v -> v.)
+			
+			Volume currentVolume = null;
+			
+			for(int i=0; i<this.volumes.length; i++) {
+				System.out.print("i: " + i);
+				System.out.print("volume: " + volumes[i].getVolumeNumber());
+				
+				if(this.volumes[i].getVolumeNumber()==Integer.parseInt(queryStringValue)) {
+					System.out.println("found volume " + volumes[i].getVolumeNumber());
+					currentVolume = volumes[i];
+				} else {
+					System.out.println("didn't find volume " + volumes[i].getVolumeNumber());
+				}
+				
+				//if(this.volumes[i].getVolumeNumber()==Integer.parseInt(queryStringValue)) {
+				//	return this.volumes[i];
+				//} else {
+				//	System.out.println("volume not found");
+				//	return null;
+				//}
+			}
+			
+			//return Long.parseLong(articleIdFromString);
+			return currentVolume;
+		}
+		
+		
+		
 	}
 	
 	
@@ -142,13 +205,13 @@ public class ContentSelector extends MVCPortlet {
 //		}
 //		
 //	}
-//	
-//	private String getQueryStringValue(String stringParam) {
-//		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(globalReq));
-//		String queryString = httpReq.getParameter(stringParam);
-//		System.out.println("queryString: " + queryString);
-//		return queryString;
-//	}
+	
+	private String getQueryStringValue(String stringParam) {
+		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(globalReq));
+		String queryString = httpReq.getParameter(stringParam);
+		System.out.println("queryString: " + queryString);
+		return queryString;
+	}
 	
 	public long getGroupId(RenderRequest req) {
 		ThemeDisplay themeDisplay = getThemeDisplay(req);

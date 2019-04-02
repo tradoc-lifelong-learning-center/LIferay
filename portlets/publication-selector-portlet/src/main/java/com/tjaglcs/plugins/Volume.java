@@ -12,6 +12,7 @@ public class Volume {
 		setArticles(articleIds);
 		this.volumeNumber = volumeNumber;
 		this.queryString = queryString;
+		System.out.println("new volume: " + this.volumeNumber + ", " + this.queryString.getQueryString());
 	}
 
 
@@ -28,12 +29,13 @@ public class Volume {
 	public void setArticles(long[] articleIds) {
 		
 		Article[] articles = new Article[articleIds.length];
-		//System.out.println("article ids: " + articleIds );
+		//System.out.println("adding " + articleIds + " to " + this.getVolumeNumber());
 		//System.out.println("article ids: " + articleIds.length );
 		
 		for(int i = 0; i<articleIds.length; i++) {
 			//System.out.println("adding " + articleIds[i] + " to array");
 			articles[i] = new Article(articleIds[i], this.volumeNumber);
+			//System.out.println("adding " + articles[i].getArticleId() + " to " + this.volumeNumber);
 		}
 		
 		this.articles = articles;

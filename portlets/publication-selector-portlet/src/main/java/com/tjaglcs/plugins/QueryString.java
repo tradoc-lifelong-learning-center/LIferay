@@ -42,22 +42,22 @@ public class QueryString {
 	public void setArticleIds(String queryString) {
 		
 		
-		queryString = "articleId=27423-27413-27403-25147&vol=225";
-		System.out.println("queryString:  " + queryString);
+		//queryString = "articleId=27423-27413-27403-25147&vol=225";
+		//System.out.println("queryString:  " + queryString);
 		
 		String idString = this.extractQueryStringVals(queryString, "articleId");
 		
-		System.out.println("idString:  " + idString);
+		//System.out.println("idString:  " + idString);
 		
 		String ids[] = idString.split("-");
 		
 		long[] idNumbers = new long[ids.length]; 
 		
-		System.out.println("ids length: " + ids.length);
+		//System.out.println("ids length: " + ids.length);
 		
 		for(int i = 0; i<ids.length; i++) {
 			idNumbers[i] = Long.parseLong(ids[i]);
-			System.out.println("added: " + idNumbers[i]);
+			//System.out.println("added: " + idNumbers[i]);
  		}
 		
 		this.articleIds = idNumbers;
