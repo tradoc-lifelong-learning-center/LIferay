@@ -20,12 +20,13 @@ Also needs to return the most recent articleId which will pop
 <c:set var="groupId" scope="session" value="${cs.getGroupId(renderRequest)}" />
 <%-- <c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" /> --%>
 
-<%-- <c:set var="archiveUrl" value="${cs.getArchiveUrl()}" /> --%> 
+ 
 
 <c:set var="volumeSet" value="${cs.setVolumes(renderRequest) }" />
 <c:set var="volumes" value="${cs.getVolumes() }" />
 
 <c:set var="currentVolume" value="${cs.fetchCurrentVolume(renderRequest)}" />
+<c:set var="archiveUrl" value="${cs.getArchiveUrl()}" />
 
 <p><c:out value="${currentVolume.getVolumeNumber() }"/></p>
 <p><c:out value="${currentVolume.getArticles()[1].getArticleId() }"/></p>
@@ -93,7 +94,7 @@ Also needs to return the most recent articleId which will pop
 <aui:script use="event, node">
      var btn = A.one('#btnSubmit');       
      var option = A.one('#<portlet:namespace/>options');
-
+     
      btn.on('click', function(event){
      	if(option.val()=="browseArchive"){
         	var url = "${archiveUrl }";
