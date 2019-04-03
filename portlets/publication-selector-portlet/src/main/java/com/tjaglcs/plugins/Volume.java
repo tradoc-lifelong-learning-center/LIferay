@@ -7,10 +7,10 @@ public class Volume {
 	private QueryString queryString; 
 	
 	
-	public Volume(long[] articleIds, int volumeNumber, QueryString queryString) {
-		this.articleIds = articleIds;
+	public Volume(QueryString queryString) {
+		this.articleIds = queryString.getArticleIds();
 		setArticles(articleIds);
-		this.volumeNumber = volumeNumber;
+		this.volumeNumber = queryString.getVolumeNumber();
 		this.queryString = queryString;
 		System.out.println("new volume: " + this.volumeNumber + ", " + this.queryString.getQueryString());
 	}

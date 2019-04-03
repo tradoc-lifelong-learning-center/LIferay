@@ -41,10 +41,7 @@ public class ContentSelector extends MVCPortlet {
 			
 			QueryString queryString = new QueryString(volumeString);
 			
-			long[] articleIds = queryString.getArticleIds();
-			int volumeNumber = queryString.getVolumeNumber();
-			
-			Volume volume = new Volume(articleIds,volumeNumber,queryString);
+			Volume volume = new Volume(queryString);
 			volumeConfigs[i] = volume;
 		} 
 		
