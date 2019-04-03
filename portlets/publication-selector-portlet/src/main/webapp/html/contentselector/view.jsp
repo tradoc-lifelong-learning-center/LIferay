@@ -25,7 +25,7 @@
 		<c:set var="archiveUrl" value="${cs.getArchiveUrl()}" />
 		<c:set var="isMostRecent" scope="session" value="${cs.isMostRecent()}" />
 	
-		<div class="mlr-selector-container">
+		<div class="mlr-selector-container" id="content-selector-container">
 
 			<aui:form cssClass="content-selector-form">
 			
@@ -81,7 +81,8 @@
 		         } else if(option.val()=="selectAnIssue") {
 		         	return false;
 		         } else {
-		         	var url = window.location.href.split('?')[0] + option.val();
+		        	var baseUrl = window.location.href.split('#')[0];
+		         	var url = baseUrl.split('?')[0] + option.val();
 		         }
 		
 		         window.location.href = url;
