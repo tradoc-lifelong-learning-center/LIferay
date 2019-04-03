@@ -12,7 +12,6 @@
 
 # Package Files #
 *.jar
-*.war
 *.nar
 *.ear
 *.zip
@@ -71,4 +70,7 @@ create.sh
 merge.bat
 themes/**/readme.txt
 
-target/
+/*/*/target/*
+!/*/*/target/*.war
+
+
