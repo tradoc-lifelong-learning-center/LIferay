@@ -28,9 +28,15 @@ public class ContentSelector extends MVCPortlet {
 		return volumes;
 	}
 
-	public void setVolumes(RenderRequest req) throws Exception {
+	public boolean setVolumes(RenderRequest req) throws Exception {
 		
 		String volumeConfig = getArticleIdsConfig(req);
+		
+		//if string is empty, return false so view JSTL knows what to do next
+		if(volumeConfig == "") {
+			return false;
+		}
+		
 		String[] volumeConfigStrings = volumeConfig.split(";");
 		
 		Volume[] volumeConfigs = new Volume[volumeConfigStrings.length];
@@ -48,6 +54,7 @@ public class ContentSelector extends MVCPortlet {
 		//update class variables for later use
 		this.volumes = volumeConfigs;
 		this.globalReq = req;
+		return true;
 
 	}
 	
@@ -80,7 +87,7 @@ public class ContentSelector extends MVCPortlet {
 					System.out.println("didn't find volume " + volumes[i].getVolumeNumber());
 				}
 			}
-			System.out.print(currentVolume.getArticles());
+			//System.out.print(currentVolume.getArticles());
 			return currentVolume;
 		}
 		
