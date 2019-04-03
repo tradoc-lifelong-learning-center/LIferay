@@ -13,8 +13,21 @@ public class QueryString {
 	public QueryString(String configString) {
 		//this.pub = this.extractQueryStringVals(configString, "pub");
 		this.pub = "mlr";
-		this.volumeNumber = Integer.parseInt(this.extractQueryStringVals(configString, "vol"));
-		setArticleIds(configString);
+		
+		try {
+			this.volumeNumber = Integer.parseInt(this.extractQueryStringVals(configString, "vol"));
+		} catch (NumberFormatException e) {
+			this.volumeNumber = -1;
+			e.printStackTrace();
+		}
+		
+		try {
+			setArticleIds(configString);
+		} catch (Exception e) {
+			articleIds = new long[] {-1};
+			e.printStackTrace();
+		}
+		
 		this.queryString = "?" + "pub=" + this.pub + "&vol=" + volumeNumber;
 	}
 	
