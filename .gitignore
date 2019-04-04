@@ -70,6 +70,7 @@ create.sh
 merge.bat
 themes/**/readme.txt
 
+bin/
 /*/*/target/*
 !/*/*/target/*.war
 
