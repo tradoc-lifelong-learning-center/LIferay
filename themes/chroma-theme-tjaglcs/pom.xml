@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+    This library is free software; you can redistribute it and/or modify it under
+    the terms of the GNU Lesser General Public License as published by the Free
+    Software Foundation; either version 2.1 of the License, or (at your option)
+    any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+    details.
+
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.liferay.plugins</groupId>
+	<artifactId>chroma-theme</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+
+	<name>Chroma Theme TJAGLCS</name>
+	<description>Chroma is Liferay Theme Plugin that is meant to provide a pragmatic look and feel that can be adjusted via several configurable options. Its two different views allow for using it in public website–scenarios as well as for administration or dashboard-style interfaces while providing a common look and feel when switching between them. This version includes edits specific to the TJAGLCS site.</description>
+
+	<developers>
+		<developer>
+			<name>Daniel Reuther</name>
+			<email>daniel.reuther@liferay.com</email>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Thiago Leão Moreira</name>
+			<email>tmoreira2020@gmail.com</email>
+			<timezone>-3</timezone>
+		</contributor>
+	</contributors>
+
+	<scm>
+		<connection>scm:git:git@github.com:danielreuther/chroma-theme.git</connection>
+		<developerConnection>scm:git:git@github.com:danielreuther/chroma-theme.git</developerConnection>
+		<url>https://github.com/danielreuther/chroma-theme</url>
+	</scm>
+
+	<parent>
+		<groupId>br.com.thiagomoreira</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.6</version>
+	</parent>
+
+	<properties>
+		<liferay.version>6.2.2</liferay.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay.maven.plugins</groupId>
+				<artifactId>liferay-maven-plugin</artifactId>
+				<version>${liferay.version}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>theme-merge</goal>
+							<goal>build-thumbnail</goal>
+							<goal>build-css</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<liferayVersion>${liferay.version}</liferayVersion>
+					<autoDeployDir>${liferay.auto.deploy.dir}</autoDeployDir>
+					<parentTheme>_styled</parentTheme>
+					<pluginType>theme</pluginType>
+					<themeType>vm</themeType>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<configuration>
+					<header>${project.basedir}/LICENSE</header>
+					<includes>
+						<include>src/**</include>
+					</includes>
+					<mapping>
+						<scss>JAVADOC_STYLE</scss>
+					</mapping>
+					<properties>
+						<owner>Liferay, Inc.</owner>
+					</properties>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							</manifest>
+						<manifestEntries>
+							<Build-Time>${timestamp}</Build-Time>
+							<Implementation-Build>${buildNumber}</Implementation-Build>
+						</manifestEntries>
+					</archive>
+					<webResources>
+						<resource>
+							<directory>src/main/resources/WEB-INF</directory>
+							<targetPath>WEB-INF</targetPath>
+							<filtering>true</filtering>
+							<includes>
+								<include>liferay-plugin-package.properties</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+<profiles>
+<profile>
+	<id>Liferay-v6.2-(Tomcat-7)-(2)</id>
+	<properties>
+		<liferay.version>6.2.5</liferay.version>
+		<liferay.maven.plugin.version>6.2.5</liferay.maven.plugin.version>
+		<liferay.auto.deploy.dir>C:\Liferay\6.2.5\liferay-6.2.5\liferay-portal-6.2-ce-ga6\deploy</liferay.auto.deploy.dir>
+		<liferay.app.server.deploy.dir>C:\Liferay\6.2.5\liferay-6.2.5\liferay-portal-6.2-ce-ga6\tomcat-7.0.62\webapps</liferay.app.server.deploy.dir>
+		<liferay.app.server.lib.global.dir>C:\Liferay\6.2.5\liferay-6.2.5\liferay-portal-6.2-ce-ga6\tomcat-7.0.62\lib\ext</liferay.app.server.lib.global.dir>
+		<liferay.app.server.portal.dir>C:\Liferay\6.2.5\liferay-6.2.5\liferay-portal-6.2-ce-ga6\tomcat-7.0.62\webapps\ROOT</liferay.app.server.portal.dir>
+	</properties>
+	</profile>
+</profiles>
+</project>

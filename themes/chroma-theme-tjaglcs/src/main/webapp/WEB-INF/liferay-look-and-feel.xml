@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!--
+
+    Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+
+    This library is free software; you can redistribute it and/or modify it under
+    the terms of the GNU Lesser General Public License as published by the Free
+    Software Foundation; either version 2.1 of the License, or (at your option)
+    any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+    FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+    details.
+
+-->
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 6.2.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_6_2_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>6.2.0+</version>
+	</compatibility>
+	<theme id="chroma" name="Chroma TJAGLCS">
+		<template-extension>vm</template-extension>
+		<settings>
+			<setting configurable="true" type="text" key="site-subheading" value="A New Theme." />
+			<setting configurable="true" type="select" key="site-header-icon" options="no-site-header-icon,icon-music,icon-search,icon-envelope,icon-heart,icon-star,icon-star-empty,icon-user,icon-film,icon-th-large,icon-th,icon-th-list,icon-ok,icon-remove,icon-zoom-in,icon-zoom-out,icon-off,icon-signal,icon-cog,icon-trash,icon-home,icon-file,icon-time,icon-road,icon-download-alt,icon-download,icon-upload,icon-inbox,icon-play-circle,icon-repeat,icon-refresh,icon-list-alt,icon-lock,icon-flag,icon-headphones,icon-volume-off,icon-volume-down,icon-volume-up,icon-qrcode,icon-barcode,icon-tag,icon-tags,icon-book,icon-bookmark,icon-print,icon-camera,icon-font,icon-bold,icon-italic,icon-text-height,icon-text-width,icon-align-left,icon-align-center,icon-align-right,icon-align-justify,icon-list,icon-indent-left,icon-indent-right,icon-facetime-video,icon-picture,icon-pencil,icon-map-marker,icon-adjust,icon-tint,icon-edit,icon-share,icon-check,icon-move,icon-step-backward,icon-fast-backward,icon-backward,icon-play,icon-pause,icon-stop,icon-forward,icon-fast-forward,icon-step-forward,icon-eject,icon-chevron-left,icon-chevron-right,icon-plus-sign,icon-minus-sign,icon-remove-sign,icon-ok-sign,icon-question-sign,icon-info-sign,icon-screenshot,icon-remove-circle,icon-ok-circle,icon-ban-circle,icon-arrow-left,icon-arrow-right,icon-arrow-up,icon-arrow-down,icon-share-alt,icon-resize-full,icon-resize-small,icon-plus,icon-minus,icon-asterisk,icon-exclamation-sign,icon-gift,icon-leaf,icon-fire,icon-eye-open,icon-eye-close,icon-warning-sign,icon-plane,icon-calendar,icon-random,icon-comment,icon-magnet,icon-chevron-up,icon-chevron-down,icon-retweet,icon-shopping-cart,icon-folder-close,icon-folder-open,icon-resize-vertical,icon-resize-horizontal,icon-bar-chart,icon-twitter-sign,icon-facebook-sign,icon-camera-retro,icon-key,icon-cogs,icon-comments,icon-thumbs-up,icon-thumbs-down,icon-star-half,icon-heart-empty,icon-signout,icon-linkedin-sign,icon-pushpin,icon-external-link,icon-signin,icon-trophy,icon-github-sign,icon-upload-alt,icon-lemon,icon-phone,icon-check-empty,icon-bookmark-empty,icon-phone-sign,icon-twitter,icon-facebook,icon-github,icon-unlock,icon-credit,icon-rss,icon-hdd,icon-bullhorn,icon-bell,icon-certificate,icon-hand-right,icon-hand-left,icon-hand-up,icon-hand-down,icon-circle-arrow-left,icon-circle-arrow-right,icon-circle-arrow-up,icon-circle-arrow-down,icon-globe,icon-wrench,icon-tasks,icon-filter,icon-briefcase,icon-fullscreen,icon-group,icon-link,icon-cloud,icon-beaker,icon-cut,icon-copy,icon-paper-clip,icon-save,icon-sign-blank,icon-reorder,icon-list-ul,icon-list-ol,icon-strikethrough,icon-underline,icon-table,icon-magic,icon-truck,icon-pinterest,icon-pinterest-sign,icon-google-plus-sign,icon-google-plus,icon-money,icon-caret-down,icon-caret-up,icon-caret-left,icon-caret-right,icon-columns,icon-sort,icon-sort-down,icon-sort-up,icon-envelope-alt,icon-linkedin,icon-undo,icon-legal,icon-dashboard,icon-comment-alt,icon-comments-alt,icon-bolt,icon-sitemap,icon-umbrella,icon-paste,icon-lightbulb,icon-exchange,icon-cloud-download,icon-cloud-upload,icon-user-md,icon-stethoscope,icon-suitcase,icon-bell-alt,icon-coffee,icon-food,icon-file-alt,icon-building,icon-hospital,icon-ambulance,icon-medkit,icon-fighter-jet,icon-beer,icon-h-sign,icon-plus-sign-2,icon-double-angle-left,icon-double-angle-right,icon-double-angle-up,icon-double-angle-down,icon-angle-left,icon-angle-right,icon-angle-up,icon-angle-down,icon-desktop,icon-laptop,icon-tablet,icon-mobile,icon-circle-blank,icon-quote-left,icon-quote-right,icon-spinner,icon-circle,icon-reply,icon-github-alt,icon-folder-close-alt,icon-folder-open-alt,icon-expand-alt,icon-collapse-alt,icon-smile,icon-frown,icon-meh,icon-gamepad,icon-keyboard,icon-flag-alt,icon-flag-checkered,icon-terminal,icon-code,icon-reply-all,icon-star-half-full,icon-location-arrow,icon-crop,icon-code-fork,icon-unlink,icon-question,icon-info,icon-exclamation,icon-superscript,icon-subscript,icon-eraser,icon-puzzle,icon-microphone,icon-microphone-off,icon-shield,icon-calendar-empty,icon-fire-extinguisher,icon-rocket,icon-maxcdn,icon-chevron-sign-left,icon-chevron-sign-right,icon-chevron-sign-up,icon-chevron-sign-down,icon-html5,icon-css3,icon-anchor,icon-unlock-alt,icon-bullseye,icon-ellipsis-horizontal,icon-ellipsis-vertical,icon-rss-sign,icon-play-sign,icon-ticket,icon-minus-sign-alt,icon-check-minus,icon-level-up,icon-level-down,icon-check-sign,icon-edit-sign,icon-external-link-sign,icon-share-sign,icon-compass,icon-collapse,icon-collapse-top,icon-expand,icon-euro,icon-gbp,icon-dollar,icon-yen,icon-renminbi,icon-won,icon-bitcoin,icon-file-2,icon-file-text,icon-sort-by-alphabet,icon-sort-by-alphabet-alt,icon-sort-by-attributes,icon-sort-by-attributes-alt,icon-sort-by-order,icon-sort-by-order-alt,icon-thumbs-up-2,icon-thumbs-down-2,icon-youtube-sign,icon-youtube,icon-xing,icon-xing-sign,icon-youtube-play,icon-dropbox,icon-stackexchange,icon-instagram,icon-flickr,icon-adn,icon-bitbucket,icon-bitbucket-sign,icon-tumblr,icon-tumblr-sign,icon-long-arrow-down,icon-long-arrow-up,icon-long-arrow-left,icon-long-arrow-right,icon-apple,icon-windows,icon-android,icon-linux,icon-dribbble,icon-skype,icon-foursquare,icon-trello,icon-female,icon-male,icon-gittip,icon-sun,icon-moon,icon-archive,icon-bug,icon-vk,icon-rupee,icon-glass,icon-fb-text-box,icon-fb-select,icon-fb-radio,icon-fb-text,icon-fb-number,icon-fb-integer,icon-fb-decimal,icon-fb-boolean,icon-renren,icon-weibo,icon-db-joinxor,icon-db-state,icon-db-end,icon-db-start,icon-db-fork,icon-db-task,icon-db-condition,icon-db-join,icon-fb-button,icon-fb-fieldset,icon-fb-custom-field,icon-fb-separator,icon-fb-paragraph,icon-fb-file-upload,icon-btc,icon-cny,icon-eur,icon-gear,icon-gears,icon-inr,icon-jpy,icon-krw,icon-mail-forward,icon-mail-reply,icon-paperclip,icon-power-off,icon-rotate-left,icon-rotate-right,icon-star-half-empty,icon-unchecked,icon-usd" value="icon-camera-retro">
+				<![CDATA[
+					AUI().ready(
+						'node',
+						function(A) {
+							var selectObj = A.one("#[@NAMESPACE@]site-header-icon");
+							var selectionObj = A.Node.create("<span/>");
+
+							selectObj.setStyle('width', '190px');
+							selectObj.insert(selectionObj, "after");
+
+							selectionObj.set('className', selectObj.get('value'));
+							selectionObj.setStyle('display', 'inline-block');
+							selectionObj.setStyle('width', '23px');
+							selectionObj.setStyle('textAlign', 'right');
+							selectionObj.setStyle('fontSize', '24px');
+							selectionObj.setStyle('margin', '3px');
+
+							selectObj.on('change', function (event) {
+								var icon = event.currentTarget.get('value');
+
+								selectionObj.set('className', icon);
+							});
+						}
+					);
+				]]>
+			</setting>
+			<setting configurable="true" type="text" key="theme-color-main" value="#D9AF79">
+				<![CDATA[
+					AUI().ready(
+						'aui-color-picker-popover',
+						function(A) {
+							var selectObj = A.one("#[@NAMESPACE@]theme-color-main");
+							var selectHighlightObj = A.one("#[@NAMESPACE@]theme-color-highlight");
+							var selectionObj = A.Node.create("<span/>");
+
+							selectObj.setStyle('width', '176px');
+
+							selectionObj.setStyle('backgroundColor', selectObj.get('value'));
+
+							selectionObj.setStyle('display', 'inline-block');
+							selectionObj.setStyle('verticalAlign', 'top');
+							selectionObj.setStyle('width', '22px');
+							selectionObj.setStyle('height', '22px');
+							selectionObj.setStyle('margin', '3px');
+							selectionObj.setStyle('border', '1px solid #555');
+
+							var selectionHighlightObj = selectionObj.cloneNode(true);
+
+							selectObj.insert(selectionObj, "after");
+							selectHighlightObj.insert(selectionHighlightObj, "after");
+
+							var colorPicker = new A.ColorPickerPopover({
+								trigger: selectObj,
+								zIndex: 2
+							}).render();
+
+							colorPicker.on('select', function(event) {
+								var color = event.color;
+
+								event.trigger.set('value', color);
+
+								selectionObj.setStyle('backgroundColor', color);
+
+								/* http://stackoverflow.com/questions/5560248 */
+								var percent = -35;
+								var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+								var highlightColor = '#' + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+
+								selectHighlightObj.set('value', highlightColor);
+								selectionHighlightObj.setStyle('backgroundColor', highlightColor);
+							});
+						}
+					);
+				]]>
+			</setting>
+			<setting  configurable="true" type="text" key="theme-color-highlight" value="#A6691A">
+				<![CDATA[
+					AUI().ready(
+						'aui-color-picker-popover',
+						function(A) {
+							var selectObj = A.one("#[@NAMESPACE@]theme-color-highlight");
+							var selectionObj = selectObj.get('nextSibling');
+
+							selectObj.setStyle('width', '176px');
+
+							selectionObj.setStyle('backgroundColor', selectObj.get('value'));
+
+							var colorPicker = new A.ColorPickerPopover({
+								trigger: selectObj,
+								zIndex: 2
+							}).render();
+
+							colorPicker.on('select', function(event) {
+								var color = event.color;
+
+								event.trigger.set('value', color);
+
+								selectionObj.setStyle('backgroundColor', color);
+							});
+						}
+					);
+				]]>
+			</setting>
+			<setting configurable="true" type="checkbox" key="dashboard-view-for-logged-in-users" value="false" />
+			<setting configurable="true" type="checkbox" key="portlet-setup-show-borders-default" value="true" />
+			<setting configurable="true" type="checkbox" key="hide-dockbar" value="false">
+				<![CDATA[
+					AUI().ready(
+						'node',
+						function(A) {
+							var selectObj = A.one("#[@NAMESPACE@]hide-dockbarCheckbox");
+							var showLinkCheckboxes = A.all('label[for^="[@NAMESPACE@]show-link-"]');
+							
+							showLinkCheckboxes.setStyle('margin-left', '20px');
+							
+							if (!selectObj.get('checked')) {
+								showLinkCheckboxes.hide();
+							}
+
+							selectObj.on('change', function (event) {
+								showLinkCheckboxes.toggle();
+							});
+						}
+					);
+				]]>
+			</setting>
+			<setting configurable="true" type="checkbox" key="show-link-user-personal-menu" value="false" />
+			<setting configurable="true" type="checkbox" key="show-search-field" value="false" />
+		</settings>
+		<color-scheme id="01" name="Default">
+			<default-cs>true</default-cs>
+			<css-class>default</css-class>
+		</color-scheme>
+		<color-scheme id="02" name="Dashboard">
+			<css-class>dashboard</css-class>
+		</color-scheme>
+	</theme>
+</look-and-feel>
