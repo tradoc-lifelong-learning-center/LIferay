@@ -141,6 +141,14 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
         		  
         		  System.out.println("doc pub: " + fields.get("publicationName").getValue());
         		  System.out.println("doc pub: " + fields.get("publicationAuthors").getValue());
+        		  
+        		  try {
+					System.out.println("date: " + fields.get("publicationPublishDate").getValue());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        		  
         		  //field = fields.get("publication");
         		  //if (field != null) {
         			//  indexerUserTitle = (String) fields.get("publication").getValue();

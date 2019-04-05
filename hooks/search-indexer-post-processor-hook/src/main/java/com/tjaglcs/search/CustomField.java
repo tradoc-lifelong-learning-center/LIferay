@@ -20,7 +20,8 @@ public class CustomField extends Field {
 	
 	public static final String PUBLICATION_AUTHORS = "publicationAuthors";
 	
-	public static final String PUBLICATION_DATE = "publicationDate";
+	public static final String PUBLICATION_DATE = "publicationPublishDate";
+	
 	
 	public CustomField(String name, Map<Locale, String> localizedValues) {
 		super(name, localizedValues);

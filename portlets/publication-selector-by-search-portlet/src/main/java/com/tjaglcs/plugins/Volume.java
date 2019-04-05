@@ -1,14 +1,16 @@
 package com.tjaglcs.plugins;
 
+import java.util.Date;
 import java.util.List;
 
 public class Volume {
 	private String journalName;
 	private int number;
 	private List<Issue> issues;
+	private Date publishDate;
+	private int year;
 	
 	public Volume(int number, List<Issue> issues) {
-		super();
 		this.journalName = journalName;
 		this.number = number;
 		this.issues = issues;
