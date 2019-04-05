@@ -16,16 +16,8 @@ public class ArticleTest {
 	//@before will run before each test. Instantiate object here
 	@org.junit.Before
 	public void setup() {
-		article = new Article(12345,10,5);
+		article = new Article(12345,5);
 	}
-   
-   @org.junit.Test
-   public void getQueryString() {
-	   String result = article.getQueryString();
-	   String desiredResults = "?articleId=12345&vol=10&no=5";
-
-	   assertEquals(desiredResults,result);
-   }
    
    @org.junit.Test
    public void getArticleId() {
@@ -38,14 +30,6 @@ public class ArticleTest {
    @org.junit.Test
    public void getVolume() {
 	   int result = article.getVolume();
-	   int desiredResults = 10;
-
-	   assertEquals(desiredResults,result);
-   }
-   
-   @org.junit.Test
-   public void getIssue() {
-	   int result = article.getIssue();
 	   int desiredResults = 5;
 
 	   assertEquals(desiredResults,result);

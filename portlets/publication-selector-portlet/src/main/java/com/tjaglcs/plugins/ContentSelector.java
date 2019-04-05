@@ -2,39 +2,14 @@ package com.tjaglcs.plugins;
 
 import com.tjaglcs.plugins.Article;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.mvc.MVCPortlet;
-import com.liferay.util.portlet.PortletRequestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 
 
 
@@ -44,79 +19,87 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class ContentSelector extends MVCPortlet {
 	
 	private RenderRequest globalReq;
-	private Article[] articles;
+	private Volume[] volumes;
 	
-	public Article[] getArticleObjs(RenderRequest req) throws Exception {
-		//method to build an array of article objects based on the portlet config
-		//objects will be used to populate dropdown, check against for query string, and select article
+	
+	
+	
+	public Volume[] getVolumes() {
+		return volumes;
+	}
+
+	public boolean setVolumes(RenderRequest req) throws Exception {
 		
-		String articleConfig = getArticleIdsConfig(req);
-		String[] articleConfigStrings = articleConfig.split(";");
+		String volumeConfig = getArticleIdsConfig(req);
 		
-		Article[] articleConfigs = new Article[articleConfigStrings.length];
+		//if string is empty, return false so view JSTL knows what to do next
+		if(volumeConfig == "") {
+			return false;
+		}
 		
-		for(int i = 0; i<articleConfigStrings.length; i++) {
+		String[] volumeConfigStrings = volumeConfig.split(";");
+		
+		Volume[] volumeConfigs = new Volume[volumeConfigStrings.length];
+		
+		for(int i = 0; i<volumeConfigStrings.length; i++) {
 			//using -1 to skip the last item, which is archive link
-			String articleString = articleConfigStrings[i];
-		
-			long articleId = Long.parseLong(extractQueryStringVals(articleString,"articleId"));
-			int volume = Integer.parseInt(extractQueryStringVals(articleString,"vol"));
-			int issue = Integer.parseInt(extractQueryStringVals(articleString,"no"));
+			String volumeString = volumeConfigStrings[i];
 			
-			Article article = new Article(articleId,volume,issue);
-			articleConfigs[i] = article;
+			QueryString queryString = new QueryString(volumeString);
+			
+			Volume volume = new Volume(queryString);
+			volumeConfigs[i] = volume;
 		} 
 		
 		//update class variables for later use
-		this.articles = articleConfigs;
+		this.volumes = volumeConfigs;
 		this.globalReq = req;
-		
-		return articleConfigs;
+		return true;
 
 	}
 	
-	public Long fetchCurrentArticleId(RenderRequest req) throws Exception{
-		//method to determin which article will be displayed
-		//based on query string and list of articles in config
+	//fetch "current" volume (the volume the user has selected)
+	public Volume fetchCurrentVolume(RenderRequest req) throws Exception {
+		//get the query string value from browser (not queryString object)
+		String queryStringValue = getQueryStringValue("vol");
 		
-		String articleIdFromString = getQueryStringValue("articleId");
 		
-		//does the article from the query string match the articles in the config?
-		boolean isArticleListed = checkArticleList(articles, articleIdFromString);
-		
-		System.out.println("art length: " + articles[0].getQueryString());
-
-		if(articles[0].getArticleId()==-1) {
+		if(volumes.length==0) {
 			//if there are no articles in the config, return an error and prevent from crashing
 			System.out.println("no article in config. Please add using the article ID, volume, and issue number (separated by semi-colons): articleId=25147&vol=225&no=4;articleId=25167&vol=225&no=3.");
-			//TO DO: need to make this configurable
-			return 0L;
-		} else if(articleIdFromString==null) {
+			return null;
+		} else if(queryStringValue==null) {
 			//this is if there's no query string, so
 			//return most recent
 			System.out.println("No article in query string. Using most recent.");
-			return articles[0].getArticleId();
-		} else if(!isArticleListed) {
-			//if the query string doesn't match what's in the config, show a not found
-			//don't really intend for this to be able to view any article in the database
-			long articleNotFound = getEmptyArticleIdConfig();
-			System.out.println("Query string doesn't match. Article not found. Using: " + articleNotFound);
-			return articleNotFound;
-		} else if(articleIdFromString=="browseArchive" || articleIdFromString=="selectAnIssue") {
-			return 0L;
+			return volumes[0];
 		} else {
-			System.out.println("Fetching article from query string: " + articleIdFromString);
-			return Long.parseLong(articleIdFromString);
+			System.out.println("Fetching volume: " + queryStringValue);
+			
+			Volume currentVolume = new Volume(getEmptyArticleIdConfig());
+			
+			for(int i=0; i<this.volumes.length; i++) {
+				
+				if(this.volumes[i].getVolumeNumber()==Integer.parseInt(queryStringValue)) {
+					System.out.println("found volume " + volumes[i].getVolumeNumber());
+					currentVolume = volumes[i];
+				} else {
+					System.out.println("didn't find volume " + volumes[i].getVolumeNumber());
+				}
+			}
+			//System.out.print(currentVolume.getArticles());
+			return currentVolume;
 		}
-
+		
+		
+		
 	}
-	
  
 	public boolean isMostRecent() throws Exception {
-		long articleId = fetchCurrentArticleId(globalReq);
-		long mostRecentArticle = articles[0].getArticleId();
+		Volume currentVol = fetchCurrentVolume(globalReq);
+		Volume mostRecentVol = volumes[0];
 		
-		if(mostRecentArticle==articleId) {
+		if(currentVol.equals(mostRecentVol)) {
 			return true;
 		} else {
 			return false;
@@ -127,7 +110,6 @@ public class ContentSelector extends MVCPortlet {
 	private String getQueryStringValue(String stringParam) {
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(globalReq));
 		String queryString = httpReq.getParameter(stringParam);
-		System.out.println("queryString: " + queryString);
 		return queryString;
 	}
 	
@@ -150,21 +132,19 @@ public class ContentSelector extends MVCPortlet {
 		return articleIDs;
 	}
 	
-	private long getEmptyArticleIdConfig() throws Exception {
+	private long[] getEmptyArticleIdConfig() throws Exception {
 		PortletPreferences portletPreferences = globalReq.getPreferences();
 		String emptyArticleString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArticleNotFound", "-1"));
-		//System.out.println("emptyArticleString: " + emptyArticleString);
 		
-		long emptyArticle;
+		long[] emptyArticle = new long[1];
 		
 		try {
-			emptyArticle = Long.parseLong(emptyArticleString);
+			emptyArticle[0] = Long.parseLong(emptyArticleString);
 		} catch (Exception e) {
-			emptyArticle=-1;
+			emptyArticle[0]=-1;
 			e.printStackTrace();
 		}
 		
-		//System.out.println("emptyArticle: " + emptyArticle);
 		return emptyArticle;
 	}
 
@@ -173,65 +153,5 @@ public class ContentSelector extends MVCPortlet {
 		String archiveUrlString = GetterUtil.getString(portletPreferences.getValue("contentSelectorArchiveUrl", "https://tjaglcspublic.army.mil/mlr-archives"));
 		return archiveUrlString;
 	}
-	
-	
-	public String fetchArticleList() {
-		String articleList = "";
-		
-		for(int i=0; i<articles.length; i++) {
-			String currentArticle = articles[i].getArticleId() + ";"; 
-			articleList += currentArticle;
-		}
-		
-		return articleList;
-	}
-	
-	private boolean checkArticleList(Article[] articles, String queryString) {
-		//method to check if articleId from query string exists in list of articles in portlet
-		
-		boolean isArticleListed = false;
-		
-		if(queryString==null) {
-			return false;
-		}
-		
-		for(int i = 0; i<articles.length; i++) {
-			
-			try {
-				Long.parseLong(queryString);
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				System.out.print("Invalid query string");
-				e.printStackTrace();
-				continue;
-			}
-			
-			if(articles[i].getArticleId()==Long.parseLong(queryString)) {
-				isArticleListed=true;
-				
-				break;
-			}
-
-		} 
-		
-		return isArticleListed;
-		
-	}
-	
-	private String extractQueryStringVals(String textToSearch, String paramName) {
-		//method to extract certain query string values
-		
-		String pattern = "(" + paramName + "=)(\\d+)";
-		Pattern r = Pattern.compile(pattern);
-		Matcher m = r.matcher(textToSearch);
-		
-		if(m.find()) {
-			return m.group(2);
-		} else {
-			return "-1";
-		}
-		
-	}
-
 	
 }
