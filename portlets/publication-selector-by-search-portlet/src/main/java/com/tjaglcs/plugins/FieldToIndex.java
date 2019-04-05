@@ -8,13 +8,13 @@ public class FieldToIndex {
 	private int fieldNameInt = -1;
 	
 	
-	public FieldToIndex(String expandoName, String fieldNameString) {
-		this.fieldValue = expandoName;
+	public FieldToIndex(String fieldValue, String fieldNameString) {
+		this.fieldValue = fieldValue;
 		this.fieldNameString = fieldNameString;
 	}
 	
-	public FieldToIndex(String expandoName, int fieldNameInt) {
-		this.fieldValue = expandoName;
+	public FieldToIndex(String fieldValue, int fieldNameInt) {
+		this.fieldValue = fieldValue;
 		this.fieldNameInt = fieldNameInt;
 	}
 	
