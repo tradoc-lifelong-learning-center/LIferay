@@ -1,5 +1,7 @@
 package com.tjaglcs.plugins;
 
+import java.time.LocalDate;
+
 public class Article {
 	private String title;
 	private String publicationName;
@@ -8,12 +10,12 @@ public class Article {
 	private int volume;
 	private int issue;
 	private String type;
+	private LocalDate articleDate;
 	
 	
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type) {
-		super();
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, LocalDate articleDate) {
 		this.title = title;
 		this.publicationName = publicationName;
 		this.id = id;
@@ -21,6 +23,7 @@ public class Article {
 		this.volume = volume;
 		this.issue = issue;
 		this.type = type;
+		this.articleDate = articleDate;
 	}
 	public String getTitle() {
 		return title;
@@ -42,6 +45,12 @@ public class Article {
 	}
 	public String getType() {
 		return type;
+	}
+	public LocalDate getArticleDate() {
+		return articleDate;
+	}
+	public void setArticleDate(LocalDate articleDate) {
+		this.articleDate = articleDate;
 	}
 	
 	

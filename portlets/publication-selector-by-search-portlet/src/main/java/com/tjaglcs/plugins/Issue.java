@@ -6,10 +6,13 @@ public class Issue {
 	private int number;
 	private List<Article> articles;
 	private int volume;
+	private int year;
 	
 	public Issue(int number, List<Article> articles) {
 		this.number = number;
 		this.articles = articles;
+		setVolume();
+		setYear();
 	}
 
 	public int getNumber() {
@@ -20,18 +23,40 @@ public class Issue {
 		return articles;
 	}
 	
-	public int getVolume() {
-		setVolume(fetchVolume());
-		return this.volume;
+	
+
+	public void setYear() {
+		
+		int[] years = new int[articles.size()];
+		
+		for(int i = 0; i<articles.size(); i++) {
+			//System.out.println("article year is " + articles.get(i).getArticleDate().getYear());
+			
+			try {
+				//System.out.println("article year: " + articles.get(i).getArticleDate().getYear());
+				years[i] = articles.get(i).getArticleDate().getYear();
+			} catch (Exception e) {
+				System.out.println("no date");
+				//e.printStackTrace();
+			}
+		}
+		
+		Average average = new Average(years);
+		List<Integer> yearMode = average.getMode();
+		System.out.println("mode: " + average.getMode());
+		
+		this.year = yearMode.get(0);
 	}
 	
-	public void setVolume(int volume) {
-		this.volume = volume;
+	public int getYear() {
+		return year;
 	}
 
+	public int getVolume() {
+		return this.volume;
+	}
 
-
-	private int fetchVolume(){
+	private int setVolume(){
 		//need to determine the volume based on article list. SHOULD all be the same
 		
 		int volume = this.articles.get(0).getVolume();
