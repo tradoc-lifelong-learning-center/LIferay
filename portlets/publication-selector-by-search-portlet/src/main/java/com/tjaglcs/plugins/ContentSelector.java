@@ -136,11 +136,7 @@ public class ContentSelector extends MVCPortlet {
 		
 			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(searchContext);
 			searchQuery.addRequiredTerm(CustomField.PUBLICATION_NAME, pubName);
-			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM dd HH:mm:ss zzz yyyy", Locale.US);
-	        
-			
-			
+
 			//searchQuery.addRequiredTerm(CustomField.PUBLICATION_VOLUME, 999);
 			//NOTE: This is finding all versions. Restrict to the latest.
 			//Tried to do this with portal.properties hook but still getting all versions
