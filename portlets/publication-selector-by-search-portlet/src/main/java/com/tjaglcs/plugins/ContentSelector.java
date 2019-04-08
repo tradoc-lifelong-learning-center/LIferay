@@ -113,8 +113,8 @@ public class ContentSelector extends MVCPortlet {
 		
 		issuesMap.forEach((k,v) -> issueArray.add(new Issue(k,v)));
 		
-		//System.out.println(issueArray);
-		
+		//System.out.println("issue year: " + issueArray.get(1).getYear());
+		 
 		return issueArray;
 	 
 	}
@@ -223,7 +223,7 @@ public class ContentSelector extends MVCPortlet {
 				
 				
 				try {
-					Article article = new Article(title, pubName, articleId, version, volume, issue, type);
+					Article article = new Article(title, pubName, articleId, version, volume, issue, type, articleDate);
 					articles[i] = article;
 					
 				} catch(Exception e) {
