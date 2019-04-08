@@ -18,6 +18,8 @@ public class CustomField extends Field {
 	
 	public static final String PUBLICATION_ISSUE = "publicationIssue";
 	
+	public static final String PUBLICATION_DATE = "publicationPublishDate";
+	
 	public CustomField(String name, Map<Locale, String> localizedValues) {
 		super(name, localizedValues);
 		// TODO Auto-generated constructor stub

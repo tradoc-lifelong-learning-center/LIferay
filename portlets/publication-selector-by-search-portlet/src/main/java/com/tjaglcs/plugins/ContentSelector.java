@@ -1,8 +1,13 @@
 package com.tjaglcs.plugins;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.RenderRequest;
@@ -132,6 +137,9 @@ public class ContentSelector extends MVCPortlet {
 			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(searchContext);
 			searchQuery.addRequiredTerm(CustomField.PUBLICATION_NAME, pubName);
 			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM dd HH:mm:ss zzz yyyy", Locale.US);
+	        
+			
 			
 			//searchQuery.addRequiredTerm(CustomField.PUBLICATION_VOLUME, 999);
 			//NOTE: This is finding all versions. Restrict to the latest.
@@ -158,6 +166,7 @@ public class ContentSelector extends MVCPortlet {
 				int volume = -1;
 				int issue = -1;
 				String type = "Type not found";
+				LocalDate articleDate = null;
 				
 				
 				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
@@ -188,6 +197,11 @@ public class ContentSelector extends MVCPortlet {
 					if(currentDoc.getField(CustomField.ENTRY_CLASS_NAME) != null) {
 						//System.out.println("string: " + currentDoc.getField(Field.ENTRY_CLASS_NAME).getValue());
 						type = currentDoc.getField(CustomField.ENTRY_CLASS_NAME).getValue();
+					} 
+					
+					if(currentDoc.getField(CustomField.PUBLICATION_DATE) != null) {
+						long fieldValue = Long.parseLong(currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
+						articleDate = Instant.ofEpochMilli(fieldValue).atZone(ZoneId.systemDefault()).toLocalDate();
 					} 
 					
 					//if(currentDoc.getField(CustomField.PUBLICATION_AUTHORS) != null) {
