@@ -34,7 +34,11 @@ This is the <b>TestPortlet</b> portlet in View mode.
     	
     	<input type="number" multiple min="1950" max="2019"/>
     
+    <%-- To DO
+    	Update so this is populated by JSON/JS, not Java
+    	Allow Volume to be filterable by year
     
+     --%>
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume." onChange="getIssues()">
 
 			<aui:option value="selectAnIssue">Select a volume</aui:option>
@@ -63,31 +67,40 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 <aui:script use="aui-base, event, node">
     var btn = A.one('#btnSubmit');
+    var jsonData = ${pubData.getJson() };
+    var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
     
+    console.log(jsonData);
+    console.log(volumeDropdown);
     
-    console.log(Liferay);
-    
-    buildJSON();
-    
-    function buildJSON(){
-    	//console.log("volume array: ")
-    	//console.log(${volumeArray.size()});
-    	
-    	var jsonData = ${pubData.getJson() };
-    	console.log(jsonData);
-    	
-    	//console.log(jsonData.publication.name);
+    for(var prop in jsonData.publication.volumes){
+    	//console.log(jsonData.publication.volumes[prop].volumeNumber);
     }
+    
+    populateMenu(jsonData.publication.volumes)
 
     Liferay.contentselectorsearchportlet.init(
         {
             namespace: '<portlet:namespace/>'
         }
     );
+    
+    function populateMenu(items){
+    	console.log("will be working with: ")
+    	console.log(items)
+    	
+    	for(var prop in items){
+    		//consider changing to "number" for easier reuse
+        	console.log(items[prop].volumeNumber);
+    		
+    		//from here, should be able to populate select menu
+        }
+    }
 
     getIssues = function(){
     	var jsonData = ${pubData.getJson() };
     	var volumeOptions = A.one('#<portlet:namespace/>volumeOptions');
+    	console.log("getting issues!");
     	//var issueOptions = A.one('#<portlet:namespace/>issueOptions');
     	
     	//var issues = jsonData.publication.
