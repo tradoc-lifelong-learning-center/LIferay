@@ -3,12 +3,14 @@ package com.tjaglcs.plugins;
 import java.util.List;
 
 public class Issue {
+	private String publicationName;
 	private int number;
 	private List<Article> articles;
 	private int volume;
 	private int year;
 	
-	public Issue(int number, List<Article> articles) {
+	public Issue(String journalName, int number, List<Article> articles) {
+		this.publicationName = publicationName;
 		this.number = number;
 		this.articles = articles;
 		setVolume();
@@ -16,6 +18,10 @@ public class Issue {
 		//System.out.println("building issue " + this.number);
 	}
 
+	public String getPublicationName() {
+		return this.publicationName;
+	}
+	
 	public int getNumber() {
 		return number;
 	}

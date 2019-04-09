@@ -4,21 +4,22 @@ import java.util.Date;
 import java.util.List;
 
 public class Volume {
-	private String journalName;
+	private String publicationName;
 	private int number;
 	private List<Issue> issues;
 	private Date publishDate;
 	private int year;
 	
-	public Volume(int number, List<Issue> issues) {
-		this.journalName = journalName;
+	public Volume(String  publicationName, int number, List<Issue> issues) {
+		this.publicationName = publicationName;
 		this.number = number;
 		this.issues = issues;
+		setYear();
 		//System.out.println("building volume " + this.number);
 	}
 
-	public String getJournalName() {
-		return journalName;
+	public String getPublicationName() {
+		return publicationName;
 	}
 
 	public int getNumber() {
@@ -29,14 +30,32 @@ public class Volume {
 		return issues;
 	}
 	
-	public String getIssueList() {
-		
-		//int[] issueArray = new int[]{1,2,3,4};
-		String issueString = "'1,2,3,4'";
-		
-		return issueString;
+	public int getYear() {
+		return this.year;
 	}
 	
+	public void setYear() {
+		
+		int[] years = new int[issues.size()];
+		
+		for(int i = 0; i<issues.size(); i++) {
+			//System.out.println("article year is " + articles.get(i).getArticleDate().getYear());
+			
+			try {
+				//System.out.println("article year: " + articles.get(i).getArticleDate().getYear());
+				years[i] = issues.get(i).getYear();
+			} catch (Exception e) {
+				System.out.println("no date");
+				//e.printStackTrace();
+			}
+		}
+		
+		Average average = new Average(years);
+		List<Integer> yearMode = average.getMode();
+		//System.out.println("mode: " + average.getMode());
+		
+		this.year = yearMode.get(0);
+	}
 	
 	
 }

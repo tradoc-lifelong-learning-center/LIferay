@@ -34,7 +34,7 @@ public class Publication {
 		setArticles(name, request);
 		setIssues();
 		setVolumes();
-		System.out.println("vols: " + this.volumes);
+		//System.out.println("vols: " + this.volumes);
 	}
 	
 	public String getName() {
@@ -45,6 +45,10 @@ public class Publication {
 	}
 	
 	public String getJson() {
+		
+		//this seems like it might be frail. Figure out a better way, or at least test
+		//-special characters in string
+		//-escape double/single quotes
 		
 		String JSON = "{'publication':{'name':'Military Law Review','volumes':{";
 		
@@ -124,22 +128,22 @@ public class Publication {
 				    list.add(currentIssue);
 
 				    volumeMap.put(currentVol, list);
-				    System.out.println("IF: adding " + currentIssue.getVolume() + " to " + currentVol);
+				    //System.out.println("IF: adding " + currentIssue.getVolume() + " to " + currentVol);
 				} else {
 					volumeMap.get(currentVol).add(currentIssue);
-					System.out.println("ELSE: adding " + currentIssue.getVolume() + " to " + currentVol);
+					//System.out.println("ELSE: adding " + currentIssue.getVolume() + " to " + currentVol);
 				}
 			}
 			 
-			System.out.println("volumeMap");
-			System.out.println(volumeMap);
+			//System.out.println("volumeMap");
+			//System.out.println(volumeMap);
 			//System.out.println(volumeMap.get(999).get(0).getArticles().get(0).getTitle());
 			//System.out.println(volumeMap.get(999).get(index));
 			//return null;
 			
 			ArrayList<Volume> volumeArray = new ArrayList<>();
 			
-			volumeMap.forEach((k,v) -> volumeArray.add(new Volume(Integer.parseInt(k),v)));
+			volumeMap.forEach((k,v) -> volumeArray.add(new Volume(this.name, Integer.parseInt(k),v)));
 			//volumeMap.forEach((k,v) -> System.out.println(k));
 			
 			//return volumeMap;
@@ -185,7 +189,7 @@ public class Publication {
 		ArrayList<Issue> issueArray = new ArrayList<>();
 		//Issue[] issueArray = new Issue[issuesMap.size()];
 		
-		issuesMap.forEach((k,v) -> issueArray.add(new Issue(k,v)));
+		issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.name,k,v)));
 		
 		//System.out.println("issue year: " + issueArray.get(1).getYear());
 		

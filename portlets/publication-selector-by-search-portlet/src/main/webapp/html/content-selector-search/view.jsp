@@ -16,10 +16,109 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 
+<c:set var="volumeArray" value="${pubData.getVolumes() }" />
+
+
+<c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
+
+	<p>volume object: ${volumeObj }</p>
+</c:forEach>
+
+<aui:form cssClass="content-selector-form">
+    <aui:fieldset cssClass="selector-fieldset">
+    
+    
+    	<aui:input name="year-input" type="range" min="1950" max="2019"></aui:input>
+    	
+    	<input type="range" multiple min="1950" max="2019"/> 
+    	
+    	<input type="number" multiple min="1950" max="2019"/>
+    
+    
+        <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume." onChange="getIssues()">
+
+			<aui:option value="selectAnIssue">Select a volume</aui:option>
+
+		    <c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
+		    	<aui:option value="${volumeObj.getNumber() }">${volumeObj.getNumber() }</aui:option>
+		    	
+			</c:forEach>
+			
+        </aui:select>
+
+		<aui:select label="" id="issueOptions" name="issue" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue." disabled="true">
+
+			<aui:option value="selectAnIssue">Select an issue</aui:option>
+
+		    
+			
+        </aui:select>
+
+        <aui:button value=">" id="btnSubmit" cssClass="btn btn-primary"/>
+    </aui:fieldset>
+    
+</aui:form>
+
+
+
+<aui:script use="aui-base, event, node">
+    var btn = A.one('#btnSubmit');
+    
+    
+    console.log(Liferay);
+    
+    buildJSON();
+    
+    function buildJSON(){
+    	//console.log("volume array: ")
+    	//console.log(${volumeArray.size()});
+    	
+    	var jsonData = ${pubData.getJson() };
+    	console.log(jsonData);
+    	
+    	//console.log(jsonData.publication.name);
+    }
+
+    Liferay.contentselectorsearchportlet.init(
+        {
+            namespace: '<portlet:namespace/>'
+        }
+    );
+
+    getIssues = function(){
+    	var jsonData = ${pubData.getJson() };
+    	var volumeOptions = A.one('#<portlet:namespace/>volumeOptions');
+    	//var issueOptions = A.one('#<portlet:namespace/>issueOptions');
+    	
+    	//var issues = jsonData.publication.
+    	
+        //var fs = Liferay.contentselectorsearchportlet.getIssues(volNo);
+        //console.log(fs);
+        
+        //console.log(volumeOptions.val());
+        //var value = volumeOptions.val();
+        
+        //don't think I can mix JS/JSTL like this. 
+        //Might have to be a two step thing - select volume, refresh page with vol query string, then populate issue and allow selection
+        //unless I can load hash map into JS/JSON?
+        //console.log(${volumeArray} + value.get(0).getNumber() });
+        
+        //var url = window.location.href.split('?')[0] + "?vol=" + volumeOptions.val();
+        //window.location.href = url;
+    }
+    
+    ///console.log("Group id: ");
+    //console.log(${volumeArray.get(0).getNumber() });
+</aui:script>
+
+
+
+
+
 
 <h3>Found volumes:</h3>
 <c:forEach items="${pubData.getVolumes() }" var = "volume" varStatus="i">
-	<p>${volume.getNumber() }</p>
+	<p>${volume.getNumber() }, year: ${volume.getYear() }</p>
 </c:forEach>
 
 <h3>Found issues:</h3>
