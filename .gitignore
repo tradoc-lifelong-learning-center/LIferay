@@ -29,7 +29,7 @@ dependencies/
 dist/
 ext/
 
-layouttpl/
+
 lib/
 misc/
 osgi/
