@@ -14,6 +14,7 @@ public class Volume {
 		this.journalName = journalName;
 		this.number = number;
 		this.issues = issues;
+		//System.out.println("building volume " + this.number);
 	}
 
 	public String getJournalName() {

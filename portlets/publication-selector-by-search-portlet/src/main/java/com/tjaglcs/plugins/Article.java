@@ -24,6 +24,7 @@ public class Article {
 		this.issue = issue;
 		this.type = type;
 		this.articleDate = articleDate;
+		//System.out.println("building article " + this.title);
 	}
 	public String getTitle() {
 		return title;

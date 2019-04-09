@@ -13,6 +13,7 @@ public class Issue {
 		this.articles = articles;
 		setVolume();
 		setYear();
+		//System.out.println("building issue " + this.number);
 	}
 
 	public int getNumber() {
@@ -43,7 +44,7 @@ public class Issue {
 		
 		Average average = new Average(years);
 		List<Integer> yearMode = average.getMode();
-		System.out.println("mode: " + average.getMode());
+		//System.out.println("mode: " + average.getMode());
 		
 		this.year = yearMode.get(0);
 	}
@@ -56,7 +57,7 @@ public class Issue {
 		return this.volume;
 	}
 
-	private int setVolume(){
+	private void setVolume(){
 		//need to determine the volume based on article list. SHOULD all be the same
 		
 		int volume = this.articles.get(0).getVolume();
@@ -69,7 +70,8 @@ public class Issue {
 			}
 		}
 		
-		return volume;
+		//System.out.println("volume from setVolume in issue: " + volume);
+		this.volume = volume;
 	}
 
 }

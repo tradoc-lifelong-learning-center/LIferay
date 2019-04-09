@@ -16,15 +16,31 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 
-<p>
-<c:out value="${pubData.getVolumes() }"/>
-</p>
+
+<h3>Found volumes:</h3>
+<c:forEach items="${pubData.getVolumes() }" var = "volume" varStatus="i">
+	<p>${volume.getNumber() }</p>
+</c:forEach>
+
+<h3>Found issues:</h3>
+<c:forEach items="${pubData.getIssues() }" var = "issue" varStatus="i">
+	<p>${issue.getNumber() }</p>
+</c:forEach>
+
+<h3>Found articles:</h3>
+<c:forEach items="${pubData.getArticles() }" var = "article" varStatus="i">
+	<p>${article.getTitle() }, volume ${article.getVolume() }</p>
+</c:forEach>
+
+<%--  
 
 <c:set var="volumeArray" value="${st.fetchVolumes(renderRequest) }" />
 
+<p>pubData volume length: 
+<c:out value="${pubData.getVolumes().size() }"/>
+</p>
 
 
-<%-- Trying to get issue list. Don't konw if this needs to go back to being array --%>
 <c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
 
 	<p>volume object: ${volumeObj.getIssueList() }</p>
@@ -107,6 +123,8 @@ This is the <b>TestPortlet</b> portlet in View mode.
     ///console.log("Group id: ");
     //console.log(${volumeArray.get(0).getNumber() });
 </aui:script>
+--%>
+
 
 
 <%--
