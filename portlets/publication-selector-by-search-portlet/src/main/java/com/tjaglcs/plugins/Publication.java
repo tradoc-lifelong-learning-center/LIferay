@@ -103,8 +103,36 @@ public class Publication {
 	}
 	
 	
-	public List<Volume> getVolume(){
-		return this.volumes;
+	public Volume getVolume(int volumeNumber){
+		for(int i = 0; i<this.volumes.size(); i++) {
+			if(this.volumes.get(i).getNumber()==volumeNumber) {
+				return this.volumes.get(i);
+			} 
+		}
+		
+		System.out.println("No volume with the number " + volumeNumber);
+		return null;
+	}
+	
+	public Volume getSelectedVolume() {
+		//If there's a query string, return that volume
+		//else, return most recent
+		return getMostRecentVolume();
+	}
+	
+	public Volume getMostRecentVolume(){
+		int latestVolumeNumber = 0;
+		Volume latestVolume = null;
+		
+		for(int i = 0; i<this.volumes.size(); i++) {
+			if(this.volumes.get(i).getNumber()>latestVolumeNumber) {
+				latestVolume = this.volumes.get(i);
+				latestVolumeNumber = latestVolume.getNumber();
+			} 
+		}
+		
+		System.out.println("Latest volume: " + latestVolumeNumber);
+		return latestVolume;
 	}
 	
 	public void setVolumes() throws Exception {
@@ -244,8 +272,6 @@ public class Publication {
 				
 				
 				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
-				
-			
 				try {
 					if(currentDoc.getField(Field.TITLE) != null) {
 						//System.out.println("string: " + currentDoc.getField(Field.TITLE).getValue());
