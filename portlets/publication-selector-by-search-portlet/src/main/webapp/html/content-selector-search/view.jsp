@@ -90,7 +90,13 @@ This is the <b>TestPortlet</b> portlet in View mode.
         	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
         	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
         	var jsonData = ${pubData.getJson() };
-
+			
+        	if(volumeDropdown.val()=="selectAVolume"){
+        		issueDropdown.setAttribute("disabled");
+        		issueDropdown.value=="selectAnIssue"; //TO DO: this isn't working. I'd like it to go back to "select an issue" if for some reason a user selects "select a volume"
+        		return false;
+        	}
+        	
         	console.log("getting issues! You chose volume " + volumeDropdown.val());
         	issueDropdown.removeAttribute("disabled");
         	
@@ -150,7 +156,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
         	var issueNumber = issueDropdown.val();
         	
         	
-        	var queryString = "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
+        	var queryString = getQueryString(pubCode,volumeNumber,issueNumber);
         	
          	if(issueDropdown.val()=="selectAnIssue" || volumeDropdown.val()=="selectAVolume") {
              	return false;
@@ -160,11 +166,13 @@ This is the <b>TestPortlet</b> portlet in View mode.
              	console.log("navigating to " + url);
              }
 
-             //window.location.href = url;
+             window.location.href = url;
          }); 
     })();
  	
-    
+    function getQueryString(pubCode,volumeNumber,issueNumber){
+    	return "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
+    }
     
     //console.log("ns: " + config.namespace)
     //console.log("btn: " + config.submitButton)
