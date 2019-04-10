@@ -56,8 +56,10 @@ public class Publication {
 		
 		for(int v = 0; v<volumes.size(); v++) {
 			int volNo = volumes.get(v).getNumber();
+			int year = volumes.get(v).getYear();
 			
-			JSON+="'volume" + volNo + "':{'volumeNumber':'" + volNo + "',";
+			JSON+="'volume" + volNo + "':{'number':'" + volNo + "',";
+			JSON+="'year':'" + year + "',";
 			
 			List<Issue> issues = volumes.get(v).getIssues();
 			
@@ -70,7 +72,7 @@ public class Publication {
 				
 				JSON+="'issue" + issueNo + "':{";
 				
-				JSON+="'issueNumber':'" + issueNo + "',";
+				JSON+="'number':'" + issueNo + "',";
 				
 				JSON+="'articles':{";
 				
@@ -78,9 +80,9 @@ public class Publication {
 					
 					JSON+="'article" + a + "':{";
 					
-					JSON+="'articleNumber':'" + articles.get(a).getId() + "',";
+					JSON+="'number':'" + articles.get(a).getId() + "',";
 					
-					JSON+="'articleTitle':'" + articles.get(a).getTitle() + "'},";
+					JSON+="'title':'" + articles.get(a).getTitle() + "'},";
 					
 				}
 				
