@@ -42,11 +42,15 @@ This is the <b>TestPortlet</b> portlet in View mode.
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume." onChange="getIssues()">
 
 			<aui:option value="selectAnIssue">Select a volume</aui:option>
-
-		    <c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
+			
+			<%--  
+			
+			<c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
 		    	<aui:option value="${volumeObj.getNumber() }">${volumeObj.getNumber() }</aui:option>
 		    	
 			</c:forEach>
+			--%>
+		    
 			
         </aui:select>
 
@@ -70,6 +74,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
     var jsonData = ${pubData.getJson() };
     var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
     
+    
     console.log(jsonData);
     console.log(volumeDropdown);
     
@@ -77,7 +82,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
     	//console.log(jsonData.publication.volumes[prop].volumeNumber);
     }
     
-    populateMenu(jsonData.publication.volumes)
+    populateMenu(volumeDropdown, jsonData.publication.volumes, 1970,5000)
 
     Liferay.contentselectorsearchportlet.init(
         {
@@ -85,22 +90,37 @@ This is the <b>TestPortlet</b> portlet in View mode.
         }
     );
     
-    function populateMenu(items){
+    function populateMenu(menu, items, startYear, endYear){
     	console.log("will be working with: ")
     	console.log(items)
     	
+    	//var menu = document.getElementById(menuId);
+    	var fragment = document.createDocumentFragment();
+    	
     	for(var prop in items){
-    		//consider changing to "number" for easier reuse
-        	console.log(items[prop].volumeNumber);
     		
+    		if(items[prop].year<startYear || items[prop].year > endYear){
+    			continue;
+    		}
+    		
+    		var option = document.createElement("option");
+    		option.innerHTML = items[prop].number + ", year " + items[prop].year;
+    		option.setAttribute("value",items[prop].number);
+    		//consider changing to "number" for easier reuse
+        	console.log(items[prop].number);
+        	fragment.appendChild(option);
     		//from here, should be able to populate select menu
         }
+    	
+    	menu.appendChild(fragment);
     }
 
     getIssues = function(){
+    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
     	var jsonData = ${pubData.getJson() };
-    	var volumeOptions = A.one('#<portlet:namespace/>volumeOptions');
+
     	console.log("getting issues!");
+    	issueDropdown.removeAttribute("disabled");
     	//var issueOptions = A.one('#<portlet:namespace/>issueOptions');
     	
     	//var issues = jsonData.publication.
