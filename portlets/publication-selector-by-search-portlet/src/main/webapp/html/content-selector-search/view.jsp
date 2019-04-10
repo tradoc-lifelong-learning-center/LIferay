@@ -78,9 +78,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
     console.log(jsonData);
     console.log(volumeDropdown);
     
-    for(var prop in jsonData.publication.volumes){
-    	//console.log(jsonData.publication.volumes[prop].volumeNumber);
-    }
+ 
     
     populateMenu(volumeDropdown, jsonData.publication.volumes, 1970,5000)
 
@@ -90,7 +88,24 @@ This is the <b>TestPortlet</b> portlet in View mode.
         }
     );
     
-    function populateMenu(menu, items, startYear, endYear){
+    
+
+    getIssues = function(){
+    	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
+    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+    	var jsonData = ${pubData.getJson() };
+
+    	console.log("getting issues! You chose volume " + volumeDropdown.val());
+    	issueDropdown.removeAttribute("disabled");
+    	
+    	var issues = jsonData.publication.volumes["volume" + volumeDropdown.val()].issues;
+    	
+    	populateMenu(issueDropdown, issues);
+
+    }
+    
+    
+    function populateMenu(menu, items, startYear=0, endYear=9999){
     	console.log("will be working with: ")
     	console.log(items)
     	
@@ -109,39 +124,17 @@ This is the <b>TestPortlet</b> portlet in View mode.
     		//consider changing to "number" for easier reuse
         	console.log(items[prop].number);
         	fragment.appendChild(option);
-    		//from here, should be able to populate select menu
+
+        	for(var artProp in items[prop].articles){
+        		console.log(items[prop].articles[artProp].title)
+        		
+        	}
+        	
         }
     	
     	menu.appendChild(fragment);
     }
 
-    getIssues = function(){
-    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
-    	var jsonData = ${pubData.getJson() };
-
-    	console.log("getting issues!");
-    	issueDropdown.removeAttribute("disabled");
-    	//var issueOptions = A.one('#<portlet:namespace/>issueOptions');
-    	
-    	//var issues = jsonData.publication.
-    	
-        //var fs = Liferay.contentselectorsearchportlet.getIssues(volNo);
-        //console.log(fs);
-        
-        //console.log(volumeOptions.val());
-        //var value = volumeOptions.val();
-        
-        //don't think I can mix JS/JSTL like this. 
-        //Might have to be a two step thing - select volume, refresh page with vol query string, then populate issue and allow selection
-        //unless I can load hash map into JS/JSON?
-        //console.log(${volumeArray} + value.get(0).getNumber() });
-        
-        //var url = window.location.href.split('?')[0] + "?vol=" + volumeOptions.val();
-        //window.location.href = url;
-    }
-    
-    ///console.log("Group id: ");
-    //console.log(${volumeArray.get(0).getNumber() });
 </aui:script>
 
 
