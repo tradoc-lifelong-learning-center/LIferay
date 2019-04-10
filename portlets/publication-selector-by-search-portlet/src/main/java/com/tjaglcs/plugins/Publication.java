@@ -50,7 +50,7 @@ public class Publication {
 		//-special characters in string
 		//-escape double/single quotes
 		
-		String JSON = "{'publication':{'name':'Military Law Review','volumes':{";
+		String JSON = "{'publication':{'name':'Military Law Review','pubCode':'mlr','volumes':{";
 		
 		List<Volume> volumes = getVolumes();
 		
