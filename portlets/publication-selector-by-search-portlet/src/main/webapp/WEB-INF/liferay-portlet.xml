@@ -11,7 +11,7 @@
 			/js/main.js
 		</footer-portlet-javascript>
 		<css-class-wrapper>
-			content-selector-search-portlet-portlet
+			content-selector-search-portlet
 		</css-class-wrapper>
 	</portlet>
 	<role-mapper>
