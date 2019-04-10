@@ -7,10 +7,12 @@
 <portlet:defineObjects />
 
 <jsp:useBean id="st" class="com.tjaglcs.plugins.ContentSelector"/>
-
+<%--  
 <script type="text/javascript">
 <%@ include file="/js/main.js" %>
 </script>
+--%>
+
 
 This is the <b>TestPortlet</b> portlet in View mode.
 
@@ -39,7 +41,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
     	Allow Volume to be filterable by year
     
      --%>
-        <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume." onChange="getIssues()">
+        <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume.">
 
 			<aui:option value="selectAVolume">Select a volume</aui:option>
 			
@@ -70,97 +72,123 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 
 <aui:script use="aui-base, event, node">
-    var btn = A.one('#btnSubmit');
-    var jsonData = ${pubData.getJson() };
-    var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
     
-    
-    console.log(jsonData);
-    console.log(volumeDropdown);
-    
- 
-    
-    populateMenu(volumeDropdown, jsonData.publication.volumes, 1970,5000)
-
-    Liferay.contentselectorsearchportlet.init(
-        {
-            namespace: '<portlet:namespace/>'
-        }
-    );
-    
-    
-
-    getIssues = function(){
-    	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
-    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
-    	var jsonData = ${pubData.getJson() };
-
-    	console.log("getting issues! You chose volume " + volumeDropdown.val());
-    	issueDropdown.removeAttribute("disabled");
-    	
-    	var issues = jsonData.publication.volumes["volume" + volumeDropdown.val()].issues;
-    	
-    	populateMenu(issueDropdown, issues);
-
-    }
-    
-    
-    function populateMenu(menu, items, startYear=0, endYear=9999){
-    	console.log("will be working with: ")
-    	console.log(items)
-    	
-    	//var menu = document.getElementById(menuId);
-    	var fragment = document.createDocumentFragment();
-    	
-    	for(var prop in items){
-    		
-    		if(items[prop].year<startYear || items[prop].year > endYear){
-    			continue;
-    		}
-    		
-    		var option = document.createElement("option");
-    		option.innerHTML = items[prop].number + ", year " + items[prop].year;
-    		option.setAttribute("value",items[prop].number);
-    		//consider changing to "number" for easier reuse
-        	console.log(items[prop].number);
-        	fragment.appendChild(option);
-
-        	for(var artProp in items[prop].articles){
-        		console.log(items[prop].articles[artProp].title)
+    (function(){
+    	var config = {
+        		'namespace': '<portlet:namespace/>',
+                'jsonData': ${pubData.getJson() },
+                'volumeDropdown':document.getElementById('<portlet:namespace/>' + 'volumeOptions'),
+                'issueDropdown':document.getElementById('<portlet:namespace/>' + 'issueOptions'),
+                'submitButton':document.getElementById('btnSubmit')
+        } //does submit button need a namespace?
         		
-        	}
-        	
-        }
-    	
-    	menu.appendChild(fragment);
-    }
-    
-    
-    btn.on('click', function(event){
-    	var jsonData = ${pubData.getJson() };
-    	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
-    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
-    	
-    	console.log("click!")
-    	
-    	
-    	var pubCode = jsonData.publication.pubCode;
-    	var volumeNumber = volumeDropdown.val();
-    	var issueNumber = issueDropdown.val();
-    	
-    	
-    	var queryString = "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
-    	
-     	if(issueDropdown.val()=="selectAnIssue" || volumeDropdown.val()=="selectAVolume") {
-         	return false;
-         } else {
-        	var baseUrl = window.location.href.split('#')[0];
-         	var url = baseUrl.split('?')[0] + queryString;
-         	console.log("navigating to " + url);
-         }
+        //populate volume menu		
+        populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, 1970,5000)		
+        		
+        
+        function getIssues(){
+        	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
+        	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        	var jsonData = ${pubData.getJson() };
 
-         //window.location.href = url;
-     });
+        	console.log("getting issues! You chose volume " + volumeDropdown.val());
+        	issueDropdown.removeAttribute("disabled");
+        	
+        	var issues = jsonData.publication.volumes["volume" + volumeDropdown.val()].issues;
+        	
+        	populateMenu(issueDropdown, issues);
+
+        } 
+        
+        
+        function populateMenu(menu, items, startYear=0, endYear=9999){
+        	console.log("will be working with: ")
+        	console.log(items)
+        	console.log("menu: ")
+        	console.log(menu)
+        	
+        	//var menu = document.getElementById(menuId);
+        	var fragment = document.createDocumentFragment();
+        	
+        	for(var prop in items){
+        		
+        		if(items[prop].year<startYear || items[prop].year > endYear){
+        			continue;
+        		}
+        		
+        		var option = document.createElement("option");
+        		option.innerHTML = items[prop].number + ", year " + items[prop].year;
+        		option.setAttribute("value",items[prop].number);
+        		//consider changing to "number" for easier reuse
+            	console.log(items[prop].number);
+            	fragment.appendChild(option);
+
+            	for(var artProp in items[prop].articles){
+            		console.log(items[prop].articles[artProp].title)
+            		
+            	}
+            	
+            }
+        	
+        	menu.appendChild(fragment);
+        } 
+        		
+        config.volumeDropdown.addEventListener('change', function(event){
+        	getIssues();
+         }); 
+        
+        config.submitButton.addEventListener('click', function(event){
+        	var jsonData = ${pubData.getJson() };
+        	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
+        	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        	
+        	console.log("click!")
+        	
+        	
+        	var pubCode = jsonData.publication.pubCode;
+        	var volumeNumber = volumeDropdown.val();
+        	var issueNumber = issueDropdown.val();
+        	
+        	
+        	var queryString = "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
+        	
+         	if(issueDropdown.val()=="selectAnIssue" || volumeDropdown.val()=="selectAVolume") {
+             	return false;
+             } else {
+            	var baseUrl = window.location.href.split('#')[0];
+             	var url = baseUrl.split('?')[0] + queryString;
+             	console.log("navigating to " + url);
+             }
+
+             //window.location.href = url;
+         }); 
+    })();
+ 	
+    
+    
+    //console.log("ns: " + config.namespace)
+    //console.log("btn: " + config.submitButton)
+    //console.log("vol: " + '<portlet:namespace/>' + 'volumeOptions')
+    //console.log("issue: " + config.issueDropdown)
+    
+
+    /* Liferay.contentselectorsearchportlet.init(
+        {
+            namespace: '<portlet:namespace/>',
+            jsonData: ${pubData.getJson() },
+            volumeDropdownId:'volumeOptions',
+            issueDropdownId:'issueOptions',
+            buttonId:'btnSubmit'
+        }
+    ); */
+    
+    //Liferay.contentselectorsearchportlet.helloWorld();
+    //console.log(Liferay.contentselectorsearchportlet)
+
+    
+    
+    
+    
 
 </aui:script>
 
