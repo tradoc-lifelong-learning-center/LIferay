@@ -18,13 +18,6 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 
-<c:set var="volumeArray" value="${pubData.getVolumes() }" />
-
-
-<c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
-
-	<p>volume object: ${volumeObj }</p>
-</c:forEach>
 
 <aui:form cssClass="content-selector-form">
     <aui:fieldset cssClass="selector-fieldset">
@@ -69,7 +62,23 @@ This is the <b>TestPortlet</b> portlet in View mode.
     
 </aui:form>
 
+<div>
+	<c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
+	<h3>Volume <c:out value="${currentVolume.getNumber() }"/></h3>
+	
+	<c:forEach items="${currentVolume.getIssues()}" var = "issue" varStatus="i">
+		 <h4>Issue <c:out value="${issue.getNumber() }"/></h4>
+		 
+		 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
+		 	<h5><c:out value="${article.getTitle() }"/></h5>
+		 
 
+		</c:forEach>
+		 
+		    	
+	</c:forEach>
+
+</div>
 
 <aui:script use="aui-base, event, node">
     
