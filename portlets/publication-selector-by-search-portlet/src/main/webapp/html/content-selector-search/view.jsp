@@ -41,7 +41,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
      --%>
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume." onChange="getIssues()">
 
-			<aui:option value="selectAnIssue">Select a volume</aui:option>
+			<aui:option value="selectAVolume">Select a volume</aui:option>
 			
 			<%--  
 			
@@ -134,6 +134,33 @@ This is the <b>TestPortlet</b> portlet in View mode.
     	
     	menu.appendChild(fragment);
     }
+    
+    
+    btn.on('click', function(event){
+    	var jsonData = ${pubData.getJson() };
+    	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
+    	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+    	
+    	console.log("click!")
+    	
+    	
+    	var pubCode = jsonData.publication.pubCode;
+    	var volumeNumber = volumeDropdown.val();
+    	var issueNumber = issueDropdown.val();
+    	
+    	
+    	var queryString = "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
+    	
+     	if(issueDropdown.val()=="selectAnIssue" || volumeDropdown.val()=="selectAVolume") {
+         	return false;
+         } else {
+        	var baseUrl = window.location.href.split('#')[0];
+         	var url = baseUrl.split('?')[0] + queryString;
+         	console.log("navigating to " + url);
+         }
+
+         //window.location.href = url;
+     });
 
 </aui:script>
 
