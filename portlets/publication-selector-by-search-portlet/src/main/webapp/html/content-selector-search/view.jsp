@@ -7,17 +7,9 @@
 <portlet:defineObjects />
 
 <jsp:useBean id="st" class="com.tjaglcs.plugins.ContentSelector"/>
-<%--  
-<script type="text/javascript">
-<%@ include file="/js/main.js" %>
-</script>
---%>
-
-
-This is the <b>TestPortlet</b> portlet in View mode.
 
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
-
+<c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
 
 <aui:form cssClass="content-selector-form">
     <aui:fieldset cssClass="selector-fieldset">
@@ -29,22 +21,11 @@ This is the <b>TestPortlet</b> portlet in View mode.
     	
     	<input type="number" multiple min="1950" max="2019"/>
     
-    <%-- To DO
-    	Update so this is populated by JSON/JS, not Java
-    	Allow Volume to be filterable by year
-    
-     --%>
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume.">
 
 			<aui:option value="selectAVolume">Select a volume</aui:option>
 			
-			<%--  
-			
-			<c:forEach items="${volumeArray}" var = "volumeObj" varStatus="i">
-		    	<aui:option value="${volumeObj.getNumber() }">${volumeObj.getNumber() }</aui:option>
-		    	
-			</c:forEach>
-			--%>
+			<%-- populated by JSON from Java bean --%>
 		    
 			
         </aui:select>
@@ -52,8 +33,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
 		<aui:select label="" id="issueOptions" name="issue" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue." disabled="true">
 
 			<aui:option value="selectAnIssue">Select an issue</aui:option>
-
-		    
+		    <%-- populated by JSON from Java bean --%>
 			
         </aui:select>
 
@@ -63,7 +43,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
 </aui:form>
 
 <div>
-	<c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
+	
 	<h3>Volume <c:out value="${currentVolume.getNumber() }"/></h3>
 	
 	<c:forEach items="${currentVolume.getIssues()}" var = "issue" varStatus="i">

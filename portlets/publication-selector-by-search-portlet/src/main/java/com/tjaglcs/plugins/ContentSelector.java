@@ -43,6 +43,7 @@ public class ContentSelector extends MVCPortlet {
 		
 		Publication pub = new Publication("Military Law Review", request);
 		
+		//pub.getSelectedVolume(request);
 		
 		return pub;
 	}

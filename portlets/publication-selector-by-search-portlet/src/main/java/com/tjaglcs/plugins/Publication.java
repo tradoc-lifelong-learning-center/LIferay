@@ -25,7 +25,7 @@ public class Publication {
 	private Article[] articles;
 	private List<Issue> issues;
 	private List<Volume> volumes;
-	
+	private RenderRequest request;
 	
 	
 	
@@ -38,7 +38,7 @@ public class Publication {
 		
 		//setIssues();
 		setVolumes();
-		
+		this.request = request;
 		//System.out.println("vols: " + this.volumes);
 	}
 	
@@ -122,7 +122,53 @@ public class Publication {
 	public Volume getSelectedVolume() {
 		//If there's a query string, return that volume
 		//else, return most recent
-		return getMostRecentVolume();
+		
+		//QueryString queryString = new QueryString();
+
+		System.out.println("get selected volume: " + this.volumes.size());
+		//System.out.println(PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request)));
+		//System.out.println(getQueryStringValue("pub"));
+
+		
+		String pubCode = getQueryStringValue("pub");
+		System.out.println("pubCode: " + pubCode);
+		
+		int volNumber = -1;
+		try {
+			volNumber = Integer.parseInt(this.getQueryStringValue("vol"));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		int issueNumber = -1;
+		try {
+			issueNumber = Integer.parseInt(this.getQueryStringValue("no"));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		Volume selectedVolume = null;
+		int selectedVolumeNumber = -1;
+		
+		for(int i = 0; i<this.volumes.size(); i++) {
+			System.out.println("checking for vol " + this.volumes.get(i).getNumber());
+			if(this.volumes.get(i).getNumber()==volNumber) {
+				selectedVolume = this.volumes.get(i);
+				selectedVolumeNumber = selectedVolume.getNumber();
+			} 
+		}
+		
+		if(selectedVolumeNumber>-1) {
+			return selectedVolume;
+		} else {
+			return getMostRecentVolume();
+		}
+		
+		
 	}
 	
 	public Volume getMostRecentVolume(){
@@ -138,6 +184,11 @@ public class Publication {
 		
 		//System.out.println("Latest volume: " + latestVolumeNumber);
 		return latestVolume;
+	}
+	
+	public Issue getMostRecentIssue() {
+		//TODO
+		return null;
 	}
 	
 	public void setVolumes() throws Exception {
@@ -203,6 +254,13 @@ public class Publication {
 	
 	public List<Issue> getIssues() {
 		return this.issues;
+	}
+	
+	
+	private String getQueryStringValue(String stringParam) {
+		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(this.request));
+		String queryString = httpReq.getParameter(stringParam);
+		return queryString;
 	}
 	
 	/*public void setIssues() throws Exception {
