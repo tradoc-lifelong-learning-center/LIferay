@@ -70,7 +70,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
 		 <h4>Issue <c:out value="${issue.getNumber() }"/></h4>
 		 
 		 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
-		 	<h5><c:out value="${article.getTitle() }"/></h5>
+		 	<h5><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></h5>
 		 
 
 		</c:forEach>

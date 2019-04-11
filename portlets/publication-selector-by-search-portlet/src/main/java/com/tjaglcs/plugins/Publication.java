@@ -102,7 +102,7 @@ public class Publication {
 		
 		JSON +="}}}";
 		
-		System.out.println(JSON);
+		//System.out.println(JSON);
 		
 		return JSON;
 	}
@@ -136,7 +136,7 @@ public class Publication {
 			} 
 		}
 		
-		System.out.println("Latest volume: " + latestVolumeNumber);
+		//System.out.println("Latest volume: " + latestVolumeNumber);
 		return latestVolume;
 	}
 	
@@ -153,7 +153,7 @@ public class Publication {
 				
 				String currentVol = Integer.toString(this.articles[i].getVolume());
 				
-				System.out.println("setVolumes currentVol: " + currentVol);
+				//System.out.println("setVolumes currentVol: " + currentVol);
 				
 				//int currentVol = issueArray.get(i).getVolume();
 				//Issue currentIssue = issueArray.get(i);
@@ -181,17 +181,17 @@ public class Publication {
 			
 			volumeMap.forEach((k,v) -> {
 				try {
-					System.out.println("K: " + k);
-					System.out.println("v: " + v);
-					System.out.println("this.name: " + this.name);
+					//System.out.println("K: " + k);
+					//System.out.println("v: " + v);
+					//System.out.println("this.name: " + this.name);
 					volumeArray.add(new Volume(this.name, Integer.parseInt(k),v));
 				} catch (NumberFormatException e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					e.printStackTrace();
 					System.out.println("NumberFormatException in volumeMap");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					//e.printStackTrace();
+					e.printStackTrace();
 					System.out.println("Exception in volumeMap");
 				}
 			});
@@ -351,12 +351,12 @@ public class Publication {
 				
 				
 				try {
-					//testing for now - figure out something better of date is null
+					// TODO testing for now - figure out something better of date is null
 					if(articleDate == null) {
 						articleDate = Instant.ofEpochMilli(1234567890).atZone(ZoneId.systemDefault()).toLocalDate();
 					}
 					//System.out.println("articleDate from 226: " + articleDate);
-					Article article = new Article(title, pubName, articleId, version, volume, issue, type, articleDate);
+					Article article = new Article(title, pubName, articleId, version, volume, issue, type, articleDate, request);
 					articles[i] = article;
 					
 				} catch(Exception e) {

@@ -43,54 +43,12 @@ public class ContentSelector extends MVCPortlet {
 		
 		Publication pub = new Publication("Military Law Review", request);
 		
-		//TO DO:
-		//get most recent vol/issue and display if no query string
-		//if query string, get that vol/issue and display
-		//How do I display ACTUAL article title (from content) versions shortened title field?
-		//How to I link to custom page URLs? Can I get a display page set up?
-		System.out.println("volume 1: " + pub.getVolume(1).getIssue(1));
-		System.out.println("latest volume: " + pub.getMostRecentVolume());
-		
-		
-		
-		//trying to find parent page URL. from https://stackoverflow.com/questions/8397679/get-portlet-page-containing-web-content-in-liferay
-		long groupId = getGroupId(request);
-		ThemeDisplay themeDisplay = getThemeDisplay(request);
-		List<Article> articles = pub.getVolume(1).getIssue(1).getArticles();
-		long articleId = articles.get(0).getId();
-		
-		//JournalArticle art = JournalArticleLocalServiceUtil.getArticle(articleId);
-		
-		//System.out.println("art: " + art);
-		
-		List<Long> layoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(groupId, false, Long.toString(articleId));
-		
-		System.out.println("layoutIds: " + layoutIds);
-		
-
-		
-		if (!layoutIds.isEmpty()) {
-			  long layoutId = layoutIds.get(0).longValue();
-			  Layout layout = LayoutLocalServiceUtil.getLayout(groupId, false, layoutId);
-			  String url = PortalUtil.getLayoutURL(layout, themeDisplay);
-			  //String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
-			  System.out.println("url: " + url);
-			}
 		
 		return pub;
 	}
 	
-	public long getGroupId(RenderRequest req) {
-		ThemeDisplay themeDisplay = getThemeDisplay(req);
-		long portletGroupId = themeDisplay.getScopeGroupId();
+	
 		
-		return portletGroupId;
-	}
-	
-	private ThemeDisplay getThemeDisplay(RenderRequest req) {
-		return (ThemeDisplay) req.getAttribute(WebKeys.THEME_DISPLAY);
-	}
-	
 	/*public ArrayList<Volume> fetchVolumes(RenderRequest request) throws Exception {
 	//public ArrayList<Volume> fetchVolumes(RenderRequest request) throws Exception {
 	//public void fetchVolumes(RenderRequest request) throws Exception {
