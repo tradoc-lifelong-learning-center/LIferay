@@ -32,8 +32,13 @@ public class Publication {
 	public Publication(String name, RenderRequest request) throws Exception {
 		this.name = name;
 		setArticles(name, request);
-		setIssues();
+		
+		//BUG: this is grouping issues cross-volume, which is not what we want
+		//group volume, then issue?
+		
+		//setIssues();
 		setVolumes();
+		
 		//System.out.println("vols: " + this.volumes);
 	}
 	
@@ -139,28 +144,29 @@ public class Publication {
 		//public ArrayList<Volume> fetchVolumes(RenderRequest request) throws Exception {
 		//public void fetchVolumes(RenderRequest request) throws Exception {
 			
-			List<Issue> issueArray = this.issues;
+			//List<Issue> issueArray = this.issues;
 			
-			HashMap<String, List<Issue>> volumeMap = new HashMap<>();
+			HashMap<String, List<Article>> volumeMap = new HashMap<>();
 			
-			for(int i = 0; i<issueArray.size(); i++) {
+			for(int i = 0; i<this.articles.length; i++) {
+				Article currentArticle = this.articles[i];
 				
-				String currentVol = Integer.toString(issueArray.get(i).getVolume());
+				String currentVol = Integer.toString(this.articles[i].getVolume());
 				
-				System.out.println(issueArray.get(i));
+				System.out.println("setVolumes currentVol: " + currentVol);
 				
 				//int currentVol = issueArray.get(i).getVolume();
-				Issue currentIssue = issueArray.get(i);
+				//Issue currentIssue = issueArray.get(i);
 				//Article currentArticle = articlesArray[i];
 			
 				if (!volumeMap.containsKey(currentVol)) {
-				    List<Issue> list = new ArrayList<Issue>();
-				    list.add(currentIssue);
+				    List<Article> list = new ArrayList<Article>();
+				    list.add(currentArticle);
 
 				    volumeMap.put(currentVol, list);
 				    //System.out.println("IF: adding " + currentIssue.getVolume() + " to " + currentVol);
 				} else {
-					volumeMap.get(currentVol).add(currentIssue);
+					volumeMap.get(currentVol).add(currentArticle);
 					//System.out.println("ELSE: adding " + currentIssue.getVolume() + " to " + currentVol);
 				}
 			}
@@ -173,7 +179,22 @@ public class Publication {
 			
 			ArrayList<Volume> volumeArray = new ArrayList<>();
 			
-			volumeMap.forEach((k,v) -> volumeArray.add(new Volume(this.name, Integer.parseInt(k),v)));
+			volumeMap.forEach((k,v) -> {
+				try {
+					System.out.println("K: " + k);
+					System.out.println("v: " + v);
+					System.out.println("this.name: " + this.name);
+					volumeArray.add(new Volume(this.name, Integer.parseInt(k),v));
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					System.out.println("NumberFormatException in volumeMap");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					System.out.println("Exception in volumeMap");
+				}
+			});
 			//volumeMap.forEach((k,v) -> System.out.println(k));
 			
 			//return volumeMap;
@@ -184,14 +205,17 @@ public class Publication {
 		return this.issues;
 	}
 	
-	public void setIssues() throws Exception {
+	/*public void setIssues() throws Exception {
 		
 		//Article[] articlesArray = fetchArticlesArray(request);
 		//System.out.println("total articles: " + articlesArray.length);
+		//List<Volume> volumeList = this.volumes;
 		Article[] articlesArray = this.articles;
 		HashMap<Integer, List<Article>> issuesMap = new HashMap<>();
 		
-		
+		//for(int z = 0; z<volumeList.size(); z++) {
+			//System.out.println("ARTICLES IN VOL: " + volumeList.get(z).get);
+		//}
 
 		for(int i = 0; i<articlesArray.length; i++) {
 			//System.out.println("title: " + articlesArray[i].getTitle());
@@ -228,7 +252,7 @@ public class Publication {
 		 
 		this.issues = issueArray;
 	 
-	}
+	}*/
 	
 	public Article[] getArticles() {
 		return this.articles;

@@ -1,19 +1,24 @@
 package com.tjaglcs.plugins;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class Volume {
 	private String publicationName;
 	private int number;
 	private List<Issue> issues;
+	private List<Article> articles;
 	private Date publishDate;
 	private int year;
 	
-	public Volume(String  publicationName, int number, List<Issue> issues) {
+	public Volume(String  publicationName, int number, List<Article> articles) throws Exception {
 		this.publicationName = publicationName;
 		this.number = number;
-		this.issues = issues;
+		this.articles = articles;
+		//this.issues = issues;
+		setIssues();
 		setYear();
 		//System.out.println("building volume " + this.number);
 	}
@@ -68,5 +73,53 @@ public class Volume {
 		this.year = yearMode.get(0);
 	}
 	
+	public void setIssues() throws Exception {
+		
+		//Article[] articlesArray = fetchArticlesArray(request);
+		//System.out.println("total articles: " + articlesArray.length);
+		//List<Volume> volumeList = this.volumes;
+		List<Article> articlesArray = this.articles;
+		HashMap<Integer, List<Article>> issuesMap = new HashMap<>();
+		
+		//for(int z = 0; z<volumeList.size(); z++) {
+			//System.out.println("ARTICLES IN VOL: " + volumeList.get(z).get);
+		//}
+
+		for(int i = 0; i<articlesArray.size(); i++) {
+			//System.out.println("title: " + articlesArray[i].getTitle());
+			//System.out.println("vol: " + articlesArray[i].getVolume());
+			
+			//int currentVol = articlesArray[i].getVolume();
+			int currentIssue = articlesArray.get(i).getIssue();
+			Article currentArticle = articlesArray.get(i);
+		
+			if (!issuesMap.containsKey(currentIssue)) {
+			    List<Article> list = new ArrayList<Article>();
+			    list.add(currentArticle);
+
+			    issuesMap.put(currentIssue, list);
+			} else {
+				issuesMap.get(currentIssue).add(currentArticle);
+			}
+		}
+		
+		
+		
+		//System.out.println(issuesMap);
+		//System.out.println(issuesMap.size());
+		
+		ArrayList<Issue> issueArray = new ArrayList<>();
+		//Issue[] issueArray = new Issue[issuesMap.size()];
+		
+		issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.publicationName,k,v)));
+		
+		//System.out.println("issue year: " + issueArray.get(1).getYear());
+		
+		System.out.println("issuesMap");
+		System.out.println(issuesMap);
+		 
+		this.issues = issueArray;
+	 
+	}
 	
 }

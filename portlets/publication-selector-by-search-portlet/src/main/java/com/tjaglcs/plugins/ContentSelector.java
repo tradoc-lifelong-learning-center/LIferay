@@ -72,8 +72,8 @@ public class ContentSelector extends MVCPortlet {
 		if (!layoutIds.isEmpty()) {
 			  long layoutId = layoutIds.get(0).longValue();
 			  Layout layout = LayoutLocalServiceUtil.getLayout(groupId, false, layoutId);
-			  //String url = PortalUtil.getLayoutURL(layout, themeDisplay);
-			  String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+			  String url = PortalUtil.getLayoutURL(layout, themeDisplay);
+			  //String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 			  System.out.println("url: " + url);
 			}
 		

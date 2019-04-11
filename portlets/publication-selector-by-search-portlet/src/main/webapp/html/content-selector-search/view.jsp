@@ -78,6 +78,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
 		    	
 	</c:forEach>
 
+
 </div>
 
 <aui:script use="aui-base, event, node">
@@ -226,7 +227,7 @@ This is the <b>TestPortlet</b> portlet in View mode.
 
 <h3>Found articles:</h3>
 <c:forEach items="${pubData.getArticles() }" var = "article" varStatus="i">
-	<p>${article.getTitle() }, volume ${article.getVolume() }</p>
+	<p>${article.getTitle() }, volume ${article.getVolume() }, issue ${article.getIssue() }</p>
 </c:forEach>
 
 <%--  

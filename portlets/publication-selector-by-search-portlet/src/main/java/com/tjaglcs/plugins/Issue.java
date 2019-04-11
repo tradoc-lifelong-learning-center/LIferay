@@ -15,7 +15,7 @@ public class Issue {
 		this.articles = articles;
 		setVolume();
 		setYear();
-		//System.out.println("building issue " + this.number);
+		System.out.println("building issue " + this.number);
 	}
 
 	public String getPublicationName() {
@@ -65,16 +65,19 @@ public class Issue {
 
 	private void setVolume(){
 		//need to determine the volume based on article list. SHOULD all be the same
-		
+		System.out.println("Set  volume in issue: " + this.articles.get(0).getVolume());
 		int volume = this.articles.get(0).getVolume();
+		
 		
 		for(int i = 0; i<this.articles.size(); i++) {
 			if(volume==this.articles.get(i).getVolume()) {
+				System.out.println(this.articles.get(i).getTitle() + " in volume " + this.articles.get(i).getVolume() + " with issue " + this.articles.get(i).getIssue());
 				continue;
 			} else {
 				System.out.println("Error: volumes in issue " + this.number + " don't match.");
 			}
 		}
+		
 		
 		//System.out.println("volume from setVolume in issue: " + volume);
 		this.volume = volume;
