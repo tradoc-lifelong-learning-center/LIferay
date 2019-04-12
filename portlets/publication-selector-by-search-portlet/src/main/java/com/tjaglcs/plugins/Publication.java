@@ -1,13 +1,16 @@
 package com.tjaglcs.plugins;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.time.Instant;
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Publication {
 	private String name;
-	private Article[] articles;
+	private List<Article> articles;
 	private List<Issue> issues;
 	private List<Volume> volumes;
 	private RenderRequest request;
@@ -199,10 +202,10 @@ public class Publication {
 			
 			HashMap<String, List<Article>> volumeMap = new HashMap<>();
 			
-			for(int i = 0; i<this.articles.length; i++) {
-				Article currentArticle = this.articles[i];
+			for(int i = 0; i<this.articles.size(); i++) {
+				Article currentArticle = this.articles.get(i);
 				
-				String currentVol = Integer.toString(this.articles[i].getVolume());
+				String currentVol = Integer.toString(this.articles.get(i).getVolume());
 				
 				//System.out.println("setVolumes currentVol: " + currentVol);
 				
@@ -312,7 +315,7 @@ public class Publication {
 	 
 	}*/
 	
-	public Article[] getArticles() {
+	public List<Article> getArticles() {
 		return this.articles;
 	}
 	
@@ -322,8 +325,24 @@ public class Publication {
 			HttpServletRequest httpRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request));
 			SearchContext searchContext = SearchContextFactory.getInstance(httpRequest);
 		
+			
+			
 			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(searchContext);
-			searchQuery.addRequiredTerm(CustomField.PUBLICATION_NAME, pubName);
+			
+			//Query stringQuery = StringQueryFactoryUtil.create("(publicationName: + " + pubName + ") AND (field:0) AND ((entryClassName:com.liferay.portlet.journal.model.JournalArticle AND head:true) OR entryClassName:com.liferay.portlet.documentlibrary.model.DLFileEntry)");
+			Query stringQuery = StringQueryFactoryUtil.create("(publicationName: " + pubName + ") AND (status:0) AND ((entryClassName:com.liferay.portlet.journal.model.JournalArticle AND head:true) OR entryClassName:com.liferay.portlet.documentlibrary.model.DLFileEntry)");
+			//searchQuery.addRequiredTerm("publicationName", pubName);
+			
+			
+			searchQuery.add(stringQuery,BooleanClauseOccur.MUST);
+			
+			
+			
+			//BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(searchContext);
+			
+			//searchQuery.addRequiredTerm(CustomField.PUBLICATION_NAME, pubName);
+			//show only "Active" status articles (Active=0)
+			//searchQuery.addRequiredTerm(Field.STATUS, 0);
 
 			//searchQuery.addRequiredTerm(CustomField.PUBLICATION_VOLUME, 999);
 			//NOTE: This is finding all versions. Restrict to the latest.
@@ -333,12 +352,12 @@ public class Publication {
 			
 			List<Document> hitsDocs = hits.toList();
 			
-			Article[] articles = new Article[hitsDocs.size()];
+			List<Article> articles = new ArrayList<>();
 			
 			System.out.println("Total hits: " + hits.getLength());
 			
 			for(int i = 0; i<hitsDocs.size(); i++) {
-				//Think about error checking here. What happens if there's an error getting data? What happens after catch?
+				//TODO Think about error checking here. What happens if there's an error getting data? What happens after catch?
 				
 				Document currentDoc = hitsDocs.get(i);
 				
@@ -351,6 +370,8 @@ public class Publication {
 				int issue = -1;
 				String type = "Type not found";
 				LocalDate articleDate = null;
+				int status = -1;
+				
 				
 				
 				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
@@ -386,6 +407,11 @@ public class Publication {
 						articleDate = Instant.ofEpochMilli(fieldValue).atZone(ZoneId.systemDefault()).toLocalDate();
 					} 
 					
+					if(currentDoc.getField(Field.STATUS) != null) {
+						status = Integer.parseInt(currentDoc.getField(Field.STATUS).getValue());
+					} 
+					
+					
 					//if(currentDoc.getField(CustomField.PUBLICATION_AUTHORS) != null) {
 					//	System.out.println("pub authors: " + currentDoc.getField(Field.ENTRY_CLASS_NAME).getValue());
 					//	type = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValue();
@@ -413,9 +439,11 @@ public class Publication {
 					if(articleDate == null) {
 						articleDate = Instant.ofEpochMilli(1234567890).atZone(ZoneId.systemDefault()).toLocalDate();
 					}
-					//System.out.println("articleDate from 226: " + articleDate);
-					Article article = new Article(title, pubName, articleId, version, volume, issue, type, articleDate, request);
-					articles[i] = article;
+					
+					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
+					System.out.println("title: " + article.getTitle());
+					System.out.println("status: " + article.getStatus());
+					articles.add(article);
 					
 				} catch(Exception e) {
 					System.out.println(e);

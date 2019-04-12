@@ -22,13 +22,14 @@ public class Article {
 	private int volume;
 	private int issue;
 	private String type;
+	int status;
 	private String url;
 	private LocalDate articleDate;
 	private RenderRequest request;
 	
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException {
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException {
 		this.title = title;
 		this.publicationName = publicationName;
 		this.id = id;
@@ -36,6 +37,7 @@ public class Article {
 		this.volume = volume;
 		this.issue = issue;
 		this.type = type;
+		this.status = status;
 		setURL(request);
 		this.articleDate = articleDate;
 		this.request = request;
@@ -69,6 +71,12 @@ public class Article {
 		this.articleDate = articleDate;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	public String getURL() {
 		return this.url;
 	}
