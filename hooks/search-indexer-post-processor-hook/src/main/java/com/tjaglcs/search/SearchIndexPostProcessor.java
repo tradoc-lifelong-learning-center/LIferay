@@ -16,15 +16,27 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
+import com.tjaglcs.plugins.Issue;
 import com.tjaglcs.search.CustomField;
 import com.tjaglcs.search.FieldToIndex;
+
+import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,35 +52,33 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		
 		String objectClass = object.getClass().toString();
 		
+		
 		String documentClassName = "DLFileEntryImpl";
 		String journalClassName = "JournalArticleImpl";
 		
+		
+		
+		
 		if(objectClass.contains(journalClassName)) {
+			//System.out.println("class name: " + objectClass);
 			//System.out.println("Journal!");
-			indexJournal(document, object);
+			objectClass = journalClassName;
+
 			
 		} else if(objectClass.contains(documentClassName)) {
+			//System.out.println("class name: " + objectClass);
 			//System.out.println("Document!");
-			indexDocument(document, object);
+			objectClass = documentClassName;
 		}
 		
-		//trying to figure out how to tell when I have a PDF and when I have an article
-    	//System.out.println(System.getProperty("line.separator"));
-    	//System.out.print("Class: " + objectClass);
-    	//System.out.println(System.getProperty("line.separator"));
-    	//System.out.print(objectClass.contains("JournalArticleImpl"));
-    	//System.out.println(System.getProperty("line.separator"));
-    	
-    	//JournalArticleImpl
-    	//DLFileEntryImpl
-    	
+		indexDocument(document, object, objectClass);
             
     }
 	
 	
 	//these are pretty much exactly the same but I'm not sure how to combine because of static types. Fix later?
-	private void indexJournal(Document document, Object object) {
-		JournalArticle article = (JournalArticle) object;
+	private void indexDocument(Document document, Object object, String className) throws NumberFormatException, PortalException, SystemException {
+		//JournalArticle article = (JournalArticle) object;
 		
 		FieldToIndex[] fieldsToIndex = new FieldToIndex[] {
 			new FieldToIndex("publicationName",CustomField.PUBLICATION_NAME),
@@ -79,21 +89,142 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		};
 		
 		for(int i = 0; i<fieldsToIndex.length; i++) {
-			String fieldVal = getJournalMeta(article, fieldsToIndex[i].getFieldValue());
+			
+			String fieldVal;
+			
+			/*if(className=="JournalArticleImpl") {
+				fieldVal = getJournalArticleMeta(object, fieldsToIndex[i].getFieldValue());
+			} else if(className=="DLFileEntryImpl") {
+				fieldVal = getDlFileMeta(object, fieldsToIndex[i].getFieldValue());
+			} else {
+				continue;
+			}*/
+
+			//TODO
+			if(className == "DLFileEntryImpl") {
+				fieldVal = getDLFileMeta(object, fieldsToIndex[i].getFieldValue());
+				
+				//System.out.println("indexing dlfile");
+				//long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)); 
+				//long fileEntryTypeId = DLFileVersionLocalServiceUtil.getFileVersion(classPK).getFileEntry().getFileEntryTypeId();                                                              
+				//DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+				//List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+				//DDMStructure ddmStructure = ddmStructures.get(0);    
+				
+				//DLFileEntryMetadata dlFileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getdl
+				
+
+				
+				
+				
+				//System.out.println("version: " + article.getFileVersion().getFileVersionId());
+				
+				/*
+				if(document.getFields().get("title")!=null) {
+					System.out.println("doc title: " + document.getFields().get("title").getValue());
+				}
+				
+				if(document.getFields().get("publicationVolume")!=null) {
+					System.out.println("volume: " + document.getFields().get("publicationVolume").getValue());
+				}
+				
+				if(document.getFields().get("publicationIssue")!=null) {
+					System.out.println("publicationIssue: " + document.getFields().get("publicationIssue").getValue());
+				}
+				
+				if(document.getFields().get("publicationAuthors")!=null) {
+					System.out.println("publicationAuthors: " + document.getFields().get("publicationAuthors").getValue());
+				}
+				
+				if(document.getFields().get("publishDate")!=null) {
+					System.out.println("doc publish date: " + document.getFields().get("publishDate").getValue());
+				}*/
+
+			} else {
+				//System.out.println("indexing journal");
+				fieldVal = getJournalArticleMeta(object, fieldsToIndex[i].getFieldValue());
+			}
+			
 			String fieldName = fieldsToIndex[i].getFieldName();
+			
+			System.out.println("indexing " + fieldName + " with the value " + fieldVal);
 			 
 			if(fieldVal.length() > 0 && fieldName.length()>0) {
 	        	document.addText(fieldName, fieldVal);
 	        }
+			
+			
 		}
 	}
 	
 	
-	
-	private String getJournalMeta(JournalArticle article, String fieldName) {
+	/*private String getDlFileMeta(Object object, String fieldName) {
+		DLFileEntry article = (DLFileEntry) object;
 		
-		//working on trying to get custom meta values from structure
-		//http://liferaytutorial.blogspot.com/2013/08/parsing-in-liferayusing-sax-parser.html
+		try {
+			String xmlContent = article.get;
+			com.liferay.portal.kernel.xml.Document document = SAXReaderUtil.read(xmlContent);
+			
+			
+			
+			Node node = document.selectSingleNode("/root/dynamic-element[@name='"  + fieldName + "']/dynamic-content");
+			
+			if(node != null) {
+				System.out.println(node.getText());
+				return node.getText();
+			} else {
+				return "";
+			}
+			
+		} catch(Exception e) {
+			System.out.println("journal pub index error");
+			System.out.println(e);
+			return "";
+		}
+	}*/
+	
+	private String getDLFileMeta(Object object, String fieldName) {
+		DLFileEntry article = (DLFileEntry) object;
+		String fieldVal = "";
+		
+
+		try {
+			Map<String,Fields> fieldMap = article.getFieldsMap(article.getFileVersion().getFileVersionId());
+			
+			System.out.println("title: " + article.getTitle());
+			
+			for (Map.Entry<String,Fields> entry : fieldMap.entrySet()) {  
+	            //System.out.println("Key: " + entry.getKey() + ", Value = " + entry.getValue()); 
+	            //System.out.println("looking for meta " + entry.getValue().getNames());
+	            
+	            
+	            
+	            if(entry.getValue().get(fieldName).getValue()!=null) {
+	            	//System.out.println("current fieldname: " + entry.getValue().get(fieldName).getName());
+	            	//System.out.println("current fieldval: " + entry.getValue().get(fieldName).getValue());
+	            	fieldVal = (String) entry.getValue().get(fieldName).getValue().toString();
+	            	//entry.getValue();
+	            	
+	            	
+	            	//System.out.print("fields: " + entry.getValue().getNames());
+	            }
+	            //System.out.println("k: " + k + ", v: " + v.get("publicationAuthors").getValue()));
+	            
+	            
+	    	} 
+			
+			//System.out.println("doc meta: " + fieldVal);
+			return fieldVal;	
+			
+		} catch(Exception e) {
+			System.out.println("dlfileentry index error");
+			System.out.println(e);
+			return "";
+		}
+	}
+	
+	private String getJournalArticleMeta(Object object, String fieldName) {
+		JournalArticle article = (JournalArticle) object;
 		
 		try {
 			String xmlContent = article.getContent();
@@ -115,12 +246,12 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			System.out.println(e);
 			return "";
 		}
-		
-		
-		
 	}
 	
-	private void indexDocument(Document document, Object object) throws PortalException, SystemException {
+	
+	
+	
+	/*private void indexDocument(Document document, Object object) throws PortalException, SystemException {
 		DLFileEntry articleEntity = (DLFileEntry) object;
 		long fileVersion = articleEntity.getLatestFileVersion(true).getFileVersionId();
 		
@@ -168,7 +299,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
         } else {
         	System.out.println("didn't index doc");
         }
-	}
+	}*/
 
 	
 
