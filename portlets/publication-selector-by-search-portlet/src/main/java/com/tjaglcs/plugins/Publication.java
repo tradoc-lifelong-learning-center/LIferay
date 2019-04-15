@@ -12,6 +12,11 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -373,50 +378,88 @@ public class Publication {
 				int status = -1;
 				
 				
-				
-				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
 				try {
 					if(currentDoc.getField(Field.TITLE) != null) {
 						//System.out.println("string: " + currentDoc.getField(Field.TITLE).getValue());
 						title = currentDoc.getField(Field.TITLE).getValue();
-						
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					//e1.printStackTrace();
+					System.out.println("title error");
+				} 
+				
+				try {
 					if(currentDoc.getField(CustomField.VERSION) != null) {
 						//System.out.println("double: " + currentDoc.getField(CustomField.VERSION).getValue());
 						version = Double.parseDouble(currentDoc.getField(CustomField.VERSION).getValue());
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("version error");
+				} 
+				
+				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_VOLUME) != null) {
 						//System.out.println("int: " + currentDoc.getField(CustomField.PUBLICATION_VOLUME).getValue());
 						volume = Integer.parseInt(currentDoc.getField(CustomField.PUBLICATION_VOLUME).getValue());
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("volume error");
+				} 
+				
+				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_ISSUE) != null) {
 						//System.out.println("int: " + currentDoc.getField(CustomField.PUBLICATION_ISSUE).getValue());
 						issue = Integer.parseInt(currentDoc.getField(CustomField.PUBLICATION_ISSUE).getValue());
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("issue error");
+				} 
+				
+				try { //does this really need to be custom field?
 					if(currentDoc.getField(CustomField.ENTRY_CLASS_NAME) != null) {
 						//System.out.println("string: " + currentDoc.getField(Field.ENTRY_CLASS_NAME).getValue());
 						type = currentDoc.getField(CustomField.ENTRY_CLASS_NAME).getValue();
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("class name error");
+				} 
+				
+				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_DATE) != null) {
 						long fieldValue = Long.parseLong(currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
 						articleDate = Instant.ofEpochMilli(fieldValue).atZone(ZoneId.systemDefault()).toLocalDate();
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("pub date error");
+				} 
+				
+				try {
 					if(currentDoc.getField(Field.STATUS) != null) {
 						status = Integer.parseInt(currentDoc.getField(Field.STATUS).getValue());
-					} 
-					
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("status error");
+				} 
+				
+				
+				//TODO: this failing for dlfile for some reason. Obviously need this to work before I can get PDF URL
+				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
+				try {
 					
 					//if(currentDoc.getField(CustomField.PUBLICATION_AUTHORS) != null) {
 					//	System.out.println("pub authors: " + currentDoc.getField(Field.ENTRY_CLASS_NAME).getValue());
 					//	type = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValue();
 					//} 
-				
+					
+
+					
 					if(type.contains("JournalArticle")) {
 						if(currentDoc.get("articleId") != null) {
 							//System.out.println("long: " + Long.parseLong(currentDoc.get("articleId")));
@@ -424,12 +467,32 @@ public class Publication {
 						}
 					} else if(type.contains("DLFileEntry")) {
 						//Need to do something different here for PDF docs... don't know what yet
-						articleId = -999;
+						//articleId = -999;
+						//articleId = Long.parseLong(currentDoc.getUID());
+						//System.out.println("fileEntryId: " + currentDoc.get("fileEntryId"));
+						
+						//DLFileEntry articleEntity = (DLFileEntry) currentDoc;
+						//System.out.println("file entry id: " + articleEntity.getFileEntryId());
+						
+						
+						//TODO: I think you want id, not class PK. fix?
+						//System.out.println("fileEntryId: " + currentDoc.getFields());
+						//System.out.println("fileEntryId: " + currentDoc.getField("fileEntryId").getValue());
+						System.out.println("entryClassPK: " + currentDoc.getField("entryClassPK").getValue());
+						//System.out.println("uid: " + currentDoc.getField("uid").getValue());
+						//System.out.println("path: " + currentDoc.getField("path").getValue());
+						//articleId = articleEntity.getFileEntryId();
+						
+						DLFileVersion fileVersion = DLFileVersionServiceUtil.getFileVersion(Long.parseLong(currentDoc.getField("entryClassPK").getValue()));
+		                DLFileEntryType fileEntryType = DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(fileVersion.getFileEntryTypeId());
+		                DLFileEntry fileEntry = fileVersion.getFileEntry();
+		                System.out.println("file ID really: " + fileEntry);
 					} 
 					
 					
 					
 				} catch(Exception e) {
+					System.out.println("article id error");
 					System.out.println(e);
 				}
 				
@@ -443,6 +506,7 @@ public class Publication {
 					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
 					System.out.println("title: " + article.getTitle());
 					System.out.println("status: " + article.getStatus());
+					System.out.println("ID: " + article.getId());
 					articles.add(article);
 					
 				} catch(Exception e) {

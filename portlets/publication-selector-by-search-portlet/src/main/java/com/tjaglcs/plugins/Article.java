@@ -2,11 +2,14 @@ package com.tjaglcs.plugins;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 import java.time.LocalDate;
@@ -107,7 +110,32 @@ public class Article {
 		List<Long> layoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(groupId, false, Long.toString(articleId));
 		
 		System.out.println("layoutIds: " + layoutIds);
+		System.out.println("article type: " + this.type);
+		System.out.println("ID: " + articleId);
+
 		
+		
+		String documentClassName = "DLFileEntry";
+		String journalClassName = "JournalArticle";
+		String objectClass="";
+
+		if(this.type.contains(journalClassName)) {
+			//System.out.println("class name: " + objectClass);
+			//System.out.println("Journal!");
+			//objectClass = journalClassName;
+
+			
+		} else if(this.type.contains(documentClassName)) {
+			//System.out.println("class name: " + objectClass);
+			//System.out.println("Document!");
+			//objectClass = documentClassName;
+			
+			//FileEntry file = DLAppLocalServiceUtil.getFileEntry(this.id);
+			
+			
+			//System.out.println("doc url?: " + "..." + file);
+			System.out.println("document url for " + this.id + ": " + DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.id));
+		}
 
 		
 		if (!layoutIds.isEmpty()) {
