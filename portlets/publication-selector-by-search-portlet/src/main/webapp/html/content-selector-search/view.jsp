@@ -73,8 +73,10 @@
         } //does submit button need a namespace?
         		
         //populate volume menu		
-        populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, 1970,5000)		
+        populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, 1970,5000);		
         		
+    	
+    	
         
         function getIssues(){
         	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
@@ -83,7 +85,7 @@
 			
         	if(volumeDropdown.val()=="selectAVolume"){
         		issueDropdown.setAttribute("disabled");
-        		issueDropdown.value=="selectAnIssue"; //TO DO: this isn't working. I'd like it to go back to "select an issue" if for some reason a user selects "select a volume"
+        		issueDropdown.value="selectAnIssue"; //TO DO: this isn't working. I'd like it to go back to "select an issue" if for some reason a user selects "select a volume"
         		return false;
         	}
         	
@@ -97,18 +99,27 @@
         } 
         
         
-        function populateMenu(menu, items, startYear=0, endYear=9999){
-        	console.log("will be working with: ")
-        	console.log(items)
-        	console.log("menu: ")
-        	console.log(menu)
+        function populateMenu(menu, items, startYear, endYear){
+        	
+        	if(!startYear){
+        		startYear=0;
+        	}
+        	
+        	if(!endYear){
+        		endYear=9999;
+        	}
+        	
+        	console.log("will be working with: ");
+        	console.log(items);
+        	console.log("menu: ");
+        	console.log(menu);
         	
         	//var menu = document.getElementById(menuId);
         	var fragment = document.createDocumentFragment();
         	
         	for(var prop in items){
         		
-        		if(items[prop].year<startYear || items[prop].year > endYear){
+        		if(items[prop].year<startYear || items[prop].year>endYear){
         			continue;
         		}
         		
@@ -120,7 +131,7 @@
             	fragment.appendChild(option);
 
             	for(var artProp in items[prop].articles){
-            		console.log(items[prop].articles[artProp].title)
+            		console.log(items[prop].articles[artProp].title);
             		
             	}
             	
@@ -163,30 +174,7 @@
     function getQueryString(pubCode,volumeNumber,issueNumber){
     	return "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
     }
-    
-    //console.log("ns: " + config.namespace)
-    //console.log("btn: " + config.submitButton)
-    //console.log("vol: " + '<portlet:namespace/>' + 'volumeOptions')
-    //console.log("issue: " + config.issueDropdown)
-    
 
-    /* Liferay.contentselectorsearchportlet.init(
-        {
-            namespace: '<portlet:namespace/>',
-            jsonData: ${pubData.getJson() },
-            volumeDropdownId:'volumeOptions',
-            issueDropdownId:'issueOptions',
-            buttonId:'btnSubmit'
-        }
-    ); */
-    
-    //Liferay.contentselectorsearchportlet.helloWorld();
-    //console.log(Liferay.contentselectorsearchportlet)
-
-    
-    
-    
-    
 
 </aui:script>
 
