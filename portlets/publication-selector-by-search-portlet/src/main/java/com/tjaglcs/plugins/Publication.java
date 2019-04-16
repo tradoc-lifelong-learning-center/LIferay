@@ -63,7 +63,7 @@ public class Publication {
 		//-special characters in string
 		//-escape double/single quotes
 		
-		String JSON = "{'publication':{'name':'Military Law Review','pubCode':'mlr','volumes':{";
+		String JSON = "{\"publication\":{\"name\":\"Military Law Review\",\"pubCode\":\"mlr\",\"volumes\":{";
 		
 		List<Volume> volumes = getVolumes();
 		
@@ -71,8 +71,8 @@ public class Publication {
 			int volNo = volumes.get(v).getNumber();
 			int year = volumes.get(v).getYear();
 			
-			JSON+="'volume" + volNo + "':{'number':'" + volNo + "',";
-			JSON+="'year':'" + year + "',";
+			JSON+="\"volume" + volNo + "\":{\"number\":\"" + volNo + "\",";
+			JSON+="\"year\":\"" + year + "\",";
 			
 			List<Issue> issues = volumes.get(v).getIssues();
 			
@@ -81,21 +81,21 @@ public class Publication {
 				
 				List<Article> articles = issues.get(i).getArticles();
 				
-				JSON+="'issues':{";
+				JSON+="\"issues\":{";
 				
-				JSON+="'issue" + issueNo + "':{";
+				JSON+="\"issue" + issueNo + "\":{";
 				
-				JSON+="'number':'" + issueNo + "',";
+				JSON+="\"number\":\"" + issueNo + "\",";
 				
-				JSON+="'articles':{";
+				JSON+="\"articles\":{";
 				
 				for(int a = 0; a<articles.size(); a++) {
 					
-					JSON+="'article" + a + "':{";
+					JSON+="\"article" + a + "\":{";
 					
-					JSON+="'number':'" + articles.get(a).getId() + "',";
+					JSON+="\"number\":\"" + articles.get(a).getId() + "\",";
 					
-					JSON+="'title':'" + articles.get(a).getTitle() + "'},";
+					JSON+="\"title\":\"" + articles.get(a).getTitle() + "\"},";
 					
 				}
 				
