@@ -29,7 +29,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.tjaglcs.plugins.Issue;
 import com.tjaglcs.search.CustomField;
 import com.tjaglcs.search.FieldToIndex;
 
