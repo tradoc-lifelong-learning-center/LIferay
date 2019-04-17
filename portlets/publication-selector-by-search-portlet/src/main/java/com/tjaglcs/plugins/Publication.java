@@ -133,37 +133,49 @@ public class Publication {
 		
 		//QueryString queryString = new QueryString();
 
-		System.out.println("get selected volume: " + this.volumes.size());
+		System.out.println("checking " + this.volumes.size() + " volumes for current volume");
 		//System.out.println(PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request)));
 		//System.out.println(getQueryStringValue("pub"));
 
 		
 		String pubCode = getQueryStringValue("pub");
-		System.out.println("pubCode: " + pubCode);
+		String volString = this.getQueryStringValue("vol");
+		String issueString = this.getQueryStringValue("no");
 		
-		int volNumber = -1;
-		try {
-			volNumber = Integer.parseInt(this.getQueryStringValue("vol"));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int volNumber=-1;
+		int issueNum = -1;
+		
+		if(volString==null) {
+			getMostRecentVolume();
+			System.out.println("no volume selected by query string. Getting most recent");
+			return null;
+		} else {
+			
+			try {
+				volNumber = Integer.parseInt(volString);
+			} catch (NumberFormatException e) {
+				System.out.println("couldn't get volume number from query string");
+				e.printStackTrace();
+			}
 		}
 		
-		
-		int issueNumber = -1;
-		try {
-			issueNumber = Integer.parseInt(this.getQueryStringValue("no"));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(issueString!=null) {
+			try {
+				issueNum = Integer.parseInt(issueString);
+			} catch (NumberFormatException e) {
+				System.out.println("couldn't get issue number from query string");
+				e.printStackTrace();
+			}
 		}
 
+		//System.out.println("params - pub: " + pubCode + ", vol: " + volNumber + ", issue: " + issueNum);
 		
 		Volume selectedVolume = null;
+		
 		int selectedVolumeNumber = -1;
 		
 		for(int i = 0; i<this.volumes.size(); i++) {
-			System.out.println("checking for vol " + this.volumes.get(i).getNumber());
+			//System.out.println("checking for vol " + this.volumes.get(i).getNumber());
 			if(this.volumes.get(i).getNumber()==volNumber) {
 				selectedVolume = this.volumes.get(i);
 				selectedVolumeNumber = selectedVolume.getNumber();
@@ -266,8 +278,12 @@ public class Publication {
 	
 	
 	private String getQueryStringValue(String stringParam) {
+		System.out.print("checking " + stringParam);
+		
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(this.request));
 		String queryString = httpReq.getParameter(stringParam);
+		System.out.println(queryString);
+		
 		return queryString;
 	}
 	
