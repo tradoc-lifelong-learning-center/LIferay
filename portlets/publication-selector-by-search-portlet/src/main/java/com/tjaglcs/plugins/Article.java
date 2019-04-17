@@ -12,6 +12,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,7 +34,9 @@ public class Article {
 	private long groupId;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException {
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException, UnsupportedEncodingException {
+		this.request = request;
+		this.groupId = this.setGroupId(request);
 		this.title = title;
 		this.publicationName = publicationName;
 		this.id = id;
@@ -43,8 +47,7 @@ public class Article {
 		this.status = status;
 		setURL(request);
 		this.articleDate = articleDate;
-		this.request = request;
-		this.groupId = this.setGroupId(request);
+		
 		
 		//System.out.println("building article " + this.title);
 	}
@@ -89,7 +92,7 @@ public class Article {
 		return this.groupId;
 	}
 	
-	public void setURL(RenderRequest request) throws SystemException, PortalException {
+	public void setURL(RenderRequest request) throws SystemException, PortalException, UnsupportedEncodingException {
 		// TODO:
 		//get most recent vol/issue and display if no query string
 		//if query string, get that vol/issue and display
@@ -135,17 +138,14 @@ public class Article {
 				}
 			
 		} else if(this.type.contains(documentClassName)) {
-			//System.out.println("class name: " + objectClass);
-			//System.out.println("Document!");
-			//objectClass = documentClassName;
+			DLFileEntry entry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.id);
 			
-			//FileEntry file = DLAppLocalServiceUtil.getFileEntry(this.id);
-			
-			
-			//System.out.println("doc url?: " + "..." + file);
-			System.out.println("document url for " + this.id + ": " + DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.id));
-			
-			this.url = "nowhere";
+			String urlTitle = URLEncoder.encode(this.title, "UTF-8");
+			long folderId = entry.getFolderId();
+			String uuid = entry.getUuid();
+
+			this.url = "/documents/" + this.groupId + "/" + folderId + "/" + urlTitle + "/" + uuid;
+
 		}
 
 		
