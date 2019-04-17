@@ -35,14 +35,14 @@ public class Volume {
 		return issues;
 	}
 	
-	public Issue getIssue(int volumeNumber){
+	public Issue getIssue(int issueNumber){
 		for(int i = 0; i<this.issues.size(); i++) {
-			if(this.issues.get(i).getNumber()==volumeNumber) {
+			if(this.issues.get(i).getNumber()==issueNumber) {
 				return this.issues.get(i);
 			} 
 		}
 		
-		System.out.println("No issue with the number " + volumeNumber);
+		System.out.println("No issue with the number " + issueNumber);
 		return null;
 	}
 	
