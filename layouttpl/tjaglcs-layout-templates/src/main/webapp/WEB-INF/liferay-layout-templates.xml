@@ -6,8 +6,18 @@
 		<layout-template id="OneTwoOneColumnsHalf"
 			name="1-2-1 Columns (50/50)">
 			<template-path>/1_2_1_columns_50-50.tpl</template-path>
-			<wap-template-path>/1_2_1_columns_50-50.wap.tpl</wap-template-path>
+			<wap-template-path>
+				/1_2_1_columns_50-50.wap.tpl
+			</wap-template-path>
 			<thumbnail-path>/1_2_1_columns_50-50.png</thumbnail-path>
+		</layout-template>
+		<layout-template id="TwoOneColumnsHalf"
+			name="2-1 Columns (50/50)">
+			<template-path>/2_1_columns_50-50.tpl</template-path>
+			<wap-template-path>
+				/2_1_columns_50-50.wap.tpl
+			</wap-template-path>
+			<thumbnail-path>/2_1_columns_50-50.png</thumbnail-path>
 		</layout-template>
 	</custom>
 </layout-templates>

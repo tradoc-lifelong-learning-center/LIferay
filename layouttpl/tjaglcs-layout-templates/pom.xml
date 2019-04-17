@@ -3,10 +3,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tjaglcs.plugins</groupId>
-	<artifactId>tjaglcs-layout-templates</artifactId>
+	<artifactId>tjaglcs-layout-templates-layouttpl</artifactId>
 	<packaging>war</packaging>
 	<name>TJAGLCS Layout Template</name>
-	<version>1.0.0</version>
+	<version>1.1.1</version>
 	<build>
 		<plugins>
 			<plugin>
