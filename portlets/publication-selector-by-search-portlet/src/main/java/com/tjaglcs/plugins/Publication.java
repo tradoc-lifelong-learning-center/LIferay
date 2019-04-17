@@ -15,6 +15,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 
@@ -278,11 +279,11 @@ public class Publication {
 	
 	
 	private String getQueryStringValue(String stringParam) {
-		System.out.print("checking " + stringParam);
+		//System.out.print("checking " + stringParam);
 		
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(this.request));
 		String queryString = httpReq.getParameter(stringParam);
-		System.out.println(queryString);
+		//System.out.println(queryString);
 		
 		return queryString;
 	}
@@ -482,27 +483,14 @@ public class Publication {
 							articleId = Long.parseLong(currentDoc.get("articleId"));
 						}
 					} else if(type.contains("DLFileEntry")) {
-						//Need to do something different here for PDF docs... don't know what yet
-						//articleId = -999;
-						//articleId = Long.parseLong(currentDoc.getUID());
-						//System.out.println("fileEntryId: " + currentDoc.get("fileEntryId"));
+						//getting fileEntryId (NOT PK)
+						long groupId = Long.parseLong(currentDoc.getField("groupId").getValue());						
+						long folderId = Long.parseLong(currentDoc.getField("folderId").getValue());
+						String docTitle = currentDoc.getField("title").getValue();
 						
-						//DLFileEntry articleEntity = (DLFileEntry) currentDoc;
-						//System.out.println("file entry id: " + articleEntity.getFileEntryId());
-						
-						
-						//TODO: I think you want id, not class PK. fix?
-						//System.out.println("fileEntryId: " + currentDoc.getFields());
-						//System.out.println("fileEntryId: " + currentDoc.getField("fileEntryId").getValue());
-						System.out.println("entryClassPK: " + currentDoc.getField("entryClassPK").getValue());
-						//System.out.println("uid: " + currentDoc.getField("uid").getValue());
-						//System.out.println("path: " + currentDoc.getField("path").getValue());
-						//articleId = articleEntity.getFileEntryId();
-						
-						DLFileVersion fileVersion = DLFileVersionServiceUtil.getFileVersion(Long.parseLong(currentDoc.getField("entryClassPK").getValue()));
-		                DLFileEntryType fileEntryType = DLFileEntryTypeLocalServiceUtil.getDLFileEntryType(fileVersion.getFileEntryTypeId());
-		                DLFileEntry fileEntry = fileVersion.getFileEntry();
-		                System.out.println("file ID really: " + fileEntry);
+						DLFileEntry entry = DLFileEntryLocalServiceUtil.fetchFileEntry(groupId, folderId, docTitle);
+					
+		                articleId = entry.getFileEntryId();
 					} 
 					
 					
