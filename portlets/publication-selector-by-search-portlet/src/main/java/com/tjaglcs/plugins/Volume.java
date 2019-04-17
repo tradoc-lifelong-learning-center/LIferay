@@ -115,8 +115,8 @@ public class Volume {
 		
 		//System.out.println("issue year: " + issueArray.get(1).getYear());
 		
-		System.out.println("issuesMap");
-		System.out.println(issuesMap);
+		//System.out.println("issuesMap");
+		//System.out.println(issuesMap);
 		 
 		this.issues = issueArray;
 	 
