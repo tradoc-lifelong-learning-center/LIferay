@@ -29,7 +29,7 @@ public class Article {
 	private String url;
 	private LocalDate articleDate;
 	private RenderRequest request;
-	
+	private long groupId;
 	
 	
 	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException {
@@ -44,6 +44,8 @@ public class Article {
 		setURL(request);
 		this.articleDate = articleDate;
 		this.request = request;
+		this.groupId = this.setGroupId(request);
+		
 		//System.out.println("building article " + this.title);
 	}
 	public String getTitle() {
@@ -83,6 +85,9 @@ public class Article {
 	public String getURL() {
 		return this.url;
 	}
+	public long getGroupId() {
+		return this.groupId;
+	}
 	
 	public void setURL(RenderRequest request) throws SystemException, PortalException {
 		// TODO:
@@ -92,26 +97,10 @@ public class Article {
 		//How to I link to custom page URLs? Can I get a display page set up?
 		//System.out.println("volume 1: " + pub.getVolume(1).getIssue(1));
 		//System.out.println("latest volume: " + pub.getMostRecentVolume());
-		
-		System.out.println("URL!");
-		
-		//trying to find parent page URL. from https://stackoverflow.com/questions/8397679/get-portlet-page-containing-web-content-in-liferay
-		long groupId = getGroupId(request);
-		
-		System.out.println(groupId);
-		
-		ThemeDisplay themeDisplay = getThemeDisplay(request);
-
-		long articleId = this.getId();
-		
-		System.out.println("ID: " + articleId);
 
 		
-		List<Long> layoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(groupId, false, Long.toString(articleId));
 		
-		System.out.println("layoutIds: " + layoutIds);
-		System.out.println("article type: " + this.type);
-		System.out.println("ID: " + articleId);
+		
 
 		
 		
@@ -121,9 +110,29 @@ public class Article {
 
 		if(this.type.contains(journalClassName)) {
 			//System.out.println("class name: " + objectClass);
-			//System.out.println("Journal!");
+			System.out.println("Journal!");
 			//objectClass = journalClassName;
 
+			//trying to find parent page URL. from https://stackoverflow.com/questions/8397679/get-portlet-page-containing-web-content-in-liferay
+			long groupId = getGroupId();
+			
+			System.out.println(groupId);
+			
+			ThemeDisplay themeDisplay = getThemeDisplay(request);
+
+			long articleId = this.getId();
+
+			
+			List<Long> layoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(groupId, false, Long.toString(articleId));
+			
+			if (!layoutIds.isEmpty()) {
+				  long layoutId = layoutIds.get(0).longValue();
+				  Layout layout = LayoutLocalServiceUtil.getLayout(groupId, false, layoutId);
+				  String url = PortalUtil.getLayoutURL(layout, themeDisplay);
+				  //String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+				  System.out.println("url: " + url);
+				  this.url = url;
+				}
 			
 		} else if(this.type.contains(documentClassName)) {
 			//System.out.println("class name: " + objectClass);
@@ -135,20 +144,15 @@ public class Article {
 			
 			//System.out.println("doc url?: " + "..." + file);
 			System.out.println("document url for " + this.id + ": " + DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.id));
+			
+			this.url = "nowhere";
 		}
 
 		
-		if (!layoutIds.isEmpty()) {
-			  long layoutId = layoutIds.get(0).longValue();
-			  Layout layout = LayoutLocalServiceUtil.getLayout(groupId, false, layoutId);
-			  String url = PortalUtil.getLayoutURL(layout, themeDisplay);
-			  //String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
-			  System.out.println("url: " + url);
-			  this.url = url;
-			}
+		
 	}
 	
-	private long getGroupId(RenderRequest req) {
+	private long setGroupId(RenderRequest req) {
 		ThemeDisplay themeDisplay = getThemeDisplay(req);
 		long portletGroupId = themeDisplay.getScopeGroupId();
 		
