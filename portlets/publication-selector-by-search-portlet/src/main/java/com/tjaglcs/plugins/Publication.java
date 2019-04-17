@@ -189,6 +189,7 @@ public class Publication {
 		
 	}
 	
+
 	public Volume getMostRecentVolume(){
 		int latestVolumeNumber = 0;
 		Volume latestVolume = null;
@@ -204,9 +205,21 @@ public class Publication {
 		return latestVolume;
 	}
 	
-	public Issue getMostRecentIssue() {
-		//TODO
-		return null;
+	public Issue getMostRecentIssue(Volume volume) {
+		int latestIssueNumber = 0;
+		Issue latestIssue = null;
+		
+		List<Issue> currentIssues = volume.getIssues();
+		
+		for(int i = 0; i<currentIssues.size(); i++) {
+			if(currentIssues.get(i).getNumber()>latestIssueNumber) {
+				latestIssue = currentIssues.get(i);
+				latestIssueNumber = latestIssue.getNumber();
+			} 
+		}
+		
+		//System.out.println("Latest volume: " + latestVolumeNumber);
+		return latestIssue;
 	}
 	
 	public void setVolumes() throws Exception {
