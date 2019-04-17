@@ -41,14 +41,12 @@ public class Publication {
 	public Publication(String name, RenderRequest request) throws Exception {
 		this.name = name;
 		setArticles(name, request);
-		
-		//BUG: this is grouping issues cross-volume, which is not what we want
-		//group volume, then issue?
-		
-		//setIssues();
+
 		setVolumes();
+		
+		//TODO filter volumes by type = if there's both an article and PDF, only show article
+		
 		this.request = request;
-		//System.out.println("vols: " + this.volumes);
 	}
 	
 	public String getName() {
@@ -147,9 +145,8 @@ public class Publication {
 		int issueNum = -1;
 		
 		if(volString==null) {
-			getMostRecentVolume();
 			System.out.println("no volume selected by query string. Getting most recent");
-			return null;
+			return getMostRecentVolume();
 		} else {
 			
 			try {
