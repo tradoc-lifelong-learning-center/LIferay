@@ -35,10 +35,16 @@ public class Publication {
 	private List<Issue> issues;
 	private List<Volume> volumes;
 	private RenderRequest request;
+	private Volume mostRecentVolume;
+	private Issue mostRecentIssue;
+	private Volume selectedVolume;
+	private Issue selectedIssue;
+	private String json;
 	
 	
 	
 	public Publication(String name, RenderRequest request) throws Exception {
+		this.request = request;
 		this.name = name;
 		setArticles(name, request);
 
@@ -46,7 +52,14 @@ public class Publication {
 		
 		//TODO filter volumes by type = if there's both an article and PDF, only show article
 		
-		this.request = request;
+		setMostRecentVolume();
+		setMostRecentIssue(this.mostRecentVolume);
+		
+		//set selected volume and issue (if present)
+		setSelectedContent();
+		setJson();
+		System.out.println("JSON: " + json);
+		
 	}
 	
 	public String getName() {
@@ -56,7 +69,31 @@ public class Publication {
 		return volumes;
 	}
 	
+	
+	
+	public Issue getMostRecentIssue() {
+		return mostRecentIssue;
+	}
+
+	public Issue getSelectedIssue() {
+		return selectedIssue;
+	}
+
+	public Volume getMostRecentVolume() {
+		return mostRecentVolume;
+	}
+
+	public Volume getSelectedVolume() {
+		return selectedVolume;
+	}
+
+	
+	
 	public String getJson() {
+		return json;
+	}
+
+	public void setJson() {
 		
 		//this seems like it might be frail. Figure out a better way, or at least test
 		//-special characters in string
@@ -71,37 +108,18 @@ public class Publication {
 			int year = volumes.get(v).getYear();
 			
 			JSON+="\"volume" + volNo + "\":{\"number\":\"" + volNo + "\",";
-			JSON+="\"year\":\"" + year + "\",";
+			JSON+="\"year\":\"" + year + "\"";
 			
-			List<Issue> issues = volumes.get(v).getIssues();
+			JSON += buildIssueJson(volumes.get(v));
 			
-			for(int i = 0; i<issues.size(); i++) {
-				int issueNo = issues.get(i).getNumber();
-				
-				List<Article> articles = issues.get(i).getArticles();
-				
-				JSON+="\"issues\":{";
-				
-				JSON+="\"issue" + issueNo + "\":{";
-				
-				JSON+="\"number\":\"" + issueNo + "\",";
-				
-				JSON+="\"articles\":{";
-				
-				for(int a = 0; a<articles.size(); a++) {
-					
-					JSON+="\"article" + a + "\":{";
-					
-					JSON+="\"number\":\"" + articles.get(a).getId() + "\",";
-					
-					JSON+="\"title\":\"" + articles.get(a).getTitle() + "\"},";
-					
-				}
-				
-				JSON+="}}},";  
+			//For now, I don't think I need articles in JSON, because JSON just populates list. view pulls TOC from bean
+			
+			//end of volume
+			JSON+="}";
+
+			if(v!=volumes.size()-1) {
+				JSON+=",";
 			}
-		
-			JSON+="},"; 
 			
 		}
 		
@@ -111,9 +129,42 @@ public class Publication {
 		
 		//System.out.println(JSON);
 		
-		return JSON;
+		this.json = JSON;
 	}
 	
+	private String buildIssueJson(Volume volume) {
+		String JSON = "";
+		List<Issue> issues = volume.getIssues();
+		
+		if(issues.size()<1) {
+			return "";
+		}
+		
+		JSON+=",\"issues\":{";
+		
+		for(int i = 0; i<issues.size();  i++) {
+			int issueNo = issues.get(i).getNumber();
+			
+			JSON+="\"issue" + issueNo + "\":{";
+			
+			JSON+="\"number\":\"" + issueNo + "\"";
+			
+			JSON+="}";
+			
+			if(i!=issues.size()-1) {
+				JSON+=",";
+			}
+		}
+		
+		
+		JSON+="}";
+
+		
+		
+		
+		return JSON;
+		
+	}
 	
 	public Volume getVolume(int volumeNumber){
 		for(int i = 0; i<this.volumes.size(); i++) {
@@ -126,7 +177,60 @@ public class Publication {
 		return null;
 	}
 	
-	public Volume getSelectedVolume() {
+	//this should grab the selected content
+	public boolean setSelectedContent() {
+		System.out.println("setting selected content!");
+		String pubCode = getQueryStringValue("pub");
+		
+		System.out.println("pub code: " + pubCode);
+		
+		String volString = this.getQueryStringValue("vol");
+		
+		System.out.println("volString: " + volString);
+		
+		String issueString = this.getQueryStringValue("no");
+		
+		System.out.println("issueString: " + issueString);
+		
+		int volNumber=-1;
+		int issueNum = -1;
+		
+		System.out.println("getting volume!");
+		if(volString==null) {
+			System.out.println("no volume selected by query string. Getting most recent");
+			this.selectedVolume = this.mostRecentVolume;
+		} else {
+			
+			try {
+				volNumber = Integer.parseInt(volString);
+				this.selectedVolume = getVolume(volNumber);
+			} catch (NumberFormatException e) {
+				System.out.println("couldn't get volume number from query string");
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		System.out.println("getting issue!");
+		if(issueString==null) {
+			//if issue string is null, then we just want the volume, right?
+			System.out.println("no issue selected by query string. Skipping issue.");
+			//this.mostRecentIssue = getMostRecentIssue(this.mostRecentVolume);
+			this.selectedIssue = null;
+		} else {
+			try {
+				issueNum = Integer.parseInt(issueString);
+				this.selectedIssue = this.selectedVolume.getIssue(issueNum);
+			} catch (NumberFormatException e) {
+				System.out.println("couldn't get issue number from query string");
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+	}
+	
+	/*public Volume getSelectedVolume() {
 		//If there's a query string, return that volume
 		//else, return most recent
 		
@@ -187,10 +291,10 @@ public class Publication {
 		}
 		
 		
-	}
+	}*/
 	
 
-	public Volume getMostRecentVolume(){
+	public void setMostRecentVolume(){
 		int latestVolumeNumber = 0;
 		Volume latestVolume = null;
 		
@@ -202,10 +306,10 @@ public class Publication {
 		}
 		
 		//System.out.println("Latest volume: " + latestVolumeNumber);
-		return latestVolume;
+		this.mostRecentVolume = latestVolume;
 	}
 	
-	public Issue getMostRecentIssue(Volume volume) {
+	public void setMostRecentIssue(Volume volume) {
 		int latestIssueNumber = 0;
 		Issue latestIssue = null;
 		
@@ -219,7 +323,7 @@ public class Publication {
 		}
 		
 		//System.out.println("Latest volume: " + latestVolumeNumber);
-		return latestIssue;
+		this.mostRecentIssue = latestIssue;
 	}
 	
 	public void setVolumes() throws Exception {
@@ -289,11 +393,11 @@ public class Publication {
 	
 	
 	private String getQueryStringValue(String stringParam) {
-		//System.out.print("checking " + stringParam);
+		System.out.print("checking " + stringParam);
 		
 		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(this.request));
 		String queryString = httpReq.getParameter(stringParam);
-		//System.out.println(queryString);
+		System.out.println(queryString);
 		
 		return queryString;
 	}
