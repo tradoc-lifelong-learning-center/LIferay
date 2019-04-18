@@ -59,10 +59,12 @@ public class Publication {
 		setMostRecentIssue(this.mostRecentVolume);
 		
 		//set selected volume and issue (if present)
+		setIsSingleIssue(request);
 		setSelectedContent();
 		setJson();
 		System.out.println("JSON: " + json);
-		setIsSingleIssue(request);
+		
+		System.out.print("setIsSingleIssue: " + this.isSingleIssue);
 	}
 	
 	public void setIsSingleIssue(RenderRequest request) {
@@ -237,12 +239,16 @@ public class Publication {
 		
 		System.out.println("getting issue!");
 		System.out.println("issue string: " + issueString);
-		if(issueString==null) {
+		System.out.println("is single issue?: " + this.isSingleIssue);
+		if(issueString==null && this.isSingleIssue==false) {
 			//if issue string is null, then we want all issues, right?
-			System.out.println("no issue selected by query string. Skipping issue.");
+			System.out.println("no issue selected by query string. Getting all issues.");
 			//this.mostRecentIssue = getMostRecentIssue(this.mostRecentVolume);
 			this.selectedIssues = this.selectedVolume.getIssues();
-		} else {
+		} else if(issueString==null && this.isSingleIssue==true){
+			//for single issue without query string, default to most recent
+			this.selectedIssues.add(this.mostRecentIssue);
+		} else if(issueString!=null){
 			//if query string is not null, get that issue
 			
 			try {
