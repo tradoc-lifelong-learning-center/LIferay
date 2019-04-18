@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,6 +42,7 @@ public class Publication {
 	private Volume selectedVolume;
 	private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
+	private boolean isSingleIssue;
 	
 	
 	
@@ -59,7 +62,27 @@ public class Publication {
 		setSelectedContent();
 		setJson();
 		System.out.println("JSON: " + json);
+		setIsSingleIssue(request);
+	}
+	
+	public void setIsSingleIssue(RenderRequest request) {
+		PortletPreferences portletPreferences = request.getPreferences();
+		String configValue = GetterUtil.getString(portletPreferences.getValue("numberOfIssues", ""));
 		
+		System.out.println("configValue: " + configValue);
+		
+		if(configValue.contains("multi")) {
+			System.out.println("multi issue!");
+			this.isSingleIssue = false;
+		} else {
+			System.out.println("single issue!");
+			this.isSingleIssue = true;
+		}
+		
+	}
+	
+	public boolean getIsSingleIssue() {
+		return this.isSingleIssue;
 	}
 	
 	public String getName() {

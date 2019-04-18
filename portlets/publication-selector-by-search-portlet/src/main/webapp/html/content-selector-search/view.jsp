@@ -11,6 +11,9 @@
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 <c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
 <c:set var="currentIssue" value="${pubData.getSelectedIssue() }" />
+<c:set var="isSingleIssue" value="${pubData.getIsSingleIssue() }" />
+
+<p>is single issue? <c:out value="${isSingleIssue }"/></p>
 
 <aui:form cssClass="content-selector-form">
     <aui:fieldset cssClass="selector-fieldset">
@@ -30,13 +33,17 @@
 		    
 			
         </aui:select>
+        
+        <c:if test="${isSingleIssue }">
+	        <aui:select label="" id="issueOptions" name="issue" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue." disabled="true">
+	
+				<aui:option value="selectAnIssue">Select an issue</aui:option>
+			    <%-- populated by JSON from Java bean --%>
+				
+	        </aui:select>
+        </c:if>
 
-		<aui:select label="" id="issueOptions" name="issue" showEmptyOption="false" cssClass="dropdown" helpMessage="Select an issue." disabled="true">
-
-			<aui:option value="selectAnIssue">Select an issue</aui:option>
-		    <%-- populated by JSON from Java bean --%>
-			
-        </aui:select>
+		
 
         <aui:button value=">" id="btnSubmit" cssClass="btn btn-primary"/>
     </aui:fieldset>
@@ -76,7 +83,8 @@
                 'jsonData': ${pubData.getJson() },
                 'volumeDropdown':document.getElementById('<portlet:namespace/>' + 'volumeOptions'),
                 'issueDropdown':document.getElementById('<portlet:namespace/>' + 'issueOptions'),
-                'submitButton':document.getElementById('btnSubmit')
+                'submitButton':document.getElementById('btnSubmit'),
+                'isSingleIssue':${isSingleIssue }
         } //does submit button need a namespace?
         		
         //populate volume menu		
@@ -146,27 +154,38 @@
         	
         	menu.appendChild(fragment);
         } 
-        		
-        config.volumeDropdown.addEventListener('change', function(event){
-        	getIssues();
-         }); 
+        
+        if(config.isSingleIssue){		
+	        config.volumeDropdown.addEventListener('change', function(event){
+	        	getIssues();
+	         }); 
+        }
         
         config.submitButton.addEventListener('click', function(event){
         	var jsonData = ${pubData.getJson() };
         	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
-        	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        	
+        	if(config.isSingleIssue){		
+        		var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        		} else{
+        		var issueDropdown = null;
+        		}
         	
         	console.log("click!")
         	
         	
         	var pubCode = jsonData.publication.pubCode;
         	var volumeNumber = volumeDropdown.val();
-        	var issueNumber = issueDropdown.val();
+        	if(config.isSingleIssue){		
+        		var issueNumber = issueDropdown.val();
+        		} else{
+        			var issueNumber=-1;
+        		}
         	
         	
         	var queryString = getQueryString(pubCode,volumeNumber,issueNumber);
         	
-         	if(issueDropdown.val()=="selectAnIssue" || volumeDropdown.val()=="selectAVolume") {
+         	if(volumeDropdown.val()=="selectAVolume" || (issueDropdown && issueDropdown.val()=="selectAnIssue")) {
              	return false;
              } else {
             	var baseUrl = window.location.href.split('#')[0];
@@ -179,7 +198,14 @@
     })();
  	
     function getQueryString(pubCode,volumeNumber,issueNumber){
-    	return "?pub=" + pubCode + "&vol=" + volumeNumber + "&no=" + issueNumber;
+    
+    	var queryString = "";
+    	queryString+="?pub=" + pubCode + "&vol=" + volumeNumber;
+    	if(issueNumber>0){
+    	queryString+= "&no=" + issueNumber;
+    	}
+    	
+    	return queryString;
     }
 
 
