@@ -38,7 +38,7 @@ public class Publication {
 	private Volume mostRecentVolume;
 	private Issue mostRecentIssue;
 	private Volume selectedVolume;
-	private Issue selectedIssue;
+	private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
 	
 	
@@ -75,8 +75,8 @@ public class Publication {
 		return mostRecentIssue;
 	}
 
-	public Issue getSelectedIssue() {
-		return selectedIssue;
+	public List<Issue> getSelectedIssue() {
+		return selectedIssues;
 	}
 
 	public Volume getMostRecentVolume() {
@@ -177,6 +177,7 @@ public class Publication {
 		return null;
 	}
 	
+	//TODO: continue working on getting either full volume or volume/issue based on query string (or if no query string, config?)
 	//this should grab the selected content
 	public boolean setSelectedContent() {
 		System.out.println("setting selected content!");
@@ -212,15 +213,19 @@ public class Publication {
 		}
 		
 		System.out.println("getting issue!");
+		System.out.println("issue string: " + issueString);
 		if(issueString==null) {
-			//if issue string is null, then we just want the volume, right?
+			//if issue string is null, then we want all issues, right?
 			System.out.println("no issue selected by query string. Skipping issue.");
 			//this.mostRecentIssue = getMostRecentIssue(this.mostRecentVolume);
-			this.selectedIssue = null;
+			this.selectedIssues = this.selectedVolume.getIssues();
 		} else {
+			//if query string is not null, get that issue
+			
 			try {
 				issueNum = Integer.parseInt(issueString);
-				this.selectedIssue = this.selectedVolume.getIssue(issueNum);
+				System.out.println("trying to add " + issueNum);
+				this.selectedIssues.add(this.selectedVolume.getIssue(issueNum));
 			} catch (NumberFormatException e) {
 				System.out.println("couldn't get issue number from query string");
 				e.printStackTrace();

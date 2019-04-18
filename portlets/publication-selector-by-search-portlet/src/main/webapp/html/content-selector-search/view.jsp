@@ -10,6 +10,7 @@
 
 <c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 <c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
+<c:set var="currentIssue" value="${pubData.getSelectedIssue() }" />
 
 <aui:form cssClass="content-selector-form">
     <aui:fieldset cssClass="selector-fieldset">
@@ -43,10 +44,16 @@
 </aui:form>
 
 <div>
+	<p><c:out value="${currentVolume }"/></p>
+	<p><c:out value="${currentIssue }"/></p>
+	
+	<%--  
+	IF current issue is empty, get all issues
+	--%>
 	
 	<h3>Volume <c:out value="${currentVolume.getNumber() }"/></h3>
 	
-	<c:forEach items="${currentVolume.getIssues()}" var = "issue" varStatus="i">
+	<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
 		 <h4>Issue <c:out value="${issue.getNumber() }"/></h4>
 		 
 		 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
