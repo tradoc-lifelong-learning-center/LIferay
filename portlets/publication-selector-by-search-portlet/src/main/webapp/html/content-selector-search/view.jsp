@@ -15,16 +15,21 @@
 
 <p>is single issue? <c:out value="${isSingleIssue }"/></p>
 
+
+
+
+
 <aui:form cssClass="content-selector-form">
     <aui:fieldset cssClass="selector-fieldset">
-    
-    
-    	<aui:input name="year-input" type="range" min="1950" max="2019"></aui:input>
+
+		<div id="noUiSlider">
+			<!-- TODO get values from bean -->
+			<span id="noUiSliderMin">1950</span>
+			<div id="noUiSliderRange" data-min-year="1950" data-max-year="2020"></div>
+			<span id="noUiSliderMax">2020</span>
+		</div>
     	
-    	<input type="range" multiple min="1950" max="2019"/> 
     	
-    	<input type="number" multiple min="1950" max="2019"/>
-    
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume.">
 
 			<aui:option value="selectAVolume">Select a volume</aui:option>

@@ -1,3 +1,59 @@
+
+//at some point, this should run with correct portlet is loaded. Shouldn't need to wait for all.
+Liferay.on(
+    'allPortletsReady',
+
+    function() {
+    	var instance = this;
+    	
+    	var slider = document.querySelector('#noUiSliderRange');
+    	var min = parseInt(slider.dataset.minYear);
+    	var max = parseInt(slider.dataset.maxYear);
+    	
+    	var minInput = document.querySelector('#noUiSliderMin');
+    	var maxInput = document.querySelector('#noUiSliderMax');
+    	
+    	console.log("slider: " + slider);
+    	console.log("min: " + min);
+    	console.log("max: " + max);
+    	
+    	noUiSlider.create(slider, {
+    	    start: [min, max],
+    	    connect: true,
+    	    padding:0,
+    	    step:1,
+    	    range: {
+    	        'min': min,
+    	        'max': max
+    	    }
+    	});
+    	
+    	console.log("all portlets ready!");
+    	
+    	console.log("noUiSlider: " + slider.noUiSlider);
+    	console.log(slider.noUiSlider);
+    	console.log("get: " + slider.noUiSlider.get());
+    	//console.log("set: " + slider.noUiSlider.set(1999));
+    	//console.log("get: " + slider.noUiSlider.get());
+    	
+    	slider.noUiSlider.on('update', function( values, handle ) {
+    		console.log("hey!");
+    		console.log("get 0: " + slider.noUiSlider.get()[0]);
+    		minInput.innerHTML = slider.noUiSlider.get()[0];
+    		maxInput.innerHTML = slider.noUiSlider.get()[1];
+    	});
+    	
+    	maxInput.addEventListener('change', function(event){
+    		
+    		console.log("changed to " + maxInput.value);
+    		
+    	});
+
+    		
+    }
+);
+
+
 /*
 Liferay.on(
     'allPortletsReady',
