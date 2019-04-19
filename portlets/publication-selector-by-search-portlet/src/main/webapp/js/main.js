@@ -6,7 +6,7 @@ Liferay.on(
     function() {
     	var instance = this;
     	
-    	var slider = document.querySelector('#noUiSliderRange');
+    	/*var slider = document.querySelector('#noUiSliderRange');
     	var min = parseInt(slider.dataset.minYear);
     	var max = parseInt(slider.dataset.maxYear);
     	
@@ -37,17 +37,11 @@ Liferay.on(
     	//console.log("get: " + slider.noUiSlider.get());
     	
     	slider.noUiSlider.on('update', function( values, handle ) {
-    		console.log("hey!");
     		console.log("get 0: " + slider.noUiSlider.get()[0]);
     		minInput.innerHTML = slider.noUiSlider.get()[0];
     		maxInput.innerHTML = slider.noUiSlider.get()[1];
     	});
-    	
-    	maxInput.addEventListener('change', function(event){
-    		
-    		console.log("changed to " + maxInput.value);
-    		
-    	});
+    	*/
 
     		
     }
