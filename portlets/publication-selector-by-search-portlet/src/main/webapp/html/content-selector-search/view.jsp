@@ -105,7 +105,7 @@
 			
         	if(volumeDropdown.value=="selectAVolume"){
         		issueDropdown.setAttribute("disabled");
-        		issueDropdown.value="selectAnIssue"; //TO DO: this isn't working. I'd like it to go back to "select an issue" if for some reason a user selects "select a volume"
+        		issueDropdown.value="selectAnIssue"; 
         		return false;
         	}
         	
@@ -137,30 +137,19 @@
         		endYear=9999;
         	}
         	
-        	console.log("will be working with: ");
-        	console.log(items);
-        	console.log("menu: ");
-        	console.log(menu);
-        	//console.log(menu.id);
-        	
         	clearMenu(menu);
         	
-        	
-        	
-        	//var menu = document.getElementById(menuId);
         	var fragment = document.createDocumentFragment();
         	
         	for(var prop in items){
         		
-        		if(items[prop].year<startYear || items[prop].year>endYear){
+        		if(parseInt(items[prop].year)<startYear || parseInt(items[prop].year)>endYear){
         			continue;
         		}
         		
         		var option = document.createElement("option");
         		option.innerHTML = items[prop].number + ", year " + items[prop].year;
         		option.setAttribute("value",items[prop].number);
-        		//consider changing to "number" for easier reuse
-            	//console.log(items[prop].number);
             	fragment.appendChild(option);
 
             	for(var artProp in items[prop].articles){
@@ -189,8 +178,6 @@
         		var issueDropdown = null;
         		}
         	
-        	console.log("click!")
-        	
         	
         	var pubCode = jsonData.publication.pubCode;
         	var volumeNumber = volumeDropdown.value;
@@ -213,61 +200,67 @@
 
              window.location.href = url;
          }); 
+        
+        
+        function getQueryString(pubCode,volumeNumber,issueNumber){
+            
+        	var queryString = "";
+        	queryString+="?pub=" + pubCode + "&vol=" + volumeNumber;
+        	if(issueNumber>0){
+        	queryString+= "&no=" + issueNumber;
+        	}
+        	
+        	return queryString;
+        }
+        
+        
+        function buildSlider() {
+        	var instance = this;
+        	
+        	var slider = document.querySelector('#noUiSliderRange');
+        	var min = parseInt(slider.dataset.minYear);
+        	var max = parseInt(slider.dataset.maxYear);
+        	
+        	var minInput = document.querySelector('#noUiSliderMin');
+        	var maxInput = document.querySelector('#noUiSliderMax');
+        	
+        	noUiSlider.create(slider, {
+        	    start: [min, max],
+        	    connect: true,
+        	    padding:0,
+        	    step:1,
+        	    range: {
+        	        'min': min,
+        	        'max': max
+        	    }
+        	});
+	
+        	slider.noUiSlider.on('update', function( values, handle ) {
+        		
+        		minInput.innerHTML = values[0];
+        		console.log("value 0: " + values[0]);
+        		maxInput.innerHTML = values[1];
+        		
+        		//re-populate volume selector, clear and disable issue selector
+        		populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, values[0],values[1]);
+        		clearMenu(config.issueDropdown);
+        		disableMenu(config.issueDropdown);
+        		
+        	});
+        	
+
+        		
+        }
+        
+        function disableMenu(menu){
+        	menu.setAttribute("disabled", "");
+        }
+        
     })();
  	
-    function getQueryString(pubCode,volumeNumber,issueNumber){
     
-    	var queryString = "";
-    	queryString+="?pub=" + pubCode + "&vol=" + volumeNumber;
-    	if(issueNumber>0){
-    	queryString+= "&no=" + issueNumber;
-    	}
-    	
-    	return queryString;
-    }
 
-    function buildSlider() {
-    	var instance = this;
-    	
-    	var slider = document.querySelector('#noUiSliderRange');
-    	var min = parseInt(slider.dataset.minYear);
-    	var max = parseInt(slider.dataset.maxYear);
-    	
-    	var minInput = document.querySelector('#noUiSliderMin');
-    	var maxInput = document.querySelector('#noUiSliderMax');
-    	
-    	console.log("slider: " + slider);
-    	console.log("min: " + min);
-    	console.log("max: " + max);
-    	
-    	noUiSlider.create(slider, {
-    	    start: [min, max],
-    	    connect: true,
-    	    padding:0,
-    	    step:1,
-    	    range: {
-    	        'min': min,
-    	        'max': max
-    	    }
-    	});
-    	
-    	console.log("all portlets ready!");
-    	
-    	console.log("noUiSlider: " + slider.noUiSlider);
-    	console.log(slider.noUiSlider);
-    	console.log("get: " + slider.noUiSlider.get());
-    	//console.log("set: " + slider.noUiSlider.set(1999));
-    	//console.log("get: " + slider.noUiSlider.get());
-    	
-    	slider.noUiSlider.on('update', function( values, handle ) {
-    		console.log("get 0: " + slider.noUiSlider.get()[0]);
-    		minInput.innerHTML = slider.noUiSlider.get()[0];
-    		maxInput.innerHTML = slider.noUiSlider.get()[1];
-    	});
-    	
-
-    		
-    }
+    
 
 </aui:script>
 
