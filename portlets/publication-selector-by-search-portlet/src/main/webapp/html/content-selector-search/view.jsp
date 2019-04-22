@@ -104,7 +104,7 @@
         	var jsonData = ${pubData.getJson() };
 			
         	if(volumeDropdown.value=="selectAVolume"){
-        		issueDropdown.setAttribute("disabled");
+        		disableMenu(issueDropdown);
         		issueDropdown.value="selectAnIssue"; 
         		return false;
         	}
@@ -253,7 +253,7 @@
         }
         
         function disableMenu(menu){
-        	menu.setAttribute("disabled", "");
+        	menu.setAttribute("disabled", "disabled");
         }
         
     })();
