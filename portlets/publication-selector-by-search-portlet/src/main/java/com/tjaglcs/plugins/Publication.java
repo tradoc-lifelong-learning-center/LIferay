@@ -43,8 +43,8 @@ public class Publication {
 	private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
-	
-	
+	private int startYear;
+	private int endYear;
 	
 	public Publication(String name, RenderRequest request) throws Exception {
 		this.request = request;
@@ -65,8 +65,62 @@ public class Publication {
 		System.out.println("JSON: " + json);
 		
 		System.out.print("setIsSingleIssue: " + this.isSingleIssue);
+		
+		setStartYear();
+		setEndYear();
+		
 	}
 	
+	
+	public void setStartYear() {
+		
+		List<Integer> years = new ArrayList<>();
+		int startYear = 9999;
+		
+		for(int i = 0; i<this.articles.size(); i++) {
+			years.add(this.articles.get(i).getArticleDate().getYear());
+		}
+		
+		for(int i = 0; i<years.size(); i++) {
+			if(years.get(i)<startYear) {
+				startYear = years.get(i);
+			}
+		}
+		
+		this.startYear = startYear;
+	}
+	
+	public void setEndYear() {
+		List<Integer> years = new ArrayList<>();
+		int endYear = 0;
+		
+		for(int i = 0; i<this.articles.size(); i++) {
+			years.add(this.articles.get(i).getArticleDate().getYear());
+		}
+		
+		for(int i = 0; i<years.size(); i++) {
+			if(years.get(i)>endYear) {
+				endYear = years.get(i);
+			}
+		}
+		
+		this.endYear = endYear;
+	}
+	
+	
+	
+	
+	
+	public int getStartYear() {
+		return startYear;
+	}
+
+
+	public int getEndYear() {
+		return endYear;
+	}
+
+
 	public void setIsSingleIssue(RenderRequest request) {
 		PortletPreferences portletPreferences = request.getPreferences();
 		String configValue = GetterUtil.getString(portletPreferences.getValue("numberOfIssues", ""));
