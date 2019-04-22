@@ -99,24 +99,32 @@
     	
         
         function getIssues(){
-        	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
-        	var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        	var volumeDropdown = config.volumeDropdown;
+        	var issueDropdown = config.issueDropdown;
         	var jsonData = ${pubData.getJson() };
 			
-        	if(volumeDropdown.val()=="selectAVolume"){
+        	if(volumeDropdown.value=="selectAVolume"){
         		issueDropdown.setAttribute("disabled");
         		issueDropdown.value="selectAnIssue"; //TO DO: this isn't working. I'd like it to go back to "select an issue" if for some reason a user selects "select a volume"
         		return false;
         	}
         	
-        	console.log("getting issues! You chose volume " + volumeDropdown.val());
+        	console.log("getting issues! You chose volume " + volumeDropdown.value);
         	issueDropdown.removeAttribute("disabled");
         	
-        	var issues = jsonData.publication.volumes["volume" + volumeDropdown.val()].issues;
+        	var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
         	
         	populateMenu(issueDropdown, issues);
 
         } 
+        
+        
+        function clearMenu(menu){
+        	//clear existing options, skipping the first
+			while (menu.children.length > 1) {
+				menu.removeChild(menu.lastChild);
+			}
+        }
         
         
         function populateMenu(menu, items, startYear, endYear){
@@ -133,6 +141,11 @@
         	console.log(items);
         	console.log("menu: ");
         	console.log(menu);
+        	//console.log(menu.id);
+        	
+        	clearMenu(menu);
+        	
+        	
         	
         	//var menu = document.getElementById(menuId);
         	var fragment = document.createDocumentFragment();
@@ -147,7 +160,7 @@
         		option.innerHTML = items[prop].number + ", year " + items[prop].year;
         		option.setAttribute("value",items[prop].number);
         		//consider changing to "number" for easier reuse
-            	console.log(items[prop].number);
+            	//console.log(items[prop].number);
             	fragment.appendChild(option);
 
             	for(var artProp in items[prop].articles){
@@ -168,10 +181,10 @@
         
         config.submitButton.addEventListener('click', function(event){
         	var jsonData = ${pubData.getJson() };
-        	var volumeDropdown = A.one('#<portlet:namespace/>volumeOptions');
+        	var volumeDropdown = config.volumeDropdown;
         	
         	if(config.isSingleIssue){		
-        		var issueDropdown = A.one('#<portlet:namespace/>issueOptions');
+        		var issueDropdown = config.issueDropdown;
         		} else{
         		var issueDropdown = null;
         		}
@@ -180,9 +193,9 @@
         	
         	
         	var pubCode = jsonData.publication.pubCode;
-        	var volumeNumber = volumeDropdown.val();
+        	var volumeNumber = volumeDropdown.value;
         	if(config.isSingleIssue){		
-        		var issueNumber = issueDropdown.val();
+        		var issueNumber = issueDropdown.value;
         		} else{
         			var issueNumber=-1;
         		}
@@ -190,7 +203,7 @@
         	
         	var queryString = getQueryString(pubCode,volumeNumber,issueNumber);
         	
-         	if(volumeDropdown.val()=="selectAVolume" || (issueDropdown && issueDropdown.val()=="selectAnIssue")) {
+         	if(volumeDropdown.value=="selectAVolume" || (issueDropdown && issueDropdown.value=="selectAnIssue")) {
              	return false;
              } else {
             	var baseUrl = window.location.href.split('#')[0];
