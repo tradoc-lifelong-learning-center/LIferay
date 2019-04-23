@@ -234,6 +234,14 @@
         	    range: {
         	        'min': min,
         	        'max': max
+        	    },
+        	    format:{
+        	    	to: function(value){
+        	    		return parseInt(value);
+        	    	},
+        	    	from: function(value){
+        	    		return parseInt(value);
+        	    	},
         	    }
         	});
 	
