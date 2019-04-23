@@ -93,7 +93,7 @@
         } //does submit button need a namespace?
         		
         //populate volume menu		
-        populateMenu(config.volumeDropdown, config.jsonData.publication.volumes,undefined,undefined);		
+        //populateMenu(config.volumeDropdown, config.jsonData.publication.volumes,undefined,undefined);		
     	buildSlider();		
     	
     	
@@ -128,7 +128,6 @@
         
         
         function populateMenu(menu, items, startYear, endYear){
-        	
         	if(!startYear){
         		startYear=0;
         	}
@@ -138,9 +137,8 @@
         	}
         	
         	//if single issue, clear sub (issue) menu
-        	if(config.isSingleIssue){
-        		clearMenu(menu);	
-        	}
+        	clearMenu(menu);	
+
         	
         	
         	var fragment = document.createDocumentFragment();
@@ -240,7 +238,6 @@
         	});
 	
         	slider.noUiSlider.on('update', function( values, handle ) {
-        		
         		minInput.innerHTML = values[0];
         		maxInput.innerHTML = values[1];
         		
