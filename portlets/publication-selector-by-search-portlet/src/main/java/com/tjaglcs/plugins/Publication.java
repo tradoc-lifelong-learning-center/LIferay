@@ -23,10 +23,12 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -710,8 +712,11 @@ public class Publication {
 				
 				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_DATE) != null) {
-						long fieldValue = Long.parseLong(currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
-						articleDate = Instant.ofEpochMilli(fieldValue).atZone(ZoneId.systemDefault()).toLocalDate();
+						System.out.println("Pub date field: " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
+						System.out.println("is string? " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue() instanceof String);
+						//System.out.println("is long? " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue() instanceof Long);
+						String fieldValue = currentDoc.getField(CustomField.PUBLICATION_DATE).getValue();
+						articleDate = parseDate(fieldValue);
 					}
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -764,11 +769,6 @@ public class Publication {
 				
 				
 				try {
-					// TODO testing for now - figure out something better of date is null
-					if(articleDate == null) {
-						articleDate = Instant.ofEpochMilli(1234567890).atZone(ZoneId.systemDefault()).toLocalDate();
-					}
-					
 					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
 					System.out.println("title: " + article.getTitle());
 					System.out.println("status: " + article.getStatus());
@@ -782,4 +782,27 @@ public class Publication {
 			
 			this.articles = articles;
 		}
+	
+	private LocalDate parseDate(String dateString) {
+		//set a default date which will show for null dates
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
+		LocalDate date = LocalDate.parse("Thu Jul 04 00:00:00 GMT 1776", formatter);
+		
+		//if this will parse to long, it's epoch
+		try {
+			long fieldValue = Long.parseLong(dateString);
+			date = Instant.ofEpochMilli(fieldValue).atZone(ZoneId.systemDefault()).toLocalDate();
+		} catch (NumberFormatException e) {
+			//e.printStackTrace();
+		}
+		
+		//otherwise, try to parse string
+        try {
+			date = LocalDate.parse(dateString, formatter);
+		} catch (Exception e) {
+			//e.printStackTrace();
+		}
+		
+		return date;
+	}
 }
