@@ -54,7 +54,7 @@ public class Publication {
 		this.name = name;
 		setArticles(name, request);
 		
-		//TODO filter volumes by type = if there's both an article and PDF, only show article
+		//filter volumes by type: if there's both an article and PDF, only show article
 		filterArticlePDFs();
 		
 		setVolumes();
@@ -769,6 +769,10 @@ public class Publication {
 				
 				
 				try {
+					if(volume==-1 || issue==-1 || articleDate == null) {
+						System.out.println("skipping " + articleId + " due to invalid vol/issue/year");
+						continue;
+					}
 					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
 					System.out.println("title: " + article.getTitle());
 					System.out.println("status: " + article.getStatus());
@@ -785,8 +789,7 @@ public class Publication {
 	
 	private LocalDate parseDate(String dateString) {
 		//set a default date which will show for null dates
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-		LocalDate date = LocalDate.parse("Thu Jul 04 00:00:00 GMT 1776", formatter);
+		LocalDate date = null;
 		
 		//if this will parse to long, it's epoch
 		try {
@@ -798,6 +801,7 @@ public class Publication {
 		
 		//otherwise, try to parse string
         try {
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
 			date = LocalDate.parse(dateString, formatter);
 		} catch (Exception e) {
 			//e.printStackTrace();
