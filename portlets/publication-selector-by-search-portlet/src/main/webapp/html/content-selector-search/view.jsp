@@ -119,6 +119,7 @@
         
         
         function clearMenu(menu){
+        	console.log("attempting to clear " + menu);
         	//clear existing options, skipping the first
 			while (menu.children.length > 1) {
 				menu.removeChild(menu.lastChild);
@@ -136,7 +137,11 @@
         		endYear=9999;
         	}
         	
-        	clearMenu(menu);
+        	//if single issue, clear sub (issue) menu
+        	if(config.isSingleIssue){
+        		clearMenu(menu);	
+        	}
+        	
         	
         	var fragment = document.createDocumentFragment();
         	
@@ -241,8 +246,12 @@
         		
         		//re-populate volume selector, clear and disable issue selector
         		populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, values[0],values[1]);
-        		clearMenu(config.issueDropdown);
-        		disableMenu(config.issueDropdown);
+        		
+        		if(config.isSingleIssue){
+        			clearMenu(config.issueDropdown);
+        			disableMenu(config.issueDropdown);
+            	}
+        		
         		
         	});
         	
