@@ -13,7 +13,7 @@
 <c:set var="currentIssue" value="${pubData.getSelectedIssue() }" />
 <c:set var="isSingleIssue" value="${pubData.getIsSingleIssue() }" />
 
-<p>is single issue? <c:out value="${isSingleIssue }"/></p>
+
 
 
 
@@ -52,9 +52,9 @@
         </c:if>
 
 		
-		<div class="btn-container">
-			<aui:button value="Submit >" id="btnSubmit" cssClass="btn btn-primary"/>
-		</div>
+		
+		<aui:button value=" > " id="btnSubmit" cssClass="btn btn-primary"/>
+
         
     </aui:fieldset>
     
@@ -62,13 +62,13 @@
 
 <div>
 	
-	<h3>Volume <c:out value="${currentVolume.getNumber() }"/></h3>
+	<h2>Volume <c:out value="${currentVolume.getNumber() }"/></h2>
 	
 	<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
-		 <h4>Issue <c:out value="${issue.getNumber() }"/></h4>
+		 <h3>Issue <c:out value="${issue.getNumber() }"/></h3>
 		 
 		 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
-		 	<h5><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></h5>
+		 	<p><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
 		 
 
 		</c:forEach>
@@ -278,8 +278,8 @@
 
 
 
-
-
+<h2 style="margin-top:6em;">Testing data</h2>
+<p>is single issue? <c:out value="${isSingleIssue }"/></p>
 <h3>Found volumes:</h3>
 <c:forEach items="${pubData.getVolumes() }" var = "volume" varStatus="i">
 	<p>${volume.getNumber() }, year: ${volume.getYear() }</p>

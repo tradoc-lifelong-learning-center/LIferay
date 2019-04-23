@@ -47,16 +47,22 @@
 	background-color: #000666;
 }
 
+.selector-fieldset div{
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:center;
+	align-items:center;
+}
+
+.content-selector-search-portlet .control-group{
+	margin-bottom:0;
+	margin-left: 10px;
+    margin-right: 10px;
+}
+
 .content-selector-search-portlet .btn-primary{
-    min-width:110px;
+	margin-bottom:10px;
 }
-
-.content-selector-search-portlet .btn-container{
-    text-align:center;
-}
-
-
-
 
 
 
