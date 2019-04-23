@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,10 +51,11 @@ public class Publication {
 		this.request = request;
 		this.name = name;
 		setArticles(name, request);
-
-		setVolumes();
 		
 		//TODO filter volumes by type = if there's both an article and PDF, only show article
+		filterArticlePDFs();
+		
+		setVolumes();
 		
 		setMostRecentVolume();
 		setMostRecentIssue(this.mostRecentVolume);
@@ -71,6 +73,64 @@ public class Publication {
 		
 	}
 	
+	private void filterArticlePDFs() {
+		//loop all journal articles, then check all PDF articles and remove any with the same volume/issue
+		//hopefully this doesn't turn out to be slow. Is there a better way?
+		//long startTime = Calendar.getInstance().getTimeInMillis();
+		long articlesLength = this.articles.size();
+		
+		List<Article> dlFileArticles = new ArrayList<>();
+		List<Article> journalArticles = new ArrayList<>();
+		List<Long> articlesToFilter = new ArrayList<>();
+		
+		
+		for(int i = 0; i<articlesLength; i++) {
+			
+			Article currentArticle = this.articles.get(i);
+			
+			if(currentArticle.getType().contains("DLFileEntry")) {
+				dlFileArticles.add(currentArticle);
+			} else {
+				journalArticles.add(currentArticle);
+			}
+		}
+		
+		
+		for(int i = 0; i<journalArticles.size(); i++) {
+			Article currentJournalArticle = journalArticles.get(i);
+			int vol = currentJournalArticle.getVolume();
+			int issue = currentJournalArticle.getIssue();
+			
+			for(int z = 0; z<dlFileArticles.size(); z++) {
+				Article currentDlFileArticle = dlFileArticles.get(z);
+				
+				if(currentDlFileArticle.getVolume()==vol && currentDlFileArticle.getIssue()==issue) {
+					articlesToFilter.add(currentDlFileArticle.getId());
+				}
+			}
+		}
+		
+		for(int i = 0; i<this.articles.size(); i++) {
+			Article article = this.articles.get(i);
+			
+			for(int z = 0; z<articlesToFilter.size(); z++) {
+				
+				if(article.getId()==articlesToFilter.get(z)) {
+					//System.out.println("removing " + articlesToFilter.get(z));
+					this.articles.remove(this.articles.get(i));
+				}
+				
+			}
+			
+			
+		}
+		
+		//long endTime = Calendar.getInstance().getTimeInMillis();
+		
+		//System.out.println("Start: " + startTime);
+		//System.out.println("End: " + endTime);
+        //System.out.println("For each loop: " + (endTime - startTime)); 
+	}
 	
 	public void setStartYear() {
 		
