@@ -1,1 +1,63 @@
 @import url(nouislider.css);
+
+/*selector form styles*/
+.content-selector-search-portlet .noUi-target{
+    border:none;
+    box-shadow:none;
+}
+
+.content-selector-search-portlet .noUi-handle{
+    box-shadow:none;
+}
+
+.content-selector-search-portlet .content-selector-form{
+    background-color:#555;
+    padding:1rem;
+}
+
+.content-selector-search-portlet .control-group{
+    text-align:center;
+}
+
+.content-selector-search-portlet .noUi--slider-outer-container{
+	display:flex;
+	align-items:center;
+	justify-content: space-around;
+	flex-direction:row;
+	
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.content-selector-search-portlet .noUi--year-label{
+	flex: 0 0 auto;
+	background-color:white;
+	padding:.5rem;
+	border-radius:5px;
+}
+
+.content-selector-search-portlet .noUi--slider-inner-container{
+	display:inline-block;
+	padding:2rem;
+	flex:1 1 50%;
+}
+
+
+.content-selector-search-portlet .noUi--slider-outer-container .noUi-connect{
+	background-color: #000666;
+}
+
+.content-selector-search-portlet .btn-primary{
+    min-width:110px;
+}
+
+.content-selector-search-portlet .btn-container{
+    text-align:center;
+}
+
+
+
+
+
+
+

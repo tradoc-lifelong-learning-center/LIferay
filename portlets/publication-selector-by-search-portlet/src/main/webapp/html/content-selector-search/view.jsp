@@ -20,16 +20,19 @@
 
 
 <aui:form cssClass="content-selector-form">
+
+	<div id="noUiSlider"  class="noUi--slider-outer-container">
+		<!-- TODO get values from bean -->
+		<span class="noUi--year-label" id="noUiSliderMin">${pubData.getStartYear() }</span>
+		<div class="noUi--slider-inner-container">
+			<div id="noUiSliderRange" data-min-year="${pubData.getStartYear() }" data-max-year="${pubData.getEndYear() }"></div>
+		</div>
+		
+		<span class="noUi--year-label" id="noUiSliderMax">${pubData.getStartYear() }</span>
+	</div>
+		
     <aui:fieldset cssClass="selector-fieldset">
 
-		<div id="noUiSlider">
-			<!-- TODO get values from bean -->
-			<span id="noUiSliderMin">${pubData.getStartYear() }</span>
-			<div id="noUiSliderRange" data-min-year="${pubData.getStartYear() }" data-max-year="${pubData.getEndYear() }"></div>
-			<span id="noUiSliderMax">${pubData.getStartYear() }</span>
-		</div>
-    	
-    	
         <aui:select label="" id="volumeOptions" name="volume" showEmptyOption="false" cssClass="dropdown" helpMessage="Select a volume.">
 
 			<aui:option value="selectAVolume">Select a volume</aui:option>
@@ -49,19 +52,15 @@
         </c:if>
 
 		
-
-        <aui:button value=">" id="btnSubmit" cssClass="btn btn-primary"/>
+		<div class="btn-container">
+			<aui:button value="Submit >" id="btnSubmit" cssClass="btn btn-primary"/>
+		</div>
+        
     </aui:fieldset>
     
 </aui:form>
 
 <div>
-	<p><c:out value="${currentVolume }"/></p>
-	<p><c:out value="${currentIssue }"/></p>
-	
-	<%--  
-	IF current issue is empty, get all issues
-	--%>
 	
 	<h3>Volume <c:out value="${currentVolume.getNumber() }"/></h3>
 	
