@@ -65,5 +65,39 @@
 }
 
 
+/*TOC styles*/
+.content-selector-search-portlet .volume-container{
+	font-family: Adobe Caslon Pro, Times New Roman, serif;
+}
+
+.content-selector-search-portlet .volume-container h2{
+	font-size:2rem;
+	font-weight:normal;
+    color: #000666 !important; /*using important to override theme color*/
+    text-align:center;
+}
+
+.content-selector-search-portlet .year-label{
+	text-align: center; 
+	padding-bottom: 1rem; 
+	color:#808080;
+	text-transform:uppercase;
+	font-family: 'Open Sans', 'sans-serif';
+	letter-spacing: 2px;
+}
+
+.content-selector-search-portlet .toc-entry{
+	color: #000666;
+	font-size:2rem;
+}
 
 
+.content-selector-search-portlet .toc-entry a {
+	color: #000666 !important; /*using important to override theme color*/
+	text-decoration: none;
+}
+
+.content-selector-search-portlet .author-names{
+	font-size:1.5rem;
+	font-style:italic;
+}

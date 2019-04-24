@@ -53,7 +53,7 @@
 
 		
 		
-		<aui:button value=" > " id="btnSubmit" cssClass="btn btn-primary"/>
+		<aui:button value=" > " id="btnSubmit" cssClass="btn btn-primary" aria-label="Submit"/>
 
         
     </aui:fieldset>
@@ -62,16 +62,23 @@
 
 <div>
 	
-	<h2>Volume <c:out value="${currentVolume.getNumber() }"/></h2>
+
+	
 	
 	<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
-		 <h3>Issue <c:out value="${issue.getNumber() }"/></h3>
-		 
-		 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
-		 	<p><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
-		 
-
-		</c:forEach>
+		<section class="volume-container">
+			<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/>, Issue <c:out value="${issue.getNumber() }"/></h2>
+			<p class="year-label"><c:out value="${issue.getYear() }"/> Online Edition</p>
+			 
+			 <nav aria-labelledby="volume${currentVolume.getNumber() }">
+				 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
+				 	<p class="toc-entry"><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
+				 	<p class="author-names">by [author name]</p>
+				 </c:forEach>
+			 </nav>
+			 
+		</section>
+		
 		 
 		    	
 	</c:forEach>
