@@ -60,6 +60,8 @@
     
 </aui:form>
 
+<liferay-ui:error key="no-volume-found" message="no-volume-found"/>
+
 <div>
 	
 

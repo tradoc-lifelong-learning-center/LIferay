@@ -11,5 +11,5 @@
     	<indexer-class-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</indexer-class-name>
     	<indexer-post-processor-impl>com.tjaglcs.plugins.CustomJournalIndexPostProcessor</indexer-post-processor-impl>
 	</indexer-post-processor> -->
-	
+	<language-properties>content/Language.properties</language-properties>
 </hook>

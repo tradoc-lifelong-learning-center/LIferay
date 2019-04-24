@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.StringQueryFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -65,7 +66,7 @@ public class Publication {
 		
 		//set selected volume and issue (if present)
 		setIsSingleIssue(request);
-		setSelectedContent();
+		setSelectedContent(this.request);
 		setJson();
 		System.out.println("JSON: " + json);
 		
@@ -321,7 +322,8 @@ public class Publication {
 	
 	//TODO: continue working on getting either full volume or volume/issue based on query string (or if no query string, config?)
 	//this should grab the selected content
-	public boolean setSelectedContent() {
+	public boolean setSelectedContent(RenderRequest request) {
+
 		System.out.println("setting selected content!");
 		String pubCode = getQueryStringValue("pub");
 		
@@ -345,11 +347,25 @@ public class Publication {
 		} else {
 			
 			try {
+				
 				volNumber = Integer.parseInt(volString);
-				this.selectedVolume = getVolume(volNumber);
+				System.out.println("trying to get volume " + volNumber);
+				
+				Volume selectedVolume = getVolume(volNumber);
+				
+				if(selectedVolume==null) {
+					SessionErrors.add(request, "no-volume-found");
+					this.selectedVolume = this.mostRecentVolume;
+				} else {
+					this.selectedVolume = selectedVolume;
+				}
+				
+				
 			} catch (NumberFormatException e) {
+				
+				//e.printStackTrace();
 				System.out.println("couldn't get volume number from query string");
-				e.printStackTrace();
+				this.selectedVolume = this.mostRecentVolume;
 				return false;
 			}
 		}
