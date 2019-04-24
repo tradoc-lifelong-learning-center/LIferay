@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -657,6 +658,7 @@ public class Publication {
 				String type = "Type not found";
 				LocalDate articleDate = null;
 				int status = -1;
+				String[] authors = new String[0];
 				
 				
 				try {
@@ -712,8 +714,7 @@ public class Publication {
 				
 				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_DATE) != null) {
-						System.out.println("Pub date field: " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
-						System.out.println("is string? " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue() instanceof String);
+						//System.out.println("Pub date field: " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue());
 						//System.out.println("is long? " + currentDoc.getField(CustomField.PUBLICATION_DATE).getValue() instanceof Long);
 						String fieldValue = currentDoc.getField(CustomField.PUBLICATION_DATE).getValue();
 						articleDate = parseDate(fieldValue);
@@ -732,6 +733,29 @@ public class Publication {
 					System.out.println("status error");
 				} 
 				
+				try {
+					if(currentDoc.getField(CustomField.PUBLICATION_AUTHORS) != null) {
+						//System.out.println("authors: " + currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValue());
+						authors = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues();
+						boolean is = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues() instanceof String[];
+						System.out.println("AUTHOR is array? " + is);
+						String [] aString = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues();
+						System.out.println("A String 0 " + aString[0]);
+						System.out.println("A String 0 is array? ");
+						System.out.println(aString[0] instanceof String);
+						
+						System.out.println("astring 0 to string: " + aString[0].toString());
+						System.out.println(java.util.Arrays.toString(aString));
+					}
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					System.out.println("author error");
+				} 
+				
+				
+				if(authors==null) {
+					authors = new String[0];
+				}
 				
 				//TODO: this failing for dlfile for some reason. Obviously need this to work before I can get PDF URL
 				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
@@ -779,7 +803,7 @@ public class Publication {
 						System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
-					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
+					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request, authors);
 					System.out.println("title: " + article.getTitle());
 					System.out.println("status: " + article.getStatus());
 					System.out.println("ID: " + article.getId());

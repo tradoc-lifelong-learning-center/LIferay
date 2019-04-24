@@ -73,7 +73,7 @@
 			 <nav aria-labelledby="volume${currentVolume.getNumber() }">
 				 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
 				 	<p class="toc-entry"><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
-				 	<p class="author-names">by [author name]</p>
+				 	<p class="author-names">${article.getAuthors() }</p>
 				 </c:forEach>
 			 </nav>
 			 

@@ -20,6 +20,8 @@ public class CustomField extends Field {
 	
 	public static final String PUBLICATION_DATE = "publicationPublishDate";
 	
+	public static final String PUBLICATION_AUTHORS = "publicationAuthors";
+	
 	public CustomField(String name, Map<Locale, String> localizedValues) {
 		super(name, localizedValues);
 		// TODO Auto-generated constructor stub
@@ -32,6 +34,7 @@ public class CustomField extends Field {
 
 	public CustomField(String name, String[] values) {
 		super(name, values);
+		System.out.println("working on " + name + " with values " + values);
 		// TODO Auto-generated constructor stub
 	}
 

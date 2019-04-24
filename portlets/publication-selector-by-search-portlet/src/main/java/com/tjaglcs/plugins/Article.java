@@ -32,9 +32,10 @@ public class Article {
 	private LocalDate articleDate;
 	private RenderRequest request;
 	private long groupId;
+	private String[] authors;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request, String[] authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
 		this.title = title;
@@ -47,6 +48,7 @@ public class Article {
 		this.status = status;
 		setURL(request);
 		this.articleDate = articleDate;
+		this.authors = authors;
 		
 		
 		//System.out.println("building article " + this.title);
@@ -91,6 +93,44 @@ public class Article {
 	public long getGroupId() {
 		return this.groupId;
 	}
+	
+	public String getAuthors() {
+		return formatAuthors(this.authors);
+	}
+	
+	private String formatAuthors(String[] authorList) {
+		String authorString = "";
+		
+		if(authorList.length>0) {
+			authorString += "by ";
+		}
+		
+		//by Joe Smith
+		//by Joe Smith and Bill Smith
+		//by Joe Smith, Bill Smith, and Phil Smith
+		//by Joe Smith, Bill Smith, Biff Smith, and Phil Smith
+		
+		
+		for(int i = 0; i<authorList.length; i++) {
+			
+			if(authorList.length-1==i && authorList.length>2) {
+				authorString += ", and ";
+			} else if(authorList.length-1==i && authorList.length==2) {
+				authorString += " and ";
+			} else if(authorList.length>1) {
+				authorString += ", ";
+			}
+			
+			authorString += authorList[i];
+			//WHY am I geting a string with the array ID instead of the actual array?
+			
+		}
+		
+		System.out.println("author string: " + authorString);
+		
+		return authorString;
+	}
+	
 	
 	public void setURL(RenderRequest request) throws SystemException, PortalException, UnsupportedEncodingException {
 		// TODO:
