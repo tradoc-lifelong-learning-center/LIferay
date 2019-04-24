@@ -769,14 +769,21 @@ public class Publication {
 				
 				
 				try {
+					LocalDate now = LocalDate.now();
+					
+					//skip articles with invalid meta, or with publish dates that are sometime in the future
 					if(volume==-1 || issue==-1 || articleDate == null) {
 						System.out.println("skipping " + articleId + " due to invalid vol/issue/year");
+						continue;
+					} else if(articleDate.isAfter(now)) {
+						System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
 					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request);
 					System.out.println("title: " + article.getTitle());
 					System.out.println("status: " + article.getStatus());
 					System.out.println("ID: " + article.getId());
+					System.out.println("date: " + article.getArticleDate());
 					articles.add(article);
 					
 				} catch(Exception e) {
