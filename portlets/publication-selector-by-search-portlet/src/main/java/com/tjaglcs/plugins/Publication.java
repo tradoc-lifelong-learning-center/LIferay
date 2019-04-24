@@ -386,8 +386,16 @@ public class Publication {
 			
 			try {
 				issueNum = Integer.parseInt(issueString);
-				System.out.println("trying to add " + issueNum);
-				this.selectedIssues.add(this.selectedVolume.getIssue(issueNum));
+				
+				Issue selectedIssue = this.selectedVolume.getIssue(issueNum);
+				
+				//if selected issue doesn't exist, present error message and get all from selected volume
+				if(selectedIssue==null) {
+					SessionErrors.add(request, "no-issue-found");
+					this.selectedIssues = this.selectedVolume.getIssues();
+				} else {
+					this.selectedIssues.add(selectedIssue);
+				}
 			} catch (NumberFormatException e) {
 				System.out.println("couldn't get issue number from query string");
 				e.printStackTrace();

@@ -61,6 +61,7 @@
 </aui:form>
 
 <liferay-ui:error key="no-volume-found" message="no-volume-found"/>
+<liferay-ui:error key="no-issue-found" message="no-issue-found"/>
 
 <div>
 	
