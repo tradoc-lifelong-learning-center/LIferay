@@ -32,6 +32,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.tjaglcs.search.CustomField;
 import com.tjaglcs.search.FieldToIndex;
 
+import java.io.FileInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -90,63 +92,9 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		for(int i = 0; i<fieldsToIndex.length; i++) {
 			
 			String fieldVal;
-			
-			/*if(className=="JournalArticleImpl") {
-				fieldVal = getJournalArticleMeta(object, fieldsToIndex[i].getFieldValue());
-			} else if(className=="DLFileEntryImpl") {
-				fieldVal = getDlFileMeta(object, fieldsToIndex[i].getFieldValue());
-			} else {
-				continue;
-			}*/
-			
-			if(document.getFields().get("title")!=null) {
-				//System.out.println(document.getFields().get("title").getValue());
-			}
-			if(document.getFields().get("publicationAuthors")!=null) {
-				//System.out.println("publicationAuthors len: " + document.getFields().get("publicationAuthors").getValue().length());
-				//System.out.println("publicationAuthors: " + document.getFields().get("publicationAuthors").getValue());
 
-			}
-
-			//TODO
 			if(className == "DLFileEntryImpl") {
 				fieldVal = getDLFileMeta(object, fieldsToIndex[i].getFieldValue());
-				
-				//System.out.println("indexing dlfile");
-				//long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)); 
-				//long fileEntryTypeId = DLFileVersionLocalServiceUtil.getFileVersion(classPK).getFileEntry().getFileEntryTypeId();                                                              
-				//DLFileEntryType dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
-				//List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-				//DDMStructure ddmStructure = ddmStructures.get(0);    
-				
-				//DLFileEntryMetadata dlFileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getdl
-				
-
-				
-				
-				
-				//System.out.println("version: " + article.getFileVersion().getFileVersionId());
-				
-				/*
-				if(document.getFields().get("title")!=null) {
-					System.out.println("doc title: " + document.getFields().get("title").getValue());
-				}
-				
-				if(document.getFields().get("publicationVolume")!=null) {
-					System.out.println("volume: " + document.getFields().get("publicationVolume").getValue());
-				}
-				
-				if(document.getFields().get("publicationIssue")!=null) {
-					System.out.println("publicationIssue: " + document.getFields().get("publicationIssue").getValue());
-				}
-				
-				if(document.getFields().get("publicationAuthors")!=null) {
-					System.out.println("publicationAuthors: " + document.getFields().get("publicationAuthors").getValue());
-				}
-				
-				if(document.getFields().get("publishDate")!=null) {
-					System.out.println("doc publish date: " + document.getFields().get("publishDate").getValue());
-				}*/
 
 			} else {
 				//System.out.println("indexing journal");
@@ -154,8 +102,6 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			}
 			
 			String fieldName = fieldsToIndex[i].getFieldName();
-			
-			//System.out.println("indexing " + fieldName + " with the value " + fieldVal);
 			 
 			if(fieldVal.length() > 0 && fieldName.length()>0) {
 	        	document.addText(fieldName, fieldVal);
@@ -166,31 +112,6 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	}
 	
 	
-	/*private String getDlFileMeta(Object object, String fieldName) {
-		DLFileEntry article = (DLFileEntry) object;
-		
-		try {
-			String xmlContent = article.get;
-			com.liferay.portal.kernel.xml.Document document = SAXReaderUtil.read(xmlContent);
-			
-			
-			
-			Node node = document.selectSingleNode("/root/dynamic-element[@name='"  + fieldName + "']/dynamic-content");
-			
-			if(node != null) {
-				System.out.println(node.getText());
-				return node.getText();
-			} else {
-				return "";
-			}
-			
-		} catch(Exception e) {
-			System.out.println("journal pub index error");
-			System.out.println(e);
-			return "";
-		}
-	}*/
-	
 	private String getDLFileMeta(Object object, String fieldName) {
 		DLFileEntry article = (DLFileEntry) object;
 		String fieldVal = "";
@@ -199,30 +120,14 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		try {
 			Map<String,Fields> fieldMap = article.getFieldsMap(article.getFileVersion().getFileVersionId());
 			
-			//System.out.println("title: " + article.getTitle());
-			
 			for (Map.Entry<String,Fields> entry : fieldMap.entrySet()) {  
-	            //System.out.println("Key: " + entry.getKey() + ", Value = " + entry.getValue()); 
-	            //System.out.println("looking for meta " + entry.getValue().getNames());
-	            
-	            
-	            
 	            if(entry.getValue().get(fieldName).getValue()!=null) {
-	            	System.out.println("current fieldname: " + entry.getValue().get(fieldName).getName());
-	            	System.out.println("current fieldval: " + entry.getValue().get(fieldName).getValue());
-	            	
-	            	
+
 	            	if(fieldName=="publicationAuthors") {
-	            		
-	            		System.out.println("entry: " + entry);
-	            		System.out.println("entry.getValue(): " + entry.getValue());
-	            		System.out.println("entry.getValue().get(fieldName): " + entry.getValue().get(fieldName));
-	            		System.out.println("entry.getValue().get(fieldName).getValue(): " + entry.getValue().get(fieldName).getValue());
+	            		//author names need to come back as an array in order to handle multiple names
 	            		String[] authorsArray = (String[]) entry.getValue().get(fieldName).getValue();
 	            		String authorsString = "";
-	            		System.out.println("str: ");
-	            		System.out.println(authorsArray);
-	            		
+
 	            		for(int i=0; i<authorsArray.length; i++) {
 	            			System.out.println(i + ": " + authorsArray[i]);
 	            			if(i>0) {
@@ -234,21 +139,17 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	            		
 	            		fieldVal = authorsString;
 	            	} else {
-	            		//THIS IS WHY AUTHOR ISN'T WORKING
 		            	fieldVal = (String) entry.getValue().get(fieldName).getValue().toString();
-		            	//entry.getValue();
-		            	
 	            	}
 	            	
 	            	
-	            	//System.out.print("fields: " + entry.getValue().getNames());
+	            	
 	            }
-	            //System.out.println("k: " + k + ", v: " + v.get("publicationAuthors").getValue()));
+	            
 	            
 	            
 	    	} 
 			
-			//System.out.println("doc meta: " + fieldVal);
 			return fieldVal;	
 			
 		} catch(Exception e) {
@@ -297,62 +198,6 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		}
 	}
 	
-	
-	
-	
-	/*private void indexDocument(Document document, Object object) throws PortalException, SystemException {
-		DLFileEntry articleEntity = (DLFileEntry) object;
-		long fileVersion = articleEntity.getLatestFileVersion(true).getFileVersionId();
-		
-		String publicationName = "";
-        try {
-        	Map<String,Fields> fieldsMap = articleEntity.getFieldsMap(fileVersion);
-        		//not sure what happened here. May have messed something up when updating field through UI
-        	
-
-        		Set<String> keys = fieldsMap.keySet();
-        		
-        		Fields fields;
-        		Field field;
-        		for (String key : keys) {
-        		  fields = fieldsMap.get(key);
-        		  //////****this needs to be cleaned up and do some error checking
-        		  publicationName = (String) fields.get("publicationName").getValue();
-        		  
-        		  System.out.println("doc pub: " + fields.get("publicationName").getValue());
-        		  System.out.println("doc pub: " + fields.get("publicationAuthors").getValue());
-        		  
-        		  try {
-					System.out.println("date: " + fields.get("publicationPublishDate").getValue());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-        		  
-        		  //field = fields.get("publication");
-        		  //if (field != null) {
-        			//  indexerUserTitle = (String) fields.get("publication").getValue();
-        		  //}
-        		}
-
-        	
-
-        } catch (Exception e) {
-        	
-        	System.out.print("Caught doc error");
-        	System.out.println(e);
-        }
-        if(publicationName.length() > 0) {
-        	System.out.println("indexed doc name: " + publicationName);
-        	document.addText(CustomField.PUBLICATION_NAME, publicationName);
-        } else {
-        	System.out.println("didn't index doc");
-        }
-	}*/
-
-	
-
-
     public void postProcessFullQuery(BooleanQuery fullQuery, SearchContext searchcontext)
             throws Exception {
         if(_log.isDebugEnabled())
