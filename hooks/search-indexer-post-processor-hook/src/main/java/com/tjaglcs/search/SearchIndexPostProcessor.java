@@ -112,16 +112,16 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	}
 	
 	
-	private String getDLFileMeta(Object object, String fieldName) {
+	private String getDLFileMeta(Object object, String fieldName) throws PortalException, SystemException {
 		DLFileEntry article = (DLFileEntry) object;
 		String fieldVal = "";
-		
 
 		try {
 			Map<String,Fields> fieldMap = article.getFieldsMap(article.getFileVersion().getFileVersionId());
 			
 			for (Map.Entry<String,Fields> entry : fieldMap.entrySet()) {  
-	            if(entry.getValue().get(fieldName).getValue()!=null) {
+	            //if(entry.getValue().get(fieldName).getValue()!=null) {
+				if(entry.getValue().get(fieldName)!=null) {
 
 	            	if(fieldName=="publicationAuthors") {
 	            		//author names need to come back as an array in order to handle multiple names
@@ -155,6 +155,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		} catch(Exception e) {
 			System.out.println("dlfileentry index error");
 			System.out.println(e);
+			//e.printStackTrace();
 			return "";
 		}
 	}
