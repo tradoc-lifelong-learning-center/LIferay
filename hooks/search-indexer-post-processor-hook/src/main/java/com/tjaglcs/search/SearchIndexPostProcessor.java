@@ -98,6 +98,15 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			} else {
 				continue;
 			}*/
+			
+			if(document.getFields().get("title")!=null) {
+				//System.out.println(document.getFields().get("title").getValue());
+			}
+			if(document.getFields().get("publicationAuthors")!=null) {
+				//System.out.println("publicationAuthors len: " + document.getFields().get("publicationAuthors").getValue().length());
+				//System.out.println("publicationAuthors: " + document.getFields().get("publicationAuthors").getValue());
+
+			}
 
 			//TODO
 			if(className == "DLFileEntryImpl") {
@@ -146,7 +155,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			
 			String fieldName = fieldsToIndex[i].getFieldName();
 			
-			System.out.println("indexing " + fieldName + " with the value " + fieldVal);
+			//System.out.println("indexing " + fieldName + " with the value " + fieldVal);
 			 
 			if(fieldVal.length() > 0 && fieldName.length()>0) {
 	        	document.addText(fieldName, fieldVal);
@@ -190,7 +199,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		try {
 			Map<String,Fields> fieldMap = article.getFieldsMap(article.getFileVersion().getFileVersionId());
 			
-			System.out.println("title: " + article.getTitle());
+			//System.out.println("title: " + article.getTitle());
 			
 			for (Map.Entry<String,Fields> entry : fieldMap.entrySet()) {  
 	            //System.out.println("Key: " + entry.getKey() + ", Value = " + entry.getValue()); 
@@ -201,6 +210,8 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	            if(entry.getValue().get(fieldName).getValue()!=null) {
 	            	//System.out.println("current fieldname: " + entry.getValue().get(fieldName).getName());
 	            	//System.out.println("current fieldval: " + entry.getValue().get(fieldName).getValue());
+	            	
+	            	//THIS IS WHY AUTHOR ISN'T WORKING
 	            	fieldVal = (String) entry.getValue().get(fieldName).getValue().toString();
 	            	//entry.getValue();
 	            	
@@ -228,17 +239,31 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		try {
 			String xmlContent = article.getContent();
 			com.liferay.portal.kernel.xml.Document document = SAXReaderUtil.read(xmlContent);
+
 			
 			
+			//get all nodes with field name (all in case it's a repeatable field like author
+			List<Node> nodes = document.selectNodes("/root/dynamic-element[@name='"  + fieldName + "']/dynamic-content");
 			
-			Node node = document.selectSingleNode("/root/dynamic-element[@name='"  + fieldName + "']/dynamic-content");
 			
-			if(node != null) {
-				System.out.println(node.getText());
-				return node.getText();
+			if(nodes.size()>0) {
+				String str = "";
+
+				for(int i = 0; i<nodes.size(); i++) {
+					System.out.println(nodes.get(i).getText());
+					if(i>0) {
+						str += "|";
+					}
+					
+					str += nodes.get(i).getText();
+					
+				}
+				
+				return str;
 			} else {
 				return "";
 			}
+
 			
 		} catch(Exception e) {
 			System.out.println("journal pub index error");
