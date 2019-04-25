@@ -32,10 +32,10 @@ public class Article {
 	private LocalDate articleDate;
 	private RenderRequest request;
 	private long groupId;
-	private String[] authors;
+	private String authors;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request, String[] authors) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
 		this.title = title;
@@ -98,37 +98,42 @@ public class Article {
 		return formatAuthors(this.authors);
 	}
 	
-	private String formatAuthors(String[] authorList) {
-		String authorString = "";
+	private String formatAuthors(String authorInputString) {
+		String authorOutputString = "";
 		
-		if(authorList.length>0) {
-			authorString += "by ";
+		if(authorInputString==null || authorInputString=="") {
+			return null;
 		}
+		
+		authorOutputString += "by ";
+
 		
 		//by Joe Smith
 		//by Joe Smith and Bill Smith
 		//by Joe Smith, Bill Smith, and Phil Smith
 		//by Joe Smith, Bill Smith, Biff Smith, and Phil Smith
 		
+		System.out.println("author list: " + authorInputString);
+		
+		String[] authorList = authorInputString.split("\\|");
 		
 		for(int i = 0; i<authorList.length; i++) {
 			
 			if(authorList.length-1==i && authorList.length>2) {
-				authorString += ", and ";
+				authorOutputString += ", and ";
 			} else if(authorList.length-1==i && authorList.length==2) {
-				authorString += " and ";
-			} else if(authorList.length>1) {
-				authorString += ", ";
+				authorOutputString += " and ";
+			} else if(authorList.length>1 && i>0) {
+				authorOutputString += ", ";
 			}
 			
-			authorString += authorList[i];
-			//WHY am I geting a string with the array ID instead of the actual array?
+			authorOutputString += authorList[i];
 			
 		}
 		
-		System.out.println("author string: " + authorString);
+		System.out.println("author string: " + authorOutputString);
 		
-		return authorString;
+		return authorOutputString;
 	}
 	
 	

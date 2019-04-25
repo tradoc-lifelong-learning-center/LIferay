@@ -682,7 +682,7 @@ public class Publication {
 				String type = "Type not found";
 				LocalDate articleDate = null;
 				int status = -1;
-				String[] authors = new String[0];
+				String authors = "";
 				
 				
 				try {
@@ -760,7 +760,7 @@ public class Publication {
 				try {
 					if(currentDoc.getField(CustomField.PUBLICATION_AUTHORS) != null) {
 						//System.out.println("authors: " + currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValue());
-						authors = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues();
+						authors = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValue();
 						boolean is = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues() instanceof String[];
 						System.out.println("AUTHOR is array? " + is);
 						String [] aString = currentDoc.getField(CustomField.PUBLICATION_AUTHORS).getValues();
@@ -770,16 +770,13 @@ public class Publication {
 						
 						System.out.println("astring 0 to string: " + aString[0].toString());
 						System.out.println(java.util.Arrays.toString(aString));
-					}
+					} 
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					System.out.println("author error");
 				} 
 				
-				
-				if(authors==null) {
-					authors = new String[0];
-				}
+
 				
 				//TODO: this failing for dlfile for some reason. Obviously need this to work before I can get PDF URL
 				//Do I like how this is set up with IFs? Should I just split each into its own try/catch? Or is there a better way to loop these?
