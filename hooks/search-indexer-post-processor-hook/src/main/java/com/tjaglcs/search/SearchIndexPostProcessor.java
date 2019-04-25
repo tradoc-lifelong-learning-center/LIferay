@@ -208,12 +208,37 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	            
 	            
 	            if(entry.getValue().get(fieldName).getValue()!=null) {
-	            	//System.out.println("current fieldname: " + entry.getValue().get(fieldName).getName());
-	            	//System.out.println("current fieldval: " + entry.getValue().get(fieldName).getValue());
+	            	System.out.println("current fieldname: " + entry.getValue().get(fieldName).getName());
+	            	System.out.println("current fieldval: " + entry.getValue().get(fieldName).getValue());
 	            	
-	            	//THIS IS WHY AUTHOR ISN'T WORKING
-	            	fieldVal = (String) entry.getValue().get(fieldName).getValue().toString();
-	            	//entry.getValue();
+	            	
+	            	if(fieldName=="publicationAuthors") {
+	            		
+	            		System.out.println("entry: " + entry);
+	            		System.out.println("entry.getValue(): " + entry.getValue());
+	            		System.out.println("entry.getValue().get(fieldName): " + entry.getValue().get(fieldName));
+	            		System.out.println("entry.getValue().get(fieldName).getValue(): " + entry.getValue().get(fieldName).getValue());
+	            		String[] authorsArray = (String[]) entry.getValue().get(fieldName).getValue();
+	            		String authorsString = "";
+	            		System.out.println("str: ");
+	            		System.out.println(authorsArray);
+	            		
+	            		for(int i=0; i<authorsArray.length; i++) {
+	            			System.out.println(i + ": " + authorsArray[i]);
+	            			if(i>0) {
+	            				authorsString+="|";
+	            			}
+	            			authorsString+=authorsArray[i];
+	            			
+	            		}
+	            		
+	            		fieldVal = authorsString;
+	            	} else {
+	            		//THIS IS WHY AUTHOR ISN'T WORKING
+		            	fieldVal = (String) entry.getValue().get(fieldName).getValue().toString();
+		            	//entry.getValue();
+		            	
+	            	}
 	            	
 	            	
 	            	//System.out.print("fields: " + entry.getValue().getNames());
