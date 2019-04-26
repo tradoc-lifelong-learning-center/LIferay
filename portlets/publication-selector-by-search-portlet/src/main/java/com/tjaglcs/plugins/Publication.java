@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-
+import com.tjaglcs.search.CustomField;
 
 import java.time.Instant;
 import java.time.LocalDate;

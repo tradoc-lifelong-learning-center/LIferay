@@ -2,14 +2,14 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
 
 <hook>
-	<!-- <portal-properties>portal.properties</portal-properties>
+	<language-properties>content/Language.properties</language-properties>
 	<indexer-post-processor>
     	<indexer-class-name>com.liferay.portlet.journal.model.JournalArticle</indexer-class-name>
-    	<indexer-post-processor-impl>com.tjaglcs.plugins.CustomJournalIndexPostProcessor</indexer-post-processor-impl>
+    	<indexer-post-processor-impl>com.tjaglcs.search.SearchIndexPostProcessor</indexer-post-processor-impl>
 	</indexer-post-processor>
 	<indexer-post-processor>
     	<indexer-class-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</indexer-class-name>
-    	<indexer-post-processor-impl>com.tjaglcs.plugins.CustomJournalIndexPostProcessor</indexer-post-processor-impl>
-	</indexer-post-processor> -->
-	<language-properties>content/Language.properties</language-properties>
+    	<indexer-post-processor-impl>com.tjaglcs.search.SearchIndexPostProcessor</indexer-post-processor-impl>
+	</indexer-post-processor>
+	
 </hook>
