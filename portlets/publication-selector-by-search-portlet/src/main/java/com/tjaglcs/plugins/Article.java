@@ -2,7 +2,6 @@ package com.tjaglcs.plugins;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -49,9 +48,6 @@ public class Article {
 		setURL(request);
 		this.articleDate = articleDate;
 		this.authors = authors;
-		
-		
-		//System.out.println("building article " + this.title);
 	}
 	public String getTitle() {
 		return title;
@@ -99,6 +95,12 @@ public class Article {
 	}
 	
 	private String formatAuthors(String authorInputString) {
+		//adding "by ", commas, and "and" between author names where needed
+				//by Joe Smith
+				//by Joe Smith and Bill Smith
+				//by Joe Smith, Bill Smith, and Phil Smith
+				//by Joe Smith, Bill Smith, Biff Smith, and Phil Smith
+		
 		String authorOutputString = "";
 		
 		if(authorInputString==null || authorInputString=="") {
@@ -106,14 +108,6 @@ public class Article {
 		}
 		
 		authorOutputString += "by ";
-
-		
-		//by Joe Smith
-		//by Joe Smith and Bill Smith
-		//by Joe Smith, Bill Smith, and Phil Smith
-		//by Joe Smith, Bill Smith, Biff Smith, and Phil Smith
-		
-		System.out.println("author list: " + authorInputString);
 		
 		String[] authorList = authorInputString.split("\\|");
 		
@@ -131,40 +125,24 @@ public class Article {
 			
 		}
 		
-		System.out.println("author string: " + authorOutputString);
+		//System.out.println("author string: " + authorOutputString);
 		
 		return authorOutputString;
 	}
 	
 	
 	public void setURL(RenderRequest request) throws SystemException, PortalException, UnsupportedEncodingException {
-		// TODO:
-		//get most recent vol/issue and display if no query string
-		//if query string, get that vol/issue and display
-		//How do I display ACTUAL article title (from content) versions shortened title field?
-		//How to I link to custom page URLs? Can I get a display page set up?
-		//System.out.println("volume 1: " + pub.getVolume(1).getIssue(1));
-		//System.out.println("latest volume: " + pub.getMostRecentVolume());
 
-		
-		
-		
-
-		
-		
 		String documentClassName = "DLFileEntry";
 		String journalClassName = "JournalArticle";
-		String objectClass="";
 
 		if(this.type.contains(journalClassName)) {
-			//System.out.println("class name: " + objectClass);
-			System.out.println("Journal!");
-			//objectClass = journalClassName;
+			//System.out.println("Journal!");
 
 			//trying to find parent page URL. from https://stackoverflow.com/questions/8397679/get-portlet-page-containing-web-content-in-liferay
 			long groupId = getGroupId();
 			
-			System.out.println(groupId);
+			//System.out.println(groupId);
 			
 			ThemeDisplay themeDisplay = getThemeDisplay(request);
 
@@ -178,7 +156,7 @@ public class Article {
 				  Layout layout = LayoutLocalServiceUtil.getLayout(groupId, false, layoutId);
 				  String url = PortalUtil.getLayoutURL(layout, themeDisplay);
 				  //String url = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
-				  System.out.println("url: " + url);
+				  //System.out.println("url: " + url);
 				  this.url = url;
 				}
 			

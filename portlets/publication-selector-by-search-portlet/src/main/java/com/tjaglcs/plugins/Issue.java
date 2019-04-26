@@ -43,14 +43,13 @@ public class Issue {
 				//System.out.println("article year: " + articles.get(i).getArticleDate().getYear());
 				years[i] = articles.get(i).getArticleDate().getYear();
 			} catch (Exception e) {
-				System.out.println("no date");
-				//e.printStackTrace();
+				//System.out.println("no date");
+				e.printStackTrace();
 			}
 		}
 		
 		Average average = new Average(years);
 		List<Integer> yearMode = average.getMode();
-		//System.out.println("mode: " + average.getMode());
 		
 		this.year = yearMode.get(0);
 	}
@@ -77,9 +76,7 @@ public class Issue {
 				System.out.println("Error: volumes in issue " + this.number + " don't match.");
 			}
 		}
-		
-		
-		//System.out.println("volume from setVolume in issue: " + volume);
+
 		this.volume = volume;
 	}
 
