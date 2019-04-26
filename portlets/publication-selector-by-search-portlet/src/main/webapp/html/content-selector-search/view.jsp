@@ -73,7 +73,7 @@
 			<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/>, Issue <c:out value="${issue.getNumber() }"/></h2>
 			<p class="year-label"><c:out value="${issue.getYear() }"/> Online Edition</p>
 			 
-			 <nav aria-labelledby="volume${currentVolume.getNumber() }">
+			 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
 				 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
 				 	<p class="toc-entry"><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
 				 	<p class="author-names">${article.getAuthors() }</p>
