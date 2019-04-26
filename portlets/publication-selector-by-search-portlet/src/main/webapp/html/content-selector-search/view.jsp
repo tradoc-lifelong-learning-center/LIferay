@@ -122,7 +122,7 @@
         	
         	var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
         	
-        	populateMenu(issueDropdown, issues, undefined,undefined);
+        	populateMenu(issueDropdown, issues, "Issue", undefined,undefined);
 
         } 
         
@@ -136,7 +136,7 @@
         }
         
         
-        function populateMenu(menu, items, startYear, endYear){
+        function populateMenu(menu, items, name, startYear, endYear){
         	if(!startYear){
         		startYear=0;
         	}
@@ -159,14 +159,17 @@
         		}
         		
         		var option = document.createElement("option");
-        		option.innerHTML = items[prop].number + ", year " + items[prop].year;
+        		
+        		var optionString = name + " " + items[prop].number;
+        		
+        		if(name=="Volume"){
+        			optionString+= " (" + items[prop].year + ")";
+        		}
+        		
+        		option.innerHTML = optionString;
         		option.setAttribute("value",items[prop].number);
             	fragment.appendChild(option);
 
-            	for(var artProp in items[prop].articles){
-            		console.log(items[prop].articles[artProp].title);
-            		
-            	}
             	
             }
         	
@@ -259,7 +262,7 @@
         		maxInput.innerHTML = values[1];
         		
         		//re-populate volume selector, clear and disable issue selector
-        		populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, values[0],values[1]);
+        		populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, "Volume", values[0],values[1]);
         		
         		if(config.isSingleIssue){
         			clearMenu(config.issueDropdown);
