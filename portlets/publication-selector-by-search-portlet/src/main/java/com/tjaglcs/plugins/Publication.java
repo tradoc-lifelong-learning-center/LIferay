@@ -366,14 +366,10 @@ public class Publication {
 		//System.out.println("getting issue!");
 		//System.out.println("issue string: " + issueString);
 		//System.out.println("is single issue?: " + this.isSingleIssue);
-		if(issueString==null && this.isSingleIssue==false) {
-			//if issue string is null, then we want all issues, right?
-			//System.out.println("no issue selected by query string. Getting all issues.");
-			//this.mostRecentIssue = getMostRecentIssue(this.mostRecentVolume);
+		//if(issueString==null && this.isSingleIssue==false) {
+		if(issueString==null) {
+			//if issue string is null, get all issues
 			this.selectedIssues = this.selectedVolume.getIssues();
-		} else if(issueString==null && this.isSingleIssue==true){
-			//for single issue without query string, default to most recent
-			this.selectedIssues.add(this.mostRecentIssue);
 		} else if(issueString!=null){
 			//if query string is not null, get that issue
 			
