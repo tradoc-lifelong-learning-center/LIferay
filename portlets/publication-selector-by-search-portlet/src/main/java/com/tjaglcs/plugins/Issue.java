@@ -5,24 +5,27 @@ import java.util.List;
 public class Issue {
 	private String publicationName;
 	private int number;
+	private String name;
 	private List<Article> articles;
 	private int volume;
 	private int year;
 	
-	public Issue(String publicationName, int number, List<Article> articles) {
+	
+	public Issue(String publicationName, int number, String name, List<Article> articles) {
 		this.publicationName = publicationName;
 		this.number = number;
+		this.name = name;
 		this.articles = articles;
 		setVolume();
 		setYear();
 		//System.out.println("building issue " + this.number);
 	}
-
+	
 	public String getPublicationName() {
 		return this.publicationName;
 	}
 	
-	public int getNumber() {
+		public int getNumber() {
 		return number;
 	}
 
@@ -31,6 +34,10 @@ public class Issue {
 	}
 	
 	
+
+	public String getName() {
+		return name;
+	}
 
 	public void setYear() {
 		

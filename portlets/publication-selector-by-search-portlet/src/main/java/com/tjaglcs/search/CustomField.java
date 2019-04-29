@@ -18,6 +18,8 @@ public class CustomField extends Field {
 	
 	public static final String PUBLICATION_ISSUE = "publicationIssue";
 	
+	public static final String PUBLICATION_ISSUE_NAME = "publicationIssueName";
+	
 	public static final String PUBLICATION_AUTHORS = "publicationAuthors";
 	
 	public static final String PUBLICATION_DATE = "publicationPublishDate";

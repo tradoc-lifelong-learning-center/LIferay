@@ -133,7 +133,7 @@ public class Publication {
 		//System.out.println("Start: " + startTime);
 		//System.out.println("End: " + endTime);
         //System.out.println("For each loop: " + (endTime - startTime)); 
-		System.out.println("end: " + this.articles.size());
+		//System.out.println("end: " + this.articles.size());
 	}
 	
 	public void setStartYear() {
@@ -287,10 +287,13 @@ public class Publication {
 		
 		for(int i = 0; i<issues.size();  i++) {
 			int issueNo = issues.get(i).getNumber();
+			String issueName = issues.get(i).getName();
 			
 			JSON+="\"issue" + issueNo + "\":{";
 			
-			JSON+="\"number\":\"" + issueNo + "\"";
+			JSON+="\"number\":\"" + issueNo + "\",";
+			
+			JSON+="\"name\":\"" + issueName + "\"";
 			
 			JSON+="}";
 			
@@ -520,6 +523,7 @@ public class Publication {
 				double version = -1;
 				int volume = -1;
 				int issue = -1;
+				String issueName = "";
 				String type = "Type not found";
 				LocalDate articleDate = null;
 				int status = -1;
@@ -564,6 +568,16 @@ public class Publication {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					System.out.println("issue error");
+				} 
+				
+				try {
+					if(currentDoc.getField(CustomField.PUBLICATION_ISSUE_NAME) != null) {
+						//System.out.println("int: " + currentDoc.getField(CustomField.PUBLICATION_ISSUE).getValue());
+						issueName = currentDoc.getField(CustomField.PUBLICATION_ISSUE_NAME).getValue();
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					System.out.println("issue name error");
 				} 
 				
 				try { //does this really need to be custom field?
@@ -648,7 +662,7 @@ public class Publication {
 						//System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
-					Article article = new Article(title, pubName, articleId, version, volume, issue, type, status, articleDate, request, authors);
+					Article article = new Article(title, pubName, articleId, version, volume, issue, issueName, type, status, articleDate, request, authors);
 					articles.add(article);
 					
 				} catch(Exception e) {

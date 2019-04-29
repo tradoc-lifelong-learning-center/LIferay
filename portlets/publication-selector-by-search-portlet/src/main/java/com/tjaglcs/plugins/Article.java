@@ -25,6 +25,7 @@ public class Article {
 	private double version;
 	private int volume;
 	private int issue;
+	private String issueName;
 	private String type;
 	int status;
 	private String url;
@@ -34,7 +35,7 @@ public class Article {
 	private String authors;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(String title, String publicationName, long id, double version, int volume, int issue, String issueName, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
 		this.title = title;
@@ -43,6 +44,7 @@ public class Article {
 		this.version = version;
 		this.volume = volume;
 		this.issue = issue;
+		this.issueName = issueName;
 		this.type = type;
 		this.status = status;
 		setURL(request);
@@ -90,9 +92,16 @@ public class Article {
 		return this.groupId;
 	}
 	
+	public String getIssueName() {
+		return issueName;
+	}
+	
 	public String getAuthors() {
 		return formatAuthors(this.authors);
 	}
+	
+	
+	
 	
 	private String formatAuthors(String authorInputString) {
 		//adding "by ", commas, and "and" between author names where needed
