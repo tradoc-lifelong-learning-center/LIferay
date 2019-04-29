@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -55,7 +56,7 @@ public class Publication {
 		filterArticlePDFs();
 		
 		setVolumes();
-		
+
 		setMostRecentVolume();
 		setMostRecentIssue(this.mostRecentVolume);
 		
@@ -81,7 +82,7 @@ public class Publication {
 		List<Article> journalArticles = new ArrayList<>();
 		List<Long> articlesToFilter = new ArrayList<>();
 		
-		
+		//split articles into categories
 		for(int i = 0; i<articlesLength; i++) {
 			
 			Article currentArticle = this.articles.get(i);
@@ -93,7 +94,7 @@ public class Publication {
 			}
 		}
 		
-		
+		//loop journal articles and look for matching PDFs
 		for(int i = 0; i<journalArticles.size(); i++) {
 			Article currentJournalArticle = journalArticles.get(i);
 			int vol = currentJournalArticle.getVolume();
@@ -108,13 +109,17 @@ public class Publication {
 			}
 		}
 		
+		//remove out duplicate IDs from articlesToFilter list
+		articlesToFilter = articlesToFilter.stream().distinct().collect(Collectors.toList());
+		
+		
+		//remove duplicate articles
 		for(int i = 0; i<this.articles.size(); i++) {
 			Article article = this.articles.get(i);
 			
 			for(int z = 0; z<articlesToFilter.size(); z++) {
 				
 				if(article.getId()==articlesToFilter.get(z)) {
-					//System.out.println("removing " + articlesToFilter.get(z));
 					this.articles.remove(this.articles.get(i));
 				}
 				
@@ -128,6 +133,7 @@ public class Publication {
 		//System.out.println("Start: " + startTime);
 		//System.out.println("End: " + endTime);
         //System.out.println("For each loop: " + (endTime - startTime)); 
+		System.out.println("end: " + this.articles.size());
 	}
 	
 	public void setStartYear() {
