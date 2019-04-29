@@ -376,9 +376,12 @@ public class Publication {
 		//System.out.println("issue string: " + issueString);
 		//System.out.println("is single issue?: " + this.isSingleIssue);
 		//if(issueString==null && this.isSingleIssue==false) {
-		if(issueString==null) {
-			//if issue string is null, get all issues
+		if(issueString==null && !this.isSingleIssue) {
+			//if issue string is null AND multi, get all issues
 			this.selectedIssues = this.selectedVolume.getIssues();
+		} else if(issueString==null && this.isSingleIssue) { 
+			//if issue string is null AND a single issue, only get most recent single issue
+			this.selectedIssues.add(this.getMostRecentIssue());
 		} else if(issueString!=null){
 			//if query string is not null, get that issue
 			
