@@ -114,12 +114,12 @@ public class Volume {
 		//issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.publicationName,k,v.get(k).getIssueName(),v)));
 		issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.publicationName,k,v.get(0).getIssueName(),v)));
 		
-		issuesMap.forEach((k,v) -> {
-			issueArray.add(new Issue(this.publicationName,k,"season",v));
+		//issuesMap.forEach((k,v) -> {
+		//	issueArray.add(new Issue(this.publicationName,k,"season",v));
 			//System.out.println("k: " + k);
 			//System.out.println("v: " + v);
 			//System.out.println(v.get(0));
-		});
+		//});
 		
 		//System.out.println("issue year: " + issueArray.get(1).getYear());
 		
