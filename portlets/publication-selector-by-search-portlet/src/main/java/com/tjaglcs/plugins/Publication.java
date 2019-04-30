@@ -109,14 +109,16 @@ public class Publication {
 			}
 		}
 		
-		System.out.println("article filter list: " + articlesToFilter);
+		//System.out.println("article filter list: " + articlesToFilter);
 		
 		//remove out duplicate IDs from articlesToFilter list
 		List<Long> articlesToFilterConsolidated = articlesToFilter.stream().distinct().collect(Collectors.toList());
 		
-		System.out.println("article filter list consolidated: " + articlesToFilterConsolidated);
+		//System.out.println("article filter list consolidated: " + articlesToFilterConsolidated);
 		
-		//remove duplicate articles
+		List<Article> articlesToRemove = new ArrayList<>();
+		
+		//build array of duplicate article objects
 		for(int i = 0; i<this.articles.size(); i++) {
 			Article article = this.articles.get(i);
 			
@@ -126,12 +128,18 @@ public class Publication {
 				
 				if(article.getId()==articlesToFilterConsolidated.get(z)) {
 					System.out.println("filtering PDF " + this.articles.get(i).getId() + " with title " + this.articles.get(i).getTitle());
-					this.articles.remove(this.articles.get(i));
+					//this.articles.remove(this.articles.get(i));
+					articlesToRemove.add(this.articles.get(i));
 				}
 				
 			}
 			
 			
+		}
+		
+		//remove articles
+		for(int i = 0; i<articlesToRemove.size(); i++) {
+			this.articles.remove(articlesToRemove.get(i));
 		}
 		
 		//long endTime = Calendar.getInstance().getTimeInMillis();
