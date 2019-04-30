@@ -90,7 +90,19 @@
 				 
 				 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
 					 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
-					 	<p class="toc-entry"><a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a></p>
+
+					 	<p class="toc-entry">
+					 	
+					 		<c:choose>
+						 		<c:when test="${article.getURL()==null }">
+						 			<c:out value="${article.getTitle() }"/>
+						 		</c:when>
+						 		<c:otherwise>
+						 			<a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a>
+						 		</c:otherwise>
+					 		</c:choose>
+					 	
+					 	</p>
 					 	<p class="author-names">${article.getAuthors() }</p>
 					 </c:forEach>
 				 </nav>
