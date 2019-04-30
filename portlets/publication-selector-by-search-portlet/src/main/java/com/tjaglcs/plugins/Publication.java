@@ -688,13 +688,13 @@ public class Publication {
 					
 					//skip articles with invalid meta, or with publish dates that are sometime in the future
 					if(volume==-1 || issue==-1 || articleDate == null) {
-						System.out.println("skipping " + articleId + " due to invalid vol/issue/year");
+						//System.out.println("skipping " + articleId + " due to invalid vol/issue/year");
 						continue;
 					} else if(pdfType.contains("Article")){
-						System.out.println("Skipping article PDF");
+						//System.out.println("Skipping article PDF");
 						continue;
 					} else if(articleDate.isAfter(now)) {
-						System.out.println("article " + title + " will not be published yet");
+						//System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
 					Article article = new Article(title, pubName, articleId, version, volume, issue, issueName, type, status, articleDate, request, authors);
