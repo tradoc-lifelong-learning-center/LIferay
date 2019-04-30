@@ -124,10 +124,10 @@ public class Publication {
 			
 			for(int z = 0; z<articlesToFilterConsolidated.size(); z++) {
 				
-				System.out.println("checking article " + article.getId() + " against " + articlesToFilterConsolidated.get(z));
+				//System.out.println("checking article " + article.getId() + " against " + articlesToFilterConsolidated.get(z));
 				
 				if(article.getId()==articlesToFilterConsolidated.get(z)) {
-					System.out.println("filtering PDF " + this.articles.get(i).getId() + " with title " + this.articles.get(i).getTitle());
+					//System.out.println("filtering PDF " + this.articles.get(i).getId() + " with title " + this.articles.get(i).getTitle());
 					//this.articles.remove(this.articles.get(i));
 					articlesToRemove.add(this.articles.get(i));
 				}
@@ -301,7 +301,7 @@ public class Publication {
 		
 		for(int i = 0; i<issues.size();  i++) {
 			int issueNo = issues.get(i).getNumber();
-			String issueName = issues.get(i).getName();
+			String issueName = escapeJSON(issues.get(i).getName());
 			
 			JSON+="\"issue" + issueNo + "\":{";
 			
@@ -324,6 +324,10 @@ public class Publication {
 		
 		return JSON;
 		
+	}
+	
+	private String escapeJSON(String str) {
+		return str.replaceAll("(\"|\\\\)", "\\\\$1");
 	}
 	
 	public Volume getVolume(int volumeNumber){
