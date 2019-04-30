@@ -155,7 +155,7 @@
 	        
 	        
 	        function clearMenu(menu){
-	        	console.log("attempting to clear " + menu);
+	        	//console.log("attempting to clear " + menu);
 	        	//clear existing options, skipping the first
 				while (menu.children.length > 1) {
 					menu.removeChild(menu.lastChild);
@@ -174,10 +174,9 @@
 	        	
 	        	//if single issue, clear sub (issue) menu
 	        	clearMenu(menu);	
-	
-	        	
 	        	
 	        	var fragment = document.createDocumentFragment();
+	        	var optionArray = [];
 	        	
 	        	for(var prop in items){
 	        		
@@ -195,10 +194,20 @@
 	        		
 	        		option.innerHTML = optionString;
 	        		option.setAttribute("value",items[prop].number);
-	            	fragment.appendChild(option);
-	
-	            	
+	        		optionArray.push(option);
+
 	            }
+	        	
+	        	//sort and add to fragment
+	        	var sortByValue = function(a, b) {
+	        		return parseInt(a.value) - parseInt(b.value);
+	            }
+
+	        	optionArray.sort(sortByValue);
+
+	        	for(var i = 0; i<optionArray.length; i++){
+	        		fragment.appendChild(optionArray[i]);
+	        	}
 	        	
 	        	menu.appendChild(fragment);
 	        } 
