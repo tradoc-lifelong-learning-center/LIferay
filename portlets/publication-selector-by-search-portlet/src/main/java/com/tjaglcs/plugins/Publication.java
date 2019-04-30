@@ -109,17 +109,23 @@ public class Publication {
 			}
 		}
 		
-		//remove out duplicate IDs from articlesToFilter list
-		articlesToFilter = articlesToFilter.stream().distinct().collect(Collectors.toList());
+		System.out.println("article filter list: " + articlesToFilter);
 		
+		//remove out duplicate IDs from articlesToFilter list
+		List<Long> articlesToFilterConsolidated = articlesToFilter.stream().distinct().collect(Collectors.toList());
+		
+		System.out.println("article filter list consolidated: " + articlesToFilterConsolidated);
 		
 		//remove duplicate articles
 		for(int i = 0; i<this.articles.size(); i++) {
 			Article article = this.articles.get(i);
 			
-			for(int z = 0; z<articlesToFilter.size(); z++) {
+			for(int z = 0; z<articlesToFilterConsolidated.size(); z++) {
 				
-				if(article.getId()==articlesToFilter.get(z)) {
+				System.out.println("checking article " + article.getId() + " against " + articlesToFilterConsolidated.get(z));
+				
+				if(article.getId()==articlesToFilterConsolidated.get(z)) {
+					System.out.println("filtering PDF " + this.articles.get(i).getId() + " with title " + this.articles.get(i).getTitle());
 					this.articles.remove(this.articles.get(i));
 				}
 				
@@ -531,6 +537,7 @@ public class Publication {
 				LocalDate articleDate = null;
 				int status = -1;
 				String authors = "";
+				String pdfType = "";
 				
 				
 				try {
@@ -625,7 +632,18 @@ public class Publication {
 					e1.printStackTrace();
 					System.out.println("author error");
 				} 
-				
+
+				try {
+					//System.out.println("pdf type field: " + currentDoc.getField(CustomField.PUBLICATION_PDF_TYPE));
+					if(currentDoc.getField(CustomField.PUBLICATION_PDF_TYPE) != null) {
+						pdfType = currentDoc.getField(CustomField.PUBLICATION_PDF_TYPE).getValues()[0];
+						
+					}
+				} catch (Exception ePDFType) {
+					System.out.println("PDF type error");
+					ePDFType.printStackTrace();
+					
+				} 
 
 				
 				try {
@@ -653,7 +671,6 @@ public class Publication {
 					e.printStackTrace();
 				}
 				
-				
 				try {
 					LocalDate now = LocalDate.now();
 					
@@ -661,8 +678,11 @@ public class Publication {
 					if(volume==-1 || issue==-1 || articleDate == null) {
 						System.out.println("skipping " + articleId + " due to invalid vol/issue/year");
 						continue;
+					} else if(pdfType.contains("Article")){
+						System.out.println("Skipping article PDF");
+						continue;
 					} else if(articleDate.isAfter(now)) {
-						//System.out.println("article " + title + " will not be published yet");
+						System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
 					Article article = new Article(title, pubName, articleId, version, volume, issue, issueName, type, status, articleDate, request, authors);

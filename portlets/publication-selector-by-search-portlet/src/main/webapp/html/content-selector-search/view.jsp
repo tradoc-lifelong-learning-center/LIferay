@@ -74,20 +74,14 @@
 		
 		<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
 			<section class="volume-container">
-				<!-- Volume #, [Season] Issue -->
-				<!-- Volume #, Issue # -->
-				
-				<!-- seems overly complicated for a single flipped word. Any simpler way? -->
+
 				<c:choose>
-					
-				
 					<c:when test="${issue.getName() != ''}">
 						<c:set var="issueLabel" value="${issue.getName() } Issue"/>
 					</c:when>
 					<c:otherwise>
 						<c:set var="issueLabel" value="Issue ${issue.getNumber() }"/>
 					</c:otherwise>
-				
 				</c:choose>
 		
 				<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/>, <c:out value="${issueLabel }"/></h2>

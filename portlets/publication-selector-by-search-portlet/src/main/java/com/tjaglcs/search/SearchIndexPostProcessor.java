@@ -87,7 +87,8 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			new FieldToIndex("publicationIssue",CustomField.PUBLICATION_ISSUE),
 			new FieldToIndex("publicationIssueName",CustomField.PUBLICATION_ISSUE_NAME),
 			new FieldToIndex("publicationAuthors",CustomField.PUBLICATION_AUTHORS),
-			new FieldToIndex("publicationPublishDate",CustomField.PUBLICATION_DATE)
+			new FieldToIndex("publicationPublishDate",CustomField.PUBLICATION_DATE),
+			new FieldToIndex("publicationPdfType",CustomField.PUBLICATION_PDF_TYPE)
 		};
 		
 		for(int i = 0; i<fieldsToIndex.length; i++) {
@@ -122,6 +123,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 			
 			for (Map.Entry<String,Fields> entry : fieldMap.entrySet()) {  
 	            //if(entry.getValue().get(fieldName).getValue()!=null) {
+				
 				if(entry.getValue().get(fieldName)!=null) {
 
 	            	if(fieldName=="publicationAuthors") {
@@ -163,6 +165,11 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	
 	private String getJournalArticleMeta(Object object, String fieldName) {
 		JournalArticle article = (JournalArticle) object;
+		
+		//don't need a PDF type for journals
+		if(fieldName=="publicationPdfType") {
+			return "";
+		}
 		
 		try {
 			String xmlContent = article.getContent();
