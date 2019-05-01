@@ -6,7 +6,7 @@
 	<artifactId>publication-selector-search-portlet</artifactId>
 	<packaging>war</packaging>
 	<name>Publication Selector by Search Portlet</name>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -115,4 +115,7 @@
 	</properties>
 	</profile>
 </profiles>
+	<description>This portlet allows users to select and navigate to a specific volume/issue. Users can narrow down the selection options by year. After selecting a volume/issue, it will display a list of articles.
+
+The portlet includes a hook to update the search index based on custom meta in the article structure.  The portlet finds pub info using the site search index.</description>
 </project>

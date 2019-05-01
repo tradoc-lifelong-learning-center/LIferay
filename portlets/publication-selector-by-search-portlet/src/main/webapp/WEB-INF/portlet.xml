@@ -4,7 +4,7 @@
 	
 	<portlet>
 		<portlet-name>content-selector-search-portlet</portlet-name>
-		<display-name>Content Selector Search Portlet</display-name>
+		<display-name>Content Selector by Search Portlet</display-name>
 		<portlet-class>
 			com.liferay.util.bridges.mvc.MVCPortlet
 		</portlet-class>
