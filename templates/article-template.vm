@@ -1,0 +1,128 @@
+##
+## Web content templates are used to lay out the fields defined in a
+## web content structure.
+##
+## Please use the left panel to quickly add commonly used variables.
+## Autocomplete is also available and can be invoked by typing "$".
+##
+
+<style>
+.journal-content-article .article--title {
+	color:#000666;
+	font-family:"Adobe Caslon Pro", serif;
+	font-size:20pt;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height: 125%;
+	margin-bottom:3rem;
+	margin-left:0;
+	margin-right:0;
+	margin-top:0;
+	orphans:1;
+	page-break-after:auto;
+	page-break-before:auto;
+	text-align:center;
+	text-decoration:none;
+	text-indent:0;
+	text-transform:none;
+	widows:1;
+}
+
+.journal-content-article .article--volume-info{
+    font-size: 16pt;
+    font-family: Adobe Caslon Pro,Times New Roman;
+    line-height: 150%;
+    text-align: center;
+    margin-bottom:3rem;
+}
+
+.article--byline {
+	color:#000000;
+	font-family:"Times New Roman", serif;
+	font-size:14pt;
+	font-style:normal;
+	font-variant:small-caps;
+	font-weight:normal;
+	margin-bottom:1rem;
+	margin-left:0;
+	margin-right:0;
+	margin-top:0;
+	orphans:1;
+	page-break-after:auto;
+	page-break-before:auto;
+	text-align:center;
+	text-decoration:none;
+	text-indent:0;
+	text-transform:none;
+	widows:1;
+}
+</style>
+
+#set ($publicationPublishDate_Data = $getterUtil.getLong($publicationPublishDate.getData()))
+
+
+
+
+
+<article>
+<header>
+<h1 class="article--title">$reserved-article-title.getData()##
+#if ($publicationSubtitle.getData())##
+: </br>$publicationSubtitle.getData()##
+#end
+
+
+</h1>
+<p class="article--volume-info">Volume $publicationVolume.getData() 
+Issue $publicationIssue.getData() 
+
+#if ($publicationPublishDate_Data > 0)
+	#set ($publicationPublishDate_DateObj = $dateUtil.newDate($publicationPublishDate_Data))
+	$dateUtil.getDate($publicationPublishDate_DateObj, "yyyy", $locale)
+#end
+
+</p>
+<p class="article--byline">#if (!$publicationAuthors.getSiblings().isEmpty())
+    #set ($separator = ",")
+
+    by 
+	#foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
+
+	
+		#if($publicationAuthors.getSiblings().size()>=3 && $velocityCount!=$publicationAuthors.getSiblings().size())
+		$cur_publicationAuthors.getData()$separator
+		#else
+		    <span id="article-author-$velocityCount">$cur_publicationAuthors.getData()<sup><a href="#article-author-bio-$velocityCount">[*]</a></sup></span>
+		#end
+				
+		#if ($publicationAuthors.getSiblings().size()>1 && $velocityCount==$publicationAuthors.getSiblings().size() - 1)
+		 and 
+		#end
+
+	#end
+#end</p>
+</header>
+
+<div class="article--body">$publicationContent.getData()</div>
+
+<footer class="article--footer">
+#foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
+    <p id="article-author-bio-$velocityCount">
+        <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData(); 
+    </p>
+#end
+ 
+<div>
+
+#if ($publicationEndNotes.getData())
+	$publicationEndNotes.getData()
+#end
+
+
+</div>
+
+</footer>
+
+
+</article>
