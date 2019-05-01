@@ -1,8 +1,8 @@
 package com.tjaglcs.search;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -13,33 +13,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.tjaglcs.search.CustomField;
 import com.tjaglcs.search.FieldToIndex;
-
-import java.io.FileInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	public void postProcessContextQuery(BooleanQuery booleanQuery, SearchContext searchcontext)
@@ -56,9 +38,6 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		
 		String documentClassName = "DLFileEntryImpl";
 		String journalClassName = "JournalArticleImpl";
-		
-		
-		
 		
 		if(objectClass.contains(journalClassName)) {
 			//System.out.println("class name: " + objectClass);
@@ -77,9 +56,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
     }
 	
 	
-	//these are pretty much exactly the same but I'm not sure how to combine because of static types. Fix later?
 	private void indexDocument(Document document, Object object, String className) throws NumberFormatException, PortalException, SystemException {
-		//JournalArticle article = (JournalArticle) object;
 		
 		FieldToIndex[] fieldsToIndex = new FieldToIndex[] {
 			new FieldToIndex("publicationName",CustomField.PUBLICATION_NAME),
@@ -132,7 +109,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 	            		String authorsString = "";
 
 	            		for(int i=0; i<authorsArray.length; i++) {
-	            			System.out.println(i + ": " + authorsArray[i]);
+	            			//System.out.println(i + ": " + authorsArray[i]);
 	            			if(i>0) {
 	            				authorsString+="|";
 	            			}
@@ -185,7 +162,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 				String str = "";
 
 				for(int i = 0; i<nodes.size(); i++) {
-					System.out.println(nodes.get(i).getText());
+					//System.out.println(nodes.get(i).getText());
 					if(i>0) {
 						str += "|";
 					}

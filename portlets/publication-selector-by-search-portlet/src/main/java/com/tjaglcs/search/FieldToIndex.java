@@ -1,7 +1,5 @@
 package com.tjaglcs.search;
 
-import com.tjaglcs.search.CustomField;
-
 public class FieldToIndex {
 	private String fieldValue;
 	private String fieldNameString ="";
