@@ -12,8 +12,14 @@
     padding:1rem;
 }
 
+/*center vol/issue selector*/
 .content-selector-search-portlet .control-group{
     text-align:center;
+}
+
+/*left align control group in config*/
+.content-selector-search-portlet .config-form .control-group{
+	text-align:left;
 }
 
 .content-selector-search-portlet .noUi--slider-outer-container{

@@ -15,21 +15,27 @@
 
 <%  
 String numberOfIssues_cfg = GetterUtil.getString(portletPreferences.getValue("numberOfIssues", ""));
+
+boolean isMulti=false;
+boolean isSingle=false;
+
+if(numberOfIssues_cfg.contains("multi")){
+	isMulti=true;
+} else if(numberOfIssues_cfg.contains("single")){
+	isSingle=true;
+}
+
 %>
 
-<aui:form action="<%= configurationURL %>" method="post" name="fm">
+<aui:form action="<%= configurationURL %>" method="post" name="fm" cssClass="config-form">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-    
-	
-	
-		<aui:select label="Single or multi issue" id="numberOfIssues" name="preferences--numberOfIssues--" showEmptyOption="true" cssClass="dropdown" helpMessage="Portlet can display either a single issue or all issues in a volume.">
-			
-			<aui:option id="numberOfIssues--single" value="single">Single</aui:option>
-			<aui:option id="numberOfIssues--multi" value="multi">Multi</aui:option>
 
-        </aui:select>
-		<p>Current selection: <%= numberOfIssues_cfg %></p>
-	
+		<aui:fieldset label="Should the portlet display one issue at a time or an entire volume?">
+			<aui:input name="preferences--numberOfIssues--" type="radio" value="single" label="Single Issue" checked="<%=isSingle %>"/>
+	        <aui:input name="preferences--numberOfIssues--" type="radio" value="multi" label="Entire Volume" checked="<%=isMulti %>"/> 
+		
+		</aui:fieldset>
+
     <aui:button-row>
        <aui:button type="submit" />
     </aui:button-row>
