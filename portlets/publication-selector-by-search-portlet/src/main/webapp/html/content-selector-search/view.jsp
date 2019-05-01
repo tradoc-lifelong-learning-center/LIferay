@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test = "${catchException != null}">
-		<div class="alert alert-info">No article found for Military Law Review.</div>
+		<div class="alert alert-info">No articles found.</div>
 		
 	</c:when>
 	
