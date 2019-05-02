@@ -68,9 +68,7 @@
 	<liferay-ui:error key="no-issue-found" message="no-issue-found"/>
 	
 	<div>
-		
-	
-		
+
 		
 		<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
 			<section class="volume-container">
@@ -200,7 +198,7 @@
 	        	
 	        	//sort and add to fragment
 	        	var sortByValue = function(a, b) {
-	        		return parseInt(a.value) - parseInt(b.value);
+	        		return parseInt(b.value) - parseInt(a.value);
 	            }
 
 	        	optionArray.sort(sortByValue);
