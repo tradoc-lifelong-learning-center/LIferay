@@ -68,7 +68,6 @@
 	<liferay-ui:error key="no-issue-found" message="no-issue-found"/>
 	
 	<div>
-
 		
 		<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
 			<section class="volume-container">
@@ -84,6 +83,9 @@
 		
 				<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/>, <c:out value="${issueLabel }"/></h2>
 				
+				<%-- <c:if test="${issue==pubData.getMostRecentIssue() }">Most Recent!</c:if> --%>
+				
+						
 				<p class="year-label"><c:out value="${issue.getYear() }"/> Online Edition</p>
 				 
 				 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
