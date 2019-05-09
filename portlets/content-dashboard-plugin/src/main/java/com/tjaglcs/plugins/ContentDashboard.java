@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -47,24 +49,30 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ContentDashboard extends MVCPortlet {
 	
+	private List<Article> articles = new ArrayList<>();
+	public static final String CSV_SEPARATOR = ",";
 	
 	public void exportCSV(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException {
 	//http://www.liferaysavvy.com/2015/04/data-export-as-csv-format-in-liferay.html
 		
 		//String portletResource = ParamUtil.getString(request, "portletResource");
 		
-		System.out.println("hey!");
-		System.out.println(resourceRequest);
+		//System.out.println("hey!");
+		//System.out.println(resourceRequest);
 		
-		StringBundler sb = new StringBundler();
+		//StringBundler sb = new StringBundler();
 		
-		sb.append("hello world");
-		sb.append(CharPool.NEW_LINE);
-		sb.append("hello again, world!");
+		//sb.append(getCSVFormattedValue("hello world"));
+		//sb.append(CharPool.NEW_LINE);
+		//sb.append(getCSVFormattedValue("hello again, world!"));
+		
+		
 		
 		String fileName = "helloworld.csv";
 		
-		byte[] bytes = sb.toString().getBytes();
+		String content = articlesToCsvString(this.articles);
+		
+		byte[] bytes = content.getBytes();
 		
 		String contentType = ContentTypes.APPLICATION_TEXT;
 		
@@ -77,10 +85,28 @@ public class ContentDashboard extends MVCPortlet {
 	public void serveResource(ResourceRequest resourceRequest,
 	ResourceResponse resourceResponse) {
 
+		
+		/*
+		try {
+			//RenderRequest request = (RenderRequest)PortalUtil.getHttpServletRequest(resourceRequest);
+			List<Article> arts = getContent(request);
+			//System.out.println("articles: " + arts);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SearchException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}*/
+		
+		
+		
+		
 	String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
 	//System.out.println("cmd"+cmd);
 
 	try {
+		//System.out.println("articles from serveResource: " + this.articles.size());
 		exportCSV(resourceRequest, resourceResponse);
 		System.out.println("click!");
 	} catch (Exception e) {
@@ -97,7 +123,7 @@ public class ContentDashboard extends MVCPortlet {
         
         
         getContent(request);
-        
+        //System.out.println("atricles: " + this.articles.size());
         
         return layouts;
 	}
@@ -118,7 +144,7 @@ public class ContentDashboard extends MVCPortlet {
 		
 	}
 	
-	public void getContent(RenderRequest request) throws ParseException, SearchException {
+	public List<Article> getContent(RenderRequest request) throws ParseException, SearchException {
 		String pubName = "Military Law Review";
 		
 		//System.out.print("hello again, world!");
@@ -222,12 +248,53 @@ public class ContentDashboard extends MVCPortlet {
 			try {
 				Article article = new Article(title, pubName, articleId, version, volume, issue, issueName, type, status, articleDate, request, authors, viewCount);
 				//System.out.println(article.getViewCount() + " views for " + article.getTitle());
+				this.articles.add(article);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-
-		
+		return this.articles;
 	}
 	
+	private String articlesToCsvString(List<Article> articles) {
+		System.out.println("trying to build stuff");
+		
+		StringBundler str = new StringBundler();
+		
+		//build headers
+		str.append("Article Name");
+		str.append(CSV_SEPARATOR);
+		str.append("ID");
+		str.append(CSV_SEPARATOR);
+		str.append("View Count");
+		str.append(CharPool.NEW_LINE);
+		
+		System.out.println("num of atricles: " + articles.size());
+		
+		for(int i = 0; i<articles.size(); i++) {
+			Article article = articles.get(i);
+			
+			str.append(article.getTitle());
+			str.append(CSV_SEPARATOR);
+			str.append(article.getId());
+			str.append(CSV_SEPARATOR);
+			str.append(article.getViewCount());
+			str.append(CharPool.NEW_LINE);
+		}
+		
+		System.out.println(str.toString());
+		return str.toString();
+	}
+	
+	protected String getCSVFormattedValue(String value) {
+		//http://www.liferaysavvy.com/2015/04/data-export-as-csv-format-in-liferay.html
+		StringBundler sb = new StringBundler(3);
+		sb.append(CharPool.QUOTE);
+		sb.append(StringUtil.replace(value, CharPool.QUOTE,
+		StringPool.DOUBLE_QUOTE));
+		sb.append(CharPool.QUOTE);
+		
+		
+		return sb.toString();
+		}
 }
