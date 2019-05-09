@@ -1,18 +1,18 @@
-.table-group-container {
+.table-scroller.table-group-container {
   background-color: white;
   margin-left: auto;
   margin-right: auto;
   position: relative;
 }
 
-.table-container {
+.table-scroller .table-container {
   overflow-x: auto;
   padding-left: 24px;
   padding-right: 24px;
 
 }
 
-.scroll-button {
+.table-scroller .scroll-button {
   border: none;
   background-color: rgba(0, 0, 0, 0.5);
   display: none;
@@ -24,9 +24,9 @@
 
 
 
-.scroll-button--right {
+.table-scroller .scroll-button--right {
   right: 0;
 }
-.scroll-button--left {
+.table-scroller .scroll-button--left {
   left: 0;
 }
