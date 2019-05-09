@@ -77,7 +77,7 @@ color: blue !important;
 <article>
 <header>
 <h1 class="article--title">$reserved-article-title.getData()##
-#if ($publicationSubtitle.getData())##
+#if ($publicationSubtitle.getData()!="")##
 : </br>$publicationSubtitle.getData()##
 #end
 
