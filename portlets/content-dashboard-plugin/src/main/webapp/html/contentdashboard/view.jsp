@@ -22,7 +22,9 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 </portlet:resourceURL>
 
 <c:set var="stuff" value="${cd.doStuff(renderRequest) }" />
-<c:set var="sitemap" value="${cd.fetchSiteMap(renderRequest) }" />
+<c:set var="articles" value="${cd.getContent(renderRequest) }" />
+
+
 
 
 This is the <b>Content Dashboard</b> portlet in View mode.
@@ -31,11 +33,20 @@ This is the <b>Content Dashboard</b> portlet in View mode.
 
 <p><a href="<%=exportCSVURL%>">Export Data as CSV</a></p>
 
+
+<%--  
+
 <c:forEach items="${stuff }" var = "item" varStatus="i">
 
 	<p><c:out value="${item.getFriendlyURL() }"/></p>
 </c:forEach>
- 
+--%>
+
+
+<c:forEach items="${articles }" var = "article" varStatus="i">
+
+	<p><c:out value="${article.getTitle() }"/></p>
+</c:forEach> 
 
 
 <div>
