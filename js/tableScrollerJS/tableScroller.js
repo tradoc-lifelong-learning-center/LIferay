@@ -106,7 +106,7 @@
 		  }
 
 		  function showElementInline(e) {
-		    e.style.display = "inline";
+		    e.style.display = "inline-flex";
 		  }
 
 		  function hideElement(e) {
