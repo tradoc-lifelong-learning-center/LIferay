@@ -1,4 +1,4 @@
-
+(function(){
 	smoothScrollPolyfill();
 	window.onload = scrollTables;
 
@@ -130,7 +130,7 @@
 				for(var i = 0; i<tableContainers.length; i++){
 					var tableContainerId = "table-container-" + i;
 					
-					var outerContainer = '<div class="table-group-container">';
+					var outerContainer = '<div class="table-scroller table-group-container">';
 					var innerContainer = '<div class="table-container" id="' + tableContainerId + '">';
 					var leftButton = '<button class="scroll-button scroll-button--left" data-direction="-1" data-linked-table="' + tableContainerId + '"><svg height="22.6" id="Layer_1" width="12.9" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style><g id="Layer_2"><g id="_00B5E2"><path class="st0" d="M1.6 11.4l9.8 9.7M11.3 1.5l-9.8 9.8"/></g></g></svg></button>';
 					var rightButton = '<button class="scroll-button scroll-button--right" data-direction="1" data-linked-table="' + tableContainerId + '"><svg height="22.6" id="Layer_1" width="12.9" xmlns="http://www.w3.org/2000/svg"><style>.st0{fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style><g id="Layer_2"><g id="_00B5E2"><path class="st0" d="M11.3 11.4l-9.8 9.7M1.6 1.5l9.8 9.8"/></g></g></svg></button>';
@@ -579,4 +579,8 @@
 	}	
 	
 	
+	
+	
+	
+})();
 	
