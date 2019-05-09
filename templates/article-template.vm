@@ -57,6 +57,15 @@
 	text-transform:none;
 	widows:1;
 }
+
+footer hr{
+margin-top:2rem;
+}
+
+._idEndnoteAnchor,
+._idEndnoteLink{
+color: blue !important;
+}
 </style>
 
 #set ($publicationPublishDate_Data = $getterUtil.getLong($publicationPublishDate.getData()))
@@ -107,6 +116,8 @@ Issue $publicationIssue.getData()
 <div class="article--body">$publicationContent.getData()</div>
 
 <footer class="article--footer">
+<hr/>
+
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
     <p id="article-author-bio-$velocityCount">
         <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData(); 
