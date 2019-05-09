@@ -121,6 +121,10 @@ function scrollTables() {
 
 // polyfill
 function smoothScrollPolyfill() {
+//Copyright (c) 2013 Dustan Kasten
+//The MIT License (MIT)
+//https://github.com/iamdustan/smoothscroll
+	
   // aliases
   var w = window;
   var d = document;
