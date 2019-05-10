@@ -83,6 +83,8 @@ color: blue !important;
 
 
 </h1>
+
+#if($publicationVolume.getData()!="null" || $publicationIssue.getData()!="null")
 <p class="article--volume-info">Volume $publicationVolume.getData() 
 Issue $publicationIssue.getData() 
 
@@ -90,12 +92,13 @@ Issue $publicationIssue.getData()
 	#set ($publicationPublishDate_DateObj = $dateUtil.newDate($publicationPublishDate_Data))
 	$dateUtil.getDate($publicationPublishDate_DateObj, "yyyy", $locale)
 #end
+#end
 
 </p>
 <p class="article--byline">#if (!$publicationAuthors.getSiblings().isEmpty())
     #set ($separator = ",")
 
-    by 
+     
 	#foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
 
 	
