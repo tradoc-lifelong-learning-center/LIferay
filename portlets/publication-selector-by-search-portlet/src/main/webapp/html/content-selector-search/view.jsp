@@ -233,7 +233,7 @@
 	        		}
 	        	
 	        	
-	        	var pubCode = jsonData.publication.pubCode;
+	        	//var pubCode = jsonData.publication.pubCode;
 	        	var volumeNumber = volumeDropdown.value;
 	        	if(config.isSingleIssue){		
 	        		var issueNumber = issueDropdown.value;
@@ -242,7 +242,7 @@
 	        		}
 	        	
 	        	
-	        	var queryString = getQueryString(pubCode,volumeNumber,issueNumber);
+	        	var queryString = getQueryString(volumeNumber,issueNumber);
 	        	
 	         	if(volumeDropdown.value=="selectAVolume" || (issueDropdown && issueDropdown.value=="selectAnIssue")) {
 	             	return false;
@@ -256,10 +256,10 @@
 	         }); 
 	        
 	        
-	        function getQueryString(pubCode,volumeNumber,issueNumber){
+	        function getQueryString(volumeNumber,issueNumber){
 	            
 	        	var queryString = "";
-	        	queryString+="?pub=" + pubCode + "&vol=" + volumeNumber;
+	        	queryString+="?vol=" + volumeNumber;
 	        	if(issueNumber>0){
 	        	queryString+= "&no=" + issueNumber;
 	        	}

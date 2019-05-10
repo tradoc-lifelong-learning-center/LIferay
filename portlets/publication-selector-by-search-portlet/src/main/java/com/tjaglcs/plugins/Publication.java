@@ -345,7 +345,7 @@ public class Publication {
 	public boolean setSelectedContent(RenderRequest request) {
 
 		//System.out.println("setting selected content!");
-		String pubCode = getQueryStringValue("pub");
+		//String pubCode = getQueryStringValue("pub");
 		
 		//System.out.println("pub code: " + pubCode);
 		
