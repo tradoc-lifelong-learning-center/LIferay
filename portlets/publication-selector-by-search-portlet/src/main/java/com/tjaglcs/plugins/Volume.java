@@ -126,7 +126,11 @@ public class Volume {
 		//System.out.println("issuesMap");
 		//System.out.println(issuesMap);
 		 
-		this.issues = issueArray;
+		
+		//SORT
+		List<Issue> issueArraySorted = new IssueSorter(issueArray).getSortedIssues();
+		
+		this.issues = issueArraySorted;
 	 
 	}
 	

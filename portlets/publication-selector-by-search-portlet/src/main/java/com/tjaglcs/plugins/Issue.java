@@ -2,7 +2,7 @@ package com.tjaglcs.plugins;
 
 import java.util.List;
 
-public class Issue {
+public class Issue implements Comparable<Issue>{
 	private String publicationName;
 	private int number;
 	private String name;
@@ -20,6 +20,18 @@ public class Issue {
 		setYear();
 		//System.out.println("building issue " + this.number);
 	}
+	
+	//allow issues to be sorted by number
+	public int compareTo(Issue compareIssue) {
+		//ascending
+		//return (this.getNumber() < compareIssue.getNumber() ? -1 : 
+        //    (this.getNumber() == compareIssue.getNumber() ? 0 : 1));
+		
+		//descending
+		return (this.getNumber() < compareIssue.getNumber() ? 1 : 
+            (this.getNumber() == compareIssue.getNumber() ? 0 : -1)); 
+		
+	}	
 	
 	public String getPublicationName() {
 		return this.publicationName;
