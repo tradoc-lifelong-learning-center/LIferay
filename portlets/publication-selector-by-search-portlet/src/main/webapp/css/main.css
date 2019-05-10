@@ -88,9 +88,17 @@
     margin-top:3rem;
 }
 
+.content-selector-search-portlet .table-of-contents-container h3{
+	text-align: center;
+    margin-top: 1rem;
+    color: #000666!important;
+    font-weight: normal;
+    border-bottom:.25px solid rgb(220,220,220);
+}
+
 .table-of-contents-container{
-	border-top:.25px solid rgb(220,220,220);
-	padding-top:2rem;
+	/*border-top:.25px solid rgb(220,220,220);
+	padding-top:2rem;*/
 }
 
 .content-selector-search-portlet .year-label{
