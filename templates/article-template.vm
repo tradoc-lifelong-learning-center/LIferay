@@ -99,7 +99,7 @@ Issue $publicationIssue.getData()
 <p class="article--byline">
     #set ($separator = ",")
 
-     
+##NOTE: any white space here may wind up in the output, which is why it's not indented below
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
 $cur_publicationAuthors.getData()##
 #if($publicationAuthors.getSiblings().size()>=3 && $velocityCount!=$publicationAuthors.getSiblings().size())$separator##
