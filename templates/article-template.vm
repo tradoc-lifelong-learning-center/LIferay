@@ -100,22 +100,16 @@ Issue $publicationIssue.getData()
     #set ($separator = ",")
 
      
-	#foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
-
-	
-		#if($publicationAuthors.getSiblings().size()>=3 && $velocityCount!=$publicationAuthors.getSiblings().size())
-		$cur_publicationAuthors.getData()$separator
-		#end
-		
-		#if($cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")
-		
-		<span id="article-author-$velocityCount">$cur_publicationAuthors.getData()<sup><a href="#article-author-bio-$velocityCount">[*]</a></sup></span>
-		
-		#end
-				
-		#if ($publicationAuthors.getSiblings().size()>1 && $velocityCount==$publicationAuthors.getSiblings().size() - 1)
-		 and 
-		#end
+#foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
+$cur_publicationAuthors.getData()##
+#if($publicationAuthors.getSiblings().size()>=3 && $velocityCount!=$publicationAuthors.getSiblings().size())$separator##
+#end##
+#if($cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")##
+<span id="article-author-$velocityCount"><sup><a href="#article-author-bio-$velocityCount">[*]</a></sup></span>##
+#end##
+#if ($publicationAuthors.getSiblings().size()>1 && $velocityCount==$publicationAuthors.getSiblings().size() - 1)##
+ and ##
+#end##
 
 	#end
 </p>#end
