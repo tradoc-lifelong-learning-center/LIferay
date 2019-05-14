@@ -98,7 +98,8 @@ Issue $publicationIssue.getData()
 #end
 
 </p>
-<p class="article--byline">#if (!$publicationAuthors.getSiblings().isEmpty())
+#if (!$publicationAuthors.getSiblings().isEmpty())
+<p class="article--byline">
     #set ($separator = ",")
 
      
@@ -116,7 +117,7 @@ Issue $publicationIssue.getData()
 		#end
 
 	#end
-#end</p>
+</p>#end
 </header>
 
 <div class="article--body">$publicationContent.getData()</div>
@@ -130,7 +131,7 @@ Issue $publicationIssue.getData()
 
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
     <p id="article-author-bio-$velocityCount">
-        <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData(); 
+        <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData()
     </p>
 #end
  
