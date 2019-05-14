@@ -73,11 +73,14 @@ color: blue !important;
 
 <article>
 <header>
+##NOTE: condition $publicationTitleNote.getData() works on the tjaglcs public instance of Liferay
+##but not locally. $publicationTitleNote.getData()!="" works locally, but not online.
+##Using both.
 <h1 class="article--title">$reserved-article-title.getData()##
-#if($publicationTitleNote.getData()!="")##
-<sup><a id="endnote-title-note-backlink" class="_idEndnoteLink _idGenColorInherit" href="#endnote-title-note">1</a></sup>##
+#if($publicationTitleNote.getData() && $publicationTitleNote.getData()!="")##
+<a id="endnote-title-note-backlink" class="_idEndnoteLink _idGenColorInherit" href="#endnote-title-note">1</a>##
 #end
-#if ($publicationSubtitle.getData()!="")##
+#if ($publicationSubtitle.getData() && $publicationSubtitle.getData()!="")##
 : </br>$publicationSubtitle.getData()##
 #end
 
@@ -104,7 +107,7 @@ Issue $publicationIssue.getData()
 $cur_publicationAuthors.getData()##
 #if($publicationAuthors.getSiblings().size()>=3 && $velocityCount!=$publicationAuthors.getSiblings().size())$separator##
 #end##
-#if($cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")##
+#if($cur_publicationAuthors.getChild('publicationAuthorBio').getData() && $cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")##
 <span id="article-author-$velocityCount"><sup><a href="#article-author-bio-$velocityCount">[*]</a></sup></span>##
 #end##
 #if ($publicationAuthors.getSiblings().size()>1 && $velocityCount==$publicationAuthors.getSiblings().size() - 1)##
@@ -119,13 +122,13 @@ $cur_publicationAuthors.getData()##
 
 <footer class="article--footer">
 <hr/>
-#if($publicationTitleNote.getData())
+#if($publicationTitleNote.getData() && $publicationTitleNote.getData()!="")
 <p class="Basic-Paragraph"><span id="endnote-title-note"><a class="_idEndnoteAnchor _idGenColorInherit" href="#endnote-title-note-backlink">1</a></span>$publicationTitleNote.getData()</p>
 #end
 
 
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
-    #if($cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")
+    #if($cur_publicationAuthors.getChild('publicationAuthorBio').getData() && $cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")
 
     <p id="article-author-bio-$velocityCount">
         <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData()
@@ -135,7 +138,7 @@ $cur_publicationAuthors.getData()##
  
 <div>
 
-#if ($publicationEndNotes.getData())
+#if ($publicationEndNotes.getData() && $publicationEndNotes.getData()!="")
 	$publicationEndNotes.getData()
 #end
 
