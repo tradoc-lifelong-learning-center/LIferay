@@ -77,6 +77,9 @@ color: blue !important;
 <article>
 <header>
 <h1 class="article--title">$reserved-article-title.getData()##
+#if($publicationTitleNote.getData())##
+<a id="endnote-title-note-backlink" class="_idEndnoteLink _idGenColorInherit" href="#endnote-title-note"><sup>[1]</sup></a>##
+#end
 #if ($publicationSubtitle.getData()!="")##
 : </br>$publicationSubtitle.getData()##
 #end
@@ -120,6 +123,10 @@ Issue $publicationIssue.getData()
 
 <footer class="article--footer">
 <hr/>
+#if($publicationTitleNote.getData())
+<p class="Basic-Paragraph"><span id="endnote-title-note"><a class="_idEndnoteAnchor _idGenColorInherit" href="#endnote-title-note-backlink">1</a></span>$publicationTitleNote.getData()</p>
+#end
+
 
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
     <p id="article-author-bio-$velocityCount">
@@ -137,6 +144,5 @@ Issue $publicationIssue.getData()
 </div>
 
 </footer>
-
 
 </article>
