@@ -74,7 +74,7 @@ color: blue !important;
 <article>
 <header>
 <h1 class="article--title">$reserved-article-title.getData()##
-#if($publicationTitleNote.getData())##
+#if($publicationTitleNote.getData()!="")##
 <sup><a id="endnote-title-note-backlink" class="_idEndnoteLink _idGenColorInherit" href="#endnote-title-note">1</a></sup>##
 #end
 #if ($publicationSubtitle.getData()!="")##
