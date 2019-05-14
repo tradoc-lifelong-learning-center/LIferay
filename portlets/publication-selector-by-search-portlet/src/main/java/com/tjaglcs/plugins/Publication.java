@@ -563,6 +563,16 @@ public class Publication {
 				} 
 				
 				try {
+					if(currentDoc.getField(CustomField.PUBLICATION_SUBTITLE) != null) {
+						//System.out.println("string: " + currentDoc.getField(Field.TITLE).getValue());
+						title = title + ": " + currentDoc.getField(CustomField.PUBLICATION_SUBTITLE).getValue();
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					System.out.println("subtitle error");
+				} 
+				
+				try {
 					if(currentDoc.getField(CustomField.VERSION) != null) {
 						//System.out.println("double: " + currentDoc.getField(CustomField.VERSION).getValue());
 						version = Double.parseDouble(currentDoc.getField(CustomField.VERSION).getValue());

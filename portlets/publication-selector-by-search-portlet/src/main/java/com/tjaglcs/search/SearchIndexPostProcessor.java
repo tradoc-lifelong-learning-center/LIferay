@@ -60,6 +60,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
 		
 		FieldToIndex[] fieldsToIndex = new FieldToIndex[] {
 			new FieldToIndex("publicationName",CustomField.PUBLICATION_NAME),
+			new FieldToIndex("publicationSubtitle",CustomField.PUBLICATION_SUBTITLE),
 			new FieldToIndex("publicationVolume",CustomField.PUBLICATION_VOLUME),
 			new FieldToIndex("publicationIssue",CustomField.PUBLICATION_ISSUE),
 			new FieldToIndex("publicationIssueName",CustomField.PUBLICATION_ISSUE_NAME),

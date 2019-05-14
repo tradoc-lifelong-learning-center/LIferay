@@ -11,6 +11,8 @@ public class CustomField extends Field {
 	
 	public static final String PUBLICATION_NAME = "publicationName";
 	
+	public static final String PUBLICATION_SUBTITLE = "publicationSubtitle";
+	
 	public static final String PUBLICATION_VOLUME = "publicationVolume";
 	
 	public static final String PUBLICATION_ISSUE = "publicationIssue";
