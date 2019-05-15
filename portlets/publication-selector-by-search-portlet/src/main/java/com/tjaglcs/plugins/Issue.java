@@ -9,6 +9,7 @@ public class Issue implements Comparable<Issue>{
 	private List<Article> articles;
 	private int volume;
 	private int year;
+	private int indexNumber;
 	
 	
 	public Issue(String publicationName, int number, String name, List<Article> articles) {
@@ -18,18 +19,46 @@ public class Issue implements Comparable<Issue>{
 		this.articles = articles;
 		setVolume();
 		setYear();
+		setIndexNumber();
 		//System.out.println("building issue " + this.number);
 	}
 	
+	public void setIndexNumber() {
+		
+		int num = 0;
+		
+		if(this.name.toLowerCase().contains("winter")) {
+			num = 1;
+		} else if(this.name.toLowerCase().contains("spring")) {
+			num = 2;
+		} else if(this.name.toLowerCase().contains("summer")) {
+			num = 3;
+		} else if(this.name.toLowerCase().contains("fall")) {
+			num = 4;
+		} else {
+			num = this.number;
+		}
+
+		this.indexNumber = num;
+	}
+	
+	
+	
+	public int getIndexNumber() {
+		return indexNumber;
+	}
+
 	//allow issues to be sorted by number
 	public int compareTo(Issue compareIssue) {
 		//ascending
 		//return (this.getNumber() < compareIssue.getNumber() ? -1 : 
         //    (this.getNumber() == compareIssue.getNumber() ? 0 : 1));
 		
+		
+		
 		//descending
-		return (this.getNumber() < compareIssue.getNumber() ? 1 : 
-            (this.getNumber() == compareIssue.getNumber() ? 0 : -1)); 
+		return (this.getIndexNumber() < compareIssue.getIndexNumber() ? 1 : 
+            (this.getIndexNumber() == compareIssue.getIndexNumber() ? 0 : -1)); 
 		
 	}	
 	
