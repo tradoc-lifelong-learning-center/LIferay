@@ -58,3 +58,5 @@ if(numberOfIssues_cfg.contains("multi")){
        <aui:button type="submit" />
     </aui:button-row>
 </aui:form>
+
+<p style="color:grey; font-size:.9rem; margin-top:2rem; text-align:right;">Content Selector 1.1.0</p>
