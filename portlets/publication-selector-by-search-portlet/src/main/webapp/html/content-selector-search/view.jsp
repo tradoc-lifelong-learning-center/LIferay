@@ -278,6 +278,11 @@
 	        	var minInput = document.querySelector('#noUiSliderMin');
 	        	var maxInput = document.querySelector('#noUiSliderMax');
 	        	
+	        	//slider can't handle it when there's just one year
+	        	if(min==max){
+	        		return false;
+	        	}
+	        	
 	        	noUiSlider.create(slider, {
 	        	    start: [min, max],
 	        	    connect: true,
