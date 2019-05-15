@@ -38,7 +38,6 @@ public class Article {
 	public Article(String title, String publicationName, long id, double version, int volume, int issue, String issueName, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
-		this.title = title;
 		this.publicationName = publicationName;
 		this.id = id;
 		this.version = version;
@@ -47,10 +46,36 @@ public class Article {
 		this.issueName = issueName;
 		this.type = type;
 		this.status = status;
-		setURL(request);
 		this.articleDate = articleDate;
 		this.authors = authors;
+		
+		if(type.contains("DLFileEntry")) {
+			this.title  = assemblePdfTitle();
+		} else { 
+			this.title = title;
+		}
+		
+		setURL(request);
 	}
+	
+	private String assemblePdfTitle() {
+		String pdfTitle = "";
+		
+		pdfTitle += "View the ";
+		
+		if(this.issueName!="") {
+			pdfTitle += this.issueName;
+			pdfTitle += " Issue ";
+		} else {
+			pdfTitle += "Issue ";
+			pdfTitle += this.issue;
+		}
+		
+		pdfTitle += " PDF";
+
+		return pdfTitle;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
