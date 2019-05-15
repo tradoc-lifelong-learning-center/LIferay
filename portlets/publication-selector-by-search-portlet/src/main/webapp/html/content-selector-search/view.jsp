@@ -102,7 +102,7 @@
 						 			<c:out value="${article.getTitle() }"/>
 						 		</c:when>
 						 		<c:otherwise>
-						 			<a href="${article.getURL() }"><c:out value="${article.getTitle() }"/></a>
+						 			<a href="${article.getURL() }" target="_blank"><c:out value="${article.getTitle() }"/></a>
 						 		</c:otherwise>
 					 		</c:choose>
 					 	
