@@ -57,7 +57,7 @@
 	
 			
 			
-			<aui:button value=" > " id="btnSubmit" cssClass="btn btn-primary" aria-label="Submit"/>
+			<!--<aui:button value=" > " id="btnSubmit" cssClass="btn btn-primary" aria-label="Submit"/>-->
 	
 	        
 	    </aui:fieldset>
@@ -217,12 +217,23 @@
 	        } 
 	        
 	        if(config.isSingleIssue){		
+	        	
 		        config.volumeDropdown.addEventListener('change', function(event){
 		        	getIssues();
+		         });
+		        
+		        config.issueDropdown.addEventListener('change', function(event){
+		        	navigate();
+		         });
+		        
+	        } else if(!config.isSingleIssue){
+	        	config.volumeDropdown.addEventListener('change', function(event){
+	        		navigate();
 		         }); 
+	        	
 	        }
 	        
-	        config.submitButton.addEventListener('click', function(event){
+	        function navigate(){
 	        	var jsonData = ${pubData.getJson() };
 	        	var volumeDropdown = config.volumeDropdown;
 	        	
@@ -253,7 +264,40 @@
 	             }
 	
 	             window.location.href = url;
-	         }); 
+	        }
+	        
+	        /*config.submitButton.addEventListener('click', function(event){
+	        	var jsonData = ${pubData.getJson() };
+	        	var volumeDropdown = config.volumeDropdown;
+	        	
+	        	if(config.isSingleIssue){		
+	        		var issueDropdown = config.issueDropdown;
+	        		} else{
+	        		var issueDropdown = null;
+	        		}
+	        	
+	        	
+	        	//var pubCode = jsonData.publication.pubCode;
+	        	var volumeNumber = volumeDropdown.value;
+	        	if(config.isSingleIssue){		
+	        		var issueNumber = issueDropdown.value;
+	        		} else{
+	        			var issueNumber=-1;
+	        		}
+	        	
+	        	
+	        	var queryString = getQueryString(volumeNumber,issueNumber);
+	        	
+	         	if(volumeDropdown.value=="selectAVolume" || (issueDropdown && issueDropdown.value=="selectAnIssue")) {
+	             	return false;
+	             } else {
+	            	var baseUrl = window.location.href.split('#')[0];
+	             	var url = baseUrl.split('?')[0] + queryString;
+	             	console.log("navigating to " + url);
+	             }
+	
+	             window.location.href = url;
+	         }); */
 	        
 	        
 	        function getQueryString(volumeNumber,issueNumber){
