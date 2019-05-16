@@ -10,6 +10,7 @@ public class Issue implements Comparable<Issue>{
 	private int volume;
 	private int year;
 	private int indexNumber;
+	private String editionType; //online or PDF edition
 	
 	
 	public Issue(String publicationName, int number, String name, List<Article> articles) {
@@ -20,9 +21,30 @@ public class Issue implements Comparable<Issue>{
 		setVolume();
 		setYear();
 		setIndexNumber();
+		setIssueType();
 		//System.out.println("building issue " + this.number);
 	}
 	
+	public void setIssueType() {
+		String issueType = "Online"; //default
+		
+		for(int i = 0; i<articles.size(); i++) {
+			//if there's a single online, I'm assuming this is or will soon be an online edition
+			if(articles.get(i).getType().contains("DLFileEntry")) {
+				issueType = "PDF";
+			} else if(articles.get(i).getType().contains("JournalArticle")) {
+				issueType = "Online";
+				break;
+			}
+		}
+		
+		this.editionType = issueType;
+	}
+	
+	public String getEditionType() {
+		return editionType;
+	}
+
 	public void setIndexNumber() {
 		
 		int num = 0;

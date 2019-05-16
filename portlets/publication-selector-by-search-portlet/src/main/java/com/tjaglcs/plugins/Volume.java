@@ -12,6 +12,7 @@ public class Volume {
 	private List<Article> articles;
 	private Date publishDate;
 	private int year;
+	private String editionType;
 	
 	public Volume(String  publicationName, int number, List<Article> articles) throws Exception {
 		this.publicationName = publicationName;
@@ -20,7 +21,27 @@ public class Volume {
 		//this.issues = issues;
 		setIssues();
 		setYear();
+		setEditionType();
 		//System.out.println("building volume " + this.number);
+	}
+	
+	public void setEditionType() {
+		String issueType = "Online"; //default
+		
+		for(int i = 0; i<issues.size(); i++) {
+			//if there's a single online, I'm assuming this is or will soon be an online edition
+			if(issues.get(i).getEditionType().contains("PDF")) {
+				issueType = issues.get(i).getEditionType();
+			} else if(issues.get(i).getEditionType().contains("Online")) {
+				issueType = issues.get(i).getEditionType();
+				break;
+			}
+		}
+		this.editionType = issueType;
+	}
+
+	public String getEditionType() {
+		return editionType;
 	}
 
 	public String getPublicationName() {

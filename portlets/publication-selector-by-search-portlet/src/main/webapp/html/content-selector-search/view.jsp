@@ -70,7 +70,7 @@
 	<div>
 		<section class="volume-container">
 		<h2 id="volume${cf.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/></h2>
-		<p class="year-label"><c:out value="${currentVolume.getYear() }"/> Online Edition</p>
+		<p class="year-label"><c:out value="${currentVolume.getYear() }"/> <c:out value="${currentVolume.getEditionType() }"/> Edition</p>
 		
 		<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
 			
