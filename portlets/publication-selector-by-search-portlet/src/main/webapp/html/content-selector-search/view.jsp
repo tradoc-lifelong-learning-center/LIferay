@@ -132,6 +132,8 @@
 	                'isSingleIssue':${isSingleIssue }
 	        } //does submit button need a namespace?
 	        		
+	        		console.log(config.jsonData)
+	        		
 	        //populate volume menu		
 	        //populateMenu(config.volumeDropdown, config.jsonData.publication.volumes,undefined,undefined);		
 	    	buildSlider();		
@@ -167,7 +169,7 @@
 	        }
 	        
 	        
-	        function populateMenu(menu, items, name, startYear, endYear){
+	        function populateMenu(menu, items, type, startYear, endYear){
 	        	if(!startYear){
 	        		startYear=0;
 	        	}
@@ -190,7 +192,12 @@
 	        		
 	        		var option = document.createElement("option");
 	        		
-	        		var optionString = name + " " + items[prop].number;
+	        		
+	        		if(type=="Issue" && items[prop].name!=""){
+	        			var optionString = items[prop].name + " " + type;
+	        		} else{
+	        			var optionString = type + " " + items[prop].number;
+	        		}
 	        		
 	        		if(name=="Volume"){
 	        			optionString+= " (" + items[prop].year + ")";
