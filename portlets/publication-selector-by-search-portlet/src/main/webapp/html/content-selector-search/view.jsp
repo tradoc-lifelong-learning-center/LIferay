@@ -199,7 +199,7 @@
 	        			var optionString = type + " " + items[prop].number;
 	        		}
 	        		
-	        		if(name=="Volume"){
+	        		if(type=="Volume"){
 	        			optionString+= " (" + items[prop].year + ")";
 	        		}
 	        		
