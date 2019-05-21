@@ -9,6 +9,7 @@ public class Volume {
 	private String publicationName;
 	private int number;
 	private List<Issue> issues;
+	private List<Integer> selectedIssues = new ArrayList<>();
 	private List<Article> articles;
 	private Date publishDate;
 	private int year;
@@ -20,11 +21,36 @@ public class Volume {
 		this.articles = articles;
 		//this.issues = issues;
 		setIssues();
+		//by default, include all issues in selection
+		setSelectedIssues();
+		System.out.println("selected issues: " + this.selectedIssues);
+
 		setYear();
 		setEditionType();
 		//System.out.println("building volume " + this.number);
 	}
 	
+	public void setSelectedIssues() {
+		for(int i = 0; i<issues.size(); i++) {
+			this.selectedIssues.add(issues.get(i).getNumber());
+		}
+	}
+	
+	//meant to replace list of issues with a single issue when there's one selected
+	public void setSelectedIssue(int issueNum) {
+		this.selectedIssues.clear();
+		this.selectedIssues.add(issueNum);
+	}
+	
+	public List<Integer> getSelectedIssue() {
+		return selectedIssues;
+	}
+	
+
+	
+
+
+
 	public void setEditionType() {
 		String issueType = "Online"; //default
 		

@@ -11,7 +11,7 @@
 <c:catch var ="catchException">
 	<c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 	<c:set var="selectedVolumes" value="${pubData.getSelectedVolumes() }" />
-	<c:set var="currentIssue" value="${currentVolume.getIssue() }" />
+
 	<c:set var="isSingleIssue" value="${pubData.getIsSingleIssue() }" />
 </c:catch>
 
@@ -138,9 +138,8 @@
 	                'jsonData': ${pubData.getJson() },
 	                'volumeDropdown':document.getElementById('<portlet:namespace/>' + 'volumeOptions'),
 	                'issueDropdown':document.getElementById('<portlet:namespace/>' + 'issueOptions'),
-	                'submitButton':document.getElementById('btnSubmit'),
 	                'isSingleIssue':${isSingleIssue }
-	        } //does submit button need a namespace?
+	        } 
 	        		
 	        		console.log(config.jsonData)
 	        		
@@ -148,7 +147,6 @@
 	    	buildSlider();		
 	    	
 	    	//bind event handlers
-	    	
        		if(config.isSingleIssue){		
    	        	
    		        config.volumeDropdown.addEventListener('change', function(event){
@@ -179,7 +177,21 @@
 	        	
 	        	issueDropdown.removeAttribute("disabled");
 	        	
-	        	var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
+	        	var yearStr = volumeDropdown.value.split(":")[0];
+	        	var yearObj = jsonData.publication.years[yearStr];
+	        	
+	        	for(var vol in yearObj){
+	        		console.log("volume " + yearObj[vol].issues)
+	        		for(var issue in yearObj[vol].issues){
+	        			console.log(yearObj[vol].issues[issue]);
+	        		}
+	        		
+	        		var issues = yearObj[vol].issues;
+	        	}
+	        	
+	    
+
+	        	//var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
 	        	
 	        	populateMenu(issueDropdown, issues, "Issue", undefined,undefined);
 	
@@ -222,8 +234,7 @@
 	        		if(type=="Issue" && items[prop].name!=""){
 	        			var optionString = items[prop].name + " " + type;
 	        		} else{
-	        			
-	        			
+
 	        			var volArray = buildVolArray(items[prop]);
 	        			var volLable = volArray>1 ? " (volume " : " (volumes "
 	        			var volString = volLable + volArray.join(", ") + ")";
@@ -232,7 +243,7 @@
 	        		}
 	        		
 	        		option.innerHTML = optionString;
-	        		option.setAttribute("value",volArray.join("-"));
+	        		option.setAttribute("value",prop + ":" + volArray.join("-"));
 	        		optionArray.push(option);
 
 	            }
@@ -275,7 +286,7 @@
 	        	
 	        	
 	        	//var pubCode = jsonData.publication.pubCode;
-	        	var volumeNumber = volumeDropdown.value;
+	        	var volumeNumber = volumeDropdown.value.split(":")[1];
 	        	if(config.isSingleIssue){		
 	        		var issueNumber = issueDropdown.value;
 	        		} else{

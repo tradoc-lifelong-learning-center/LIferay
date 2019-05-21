@@ -322,7 +322,7 @@ public class Publication {
 		//end of JSON
 		JSON +="}}}";
 		
-		System.out.println(JSON);
+		//System.out.println(JSON);
 		
 		this.json = JSON;
 	}
@@ -448,6 +448,7 @@ public class Publication {
 					//System.out.println("trying to get volume " + volNumber);
 					
 					Volume selectedVolume = getVolume(volNumber);
+					
 					//System.out.println("got volume " + volNumber + ": " + selectedVolume);
 					
 					if(selectedVolume==null) {
@@ -478,11 +479,22 @@ public class Publication {
 				return false;
 			}
 		}
-		/*
+		
 		System.out.println("getting issue!");
 		System.out.println("issue string: " + issueString);
 		System.out.println("is single issue?: " + this.isSingleIssue);
 		
+		//for single isse, requires:
+		//only one volume selected
+		
+		if(this.isSingleIssue && this.selectedVolumes.size()==1) {
+			this.selectedVolumes.get(0).setSelectedIssue(Integer.parseInt(issueString));
+			System.out.println("selected issues: " + this.selectedVolumes.get(0).getSelectedIssue());
+			
+			//TODO got selected issue as list of numbers. Now, figure out what to do with that
+			//I think I need to work on front end next
+		} 
+		/*
 		if(issueString==null && !this.isSingleIssue) {
 			//if issue string is null AND multi, get all issues for all selected volumes
 			
