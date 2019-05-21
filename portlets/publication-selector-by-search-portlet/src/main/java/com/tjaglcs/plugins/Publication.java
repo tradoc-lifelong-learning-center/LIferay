@@ -37,11 +37,12 @@ public class Publication {
 	private List<Article> articles;
 	private List<Issue> issues;
 	private List<Volume> volumes;
+	private List<Year> years;
 	private RenderRequest request;
 	private Volume mostRecentVolume;
 	private Issue mostRecentIssue;
 	private List<Volume> selectedVolumes = new ArrayList<>();
-	private List<Issue> selectedIssues = new ArrayList<>();
+	//private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
 	private int startYear;
@@ -56,6 +57,7 @@ public class Publication {
 		filterArticlePDFs();
 		
 		setVolumes();
+		groupVolumesByYear();
 
 		setMostRecentVolume();
 		setMostRecentIssue(this.mostRecentVolume);
@@ -71,6 +73,38 @@ public class Publication {
 		setStartYear();
 		setEndYear();
 		
+	}
+	
+	public void groupVolumesByYear() {
+		System.out.println("hash mapping!");
+		HashMap<Integer, Year> yearMap = new HashMap<>(); 
+		
+		//loop volumes and sort into years
+		for(int i = 0; i<this.volumes.size(); i++) {
+			
+			Volume currentVol = this.volumes.get(i);
+			int currentYearNumber = currentVol.getYear();
+			
+			//yearMap.computeIfPresent(currentYearNumber, (k, v) -> v.updateVolumes(currentVol));
+			
+			if(yearMap.containsKey(currentYearNumber)) {
+				Year year = yearMap.get(currentYearNumber);
+				year.addVolume(currentVol);
+				yearMap.replace(currentYearNumber, year);
+			} else {
+				List<Volume> volList = new ArrayList<>();
+				volList.add(currentVol);
+				
+				Year currentYearObj = new Year(currentYearNumber, volList);
+				
+				yearMap.put(currentYearNumber, currentYearObj);
+			}
+		}
+		System.out.println("year map: ");
+		System.out.println(yearMap);
+		System.out.println("2016: ");
+		System.out.println(yearMap.get(2016).getVolumes().get(0).getNumber());
+		System.out.println(yearMap.get(2016).getVolumes().get(1).getNumber());
 	}
 	
 	private void filterArticlePDFs() {
@@ -232,15 +266,15 @@ public class Publication {
 		return mostRecentIssue;
 	}
 
-	public List<Issue> getSelectedIssue() {
+	/*public List<Issue> getSelectedIssue() {
 		return selectedIssues;
-	}
+	}*/
 
 	public Volume getMostRecentVolume() {
 		return mostRecentVolume;
 	}
 
-	public List<Volume> getSelectedVolume() {
+	public List<Volume> getSelectedVolumes() {
 		return selectedVolumes;
 	}
 
@@ -249,7 +283,41 @@ public class Publication {
 	public String getJson() {
 		return json;
 	}
+	
+	public void setJsonByYear() {
+		String JSON = "{\"publication\":{\"name\":\"" + this.name + "\",\"pubCode\":\"mlr\",\"volumes\":{";
+		
+		List<Volume> volumes = getVolumes();
+		
+		for(int v = 0; v<volumes.size(); v++) {
+			int volNo = volumes.get(v).getNumber();
+			int year = volumes.get(v).getYear();
+			
+			JSON+="\"volume" + volNo + "\":{\"number\":\"" + volNo + "\",";
+			JSON+="\"year\":\"" + year + "\"";
+			
+			JSON += buildIssueJson(volumes.get(v));
+			
+			//For now, I don't think I need articles in JSON, because JSON just populates list. view pulls TOC from bean
+			
+			//end of volume
+			JSON+="}";
 
+			if(v!=volumes.size()-1) {
+				JSON+=",";
+			}
+			
+		}
+		
+		
+		
+		JSON +="}}}";
+		
+		//System.out.println(JSON);
+		
+		this.json = JSON;
+	}
+	
 	public void setJson() {
 		
 		//this seems like it might be frail. Figure out a better way, or at least test
@@ -344,22 +412,22 @@ public class Publication {
 	//this should grab the selected content
 	public boolean setSelectedContent(RenderRequest request) {
 
-		System.out.println("setting selected content!");
+		//System.out.println("setting selected content!");
 		
 		String volString = this.getQueryStringValue("vol");
 		
-		System.out.println("volString: " + volString);
+		//System.out.println("volString: " + volString);
 		
 		String issueString = this.getQueryStringValue("no");
 		
-		System.out.println("issueString: " + issueString);
+		//System.out.println("issueString: " + issueString);
 		
 		int volNumber=-1;
 		int issueNum = -1;
 		
-		System.out.println("getting volume!");
+		//System.out.println("getting volume!");
 		if(volString==null) {
-			System.out.println("no volume selected by query string. Getting most recent");
+			//System.out.println("no volume selected by query string. Getting most recent");
 			this.selectedVolumes.add(this.mostRecentVolume);
 		} else {
 			
@@ -372,10 +440,10 @@ public class Publication {
 				
 				for(int i = 0; i<volStringArray.length; i++) {
 					volNumber = Integer.parseInt(volStringArray[i]);
-					System.out.println("trying to get volume " + volNumber);
+					//System.out.println("trying to get volume " + volNumber);
 					
 					Volume selectedVolume = getVolume(volNumber);
-					System.out.println("got volume " + volNumber + ": " + selectedVolume);
+					//System.out.println("got volume " + volNumber + ": " + selectedVolume);
 					
 					if(selectedVolume==null) {
 						SessionErrors.add(request, "no-volume-found");
@@ -384,14 +452,14 @@ public class Publication {
 						this.selectedVolumes.clear();
 						this.selectedVolumes.add(this.mostRecentVolume);
 						
-						System.out.println("nope! noe volume " + volNumber);
+						//System.out.println("nope! no volume " + volNumber);
 						
 						return false;
 					} else {
 						this.selectedVolumes.add(selectedVolume);
 					}
 					
-					System.out.println("this.selectedVolumes length: " + this.selectedVolumes.size());
+					//System.out.println("this.selectedVolumes length: " + this.selectedVolumes.size());
 					
 				}
 				
@@ -400,12 +468,12 @@ public class Publication {
 			} catch (NumberFormatException e) {
 				
 				e.printStackTrace();
-				System.out.println("couldn't get volume number from query string");
+				//System.out.println("couldn't get volume number from query string");
 				this.selectedVolumes.add(this.mostRecentVolume);
 				return false;
 			}
 		}
-		
+		/*
 		System.out.println("getting issue!");
 		System.out.println("issue string: " + issueString);
 		System.out.println("is single issue?: " + this.isSingleIssue);
@@ -430,8 +498,9 @@ public class Publication {
 		} else if(issueString!=null){
 			//may want to do something else with issues
 			//instead of adding selected issue to publication object, just get from selected volume object?
+			//also, single issue selector will only work with single volume
 			//if query string is not null, get that issue
-			/*
+			
 			try {
 				issueNum = Integer.parseInt(issueString);
 				
@@ -447,8 +516,8 @@ public class Publication {
 			} catch (NumberFormatException e) {
 				//System.out.println("couldn't get issue number from query string");
 				e.printStackTrace();
-			}*/
-		}
+			}
+		}*/
 		
 		return true;
 	}
