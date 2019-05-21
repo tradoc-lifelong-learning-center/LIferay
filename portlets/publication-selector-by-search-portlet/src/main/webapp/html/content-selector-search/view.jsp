@@ -10,10 +10,11 @@
 
 <c:catch var ="catchException">
 	<c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
-	<c:set var="currentVolume" value="${pubData.getSelectedVolume() }" />
-	<c:set var="currentIssue" value="${pubData.getSelectedIssue() }" />
+	<c:set var="selectedVolumes" value="${pubData.getSelectedVolumes() }" />
+	<c:set var="currentIssue" value="${currentVolume.getIssue() }" />
 	<c:set var="isSingleIssue" value="${pubData.getIsSingleIssue() }" />
 </c:catch>
+
 
 
 <c:choose>
@@ -67,12 +68,19 @@
 	<liferay-ui:error key="no-volume-found" message="no-volume-found"/>
 	<liferay-ui:error key="no-issue-found" message="no-issue-found"/>
 	
+	
+	<c:forEach items="${selectedVolumes}" var = "currentVolume" varStatus="i">
+	
+	
+	
 	<div>
 		<section class="volume-container">
-		<h2 id="volume${cf.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/></h2>
+		<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/></h2>
+		
+		
 		<p class="year-label"><c:out value="${currentVolume.getYear() }"/> <c:out value="${currentVolume.getEditionType() }"/> Edition</p>
 		
-		<c:forEach items="${currentIssue }" var = "issue" varStatus="i">
+		<c:forEach items="${currentVolume.getIssues() }" var = "issue" varStatus="i">
 			
 
 				<c:choose>
@@ -120,6 +128,8 @@
 	
 	</div>
 	
+	</c:forEach>
+	
 	<aui:script use="aui-base, event, node">
 	    
 	    (function(){
@@ -135,10 +145,26 @@
 	        		console.log(config.jsonData)
 	        		
 	        //populate volume menu		
-	        //populateMenu(config.volumeDropdown, config.jsonData.publication.volumes,undefined,undefined);		
 	    	buildSlider();		
 	    	
+	    	//bind event handlers
 	    	
+       		if(config.isSingleIssue){		
+   	        	
+   		        config.volumeDropdown.addEventListener('change', function(event){
+   		        	getIssues();
+   		         });
+   		        
+   		        config.issueDropdown.addEventListener('change', function(event){
+   		        	navigate();
+   		         });
+   		        
+   	        } else if(!config.isSingleIssue){
+   	        	config.volumeDropdown.addEventListener('change', function(event){
+   	        		navigate();
+   		         }); 
+   	        	
+   	        }
 	        
 	        function getIssues(){
 	        	var volumeDropdown = config.volumeDropdown;
@@ -223,22 +249,7 @@
 	        	menu.appendChild(fragment);
 	        } 
 	        
-	        if(config.isSingleIssue){		
-	        	
-		        config.volumeDropdown.addEventListener('change', function(event){
-		        	getIssues();
-		         });
-		        
-		        config.issueDropdown.addEventListener('change', function(event){
-		        	navigate();
-		         });
-		        
-	        } else if(!config.isSingleIssue){
-	        	config.volumeDropdown.addEventListener('change', function(event){
-	        		navigate();
-		         }); 
-	        	
-	        }
+	        
 	        
 	        function navigate(){
 	        	var jsonData = ${pubData.getJson() };
