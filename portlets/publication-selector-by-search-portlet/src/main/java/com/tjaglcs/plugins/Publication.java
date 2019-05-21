@@ -37,7 +37,7 @@ public class Publication {
 	private List<Article> articles;
 	private List<Issue> issues;
 	private List<Volume> volumes;
-	private List<Year> years;
+	private List<Year> yearsList;
 	private RenderRequest request;
 	private Volume mostRecentVolume;
 	private Issue mostRecentIssue;
@@ -76,7 +76,7 @@ public class Publication {
 	}
 	
 	public void groupVolumesByYear() {
-		System.out.println("hash mapping!");
+		//System.out.println("hash mapping!");
 		HashMap<Integer, Year> yearMap = new HashMap<>(); 
 		
 		//loop volumes and sort into years
@@ -100,13 +100,26 @@ public class Publication {
 				yearMap.put(currentYearNumber, currentYearObj);
 			}
 		}
+		/*
 		System.out.println("year map: ");
 		System.out.println(yearMap);
 		System.out.println("2016: ");
 		System.out.println(yearMap.get(2016).getVolumes().get(0).getNumber());
 		System.out.println(yearMap.get(2016).getVolumes().get(1).getNumber());
+		*/
+		
+		ArrayList<Year> yearArray = new ArrayList<>();
+
+		//yearMap.forEach((k,v) -> yearArray.add(this.publicationName,k,v.get(0).getIssueName(),v));
+		//yearMap.forEach((k,v) -> System.out.println("v: " + v));
+		yearMap.forEach((k,v) -> yearArray.add(v));
+		this.yearsList = yearArray;
 	}
 	
+	public List<Year> getYearsList() {
+		return yearsList;
+	}
+
 	private void filterArticlePDFs() {
 		//loop all journal articles, then check all PDF articles and remove any with the same volume/issue
 		//long startTime = Calendar.getInstance().getTimeInMillis();
@@ -284,49 +297,44 @@ public class Publication {
 		return json;
 	}
 	
-	public void setJsonByYear() {
-		String JSON = "{\"publication\":{\"name\":\"" + this.name + "\",\"pubCode\":\"mlr\",\"volumes\":{";
+	public void setJson() {
+		String JSON = "{\"publication\":{\"name\":\"" + this.name + "\",\"pubCode\":\"mlr\",\"years\":{";
 		
-		List<Volume> volumes = getVolumes();
+		List<Year> years = getYearsList();
 		
-		for(int v = 0; v<volumes.size(); v++) {
-			int volNo = volumes.get(v).getNumber();
-			int year = volumes.get(v).getYear();
+		System.out.println("number of years: " + years.size());
+		
+		for(int y = 0; y<years.size(); y++) {
+			Year currentYear = years.get(y);
 			
-			JSON+="\"volume" + volNo + "\":{\"number\":\"" + volNo + "\",";
-			JSON+="\"year\":\"" + year + "\"";
+			JSON += "\"" + currentYear.getName() + "\":{";
+			JSON += buildVolumeJson(years.get(y));
+			JSON += "}";
 			
-			JSON += buildIssueJson(volumes.get(v));
-			
-			//For now, I don't think I need articles in JSON, because JSON just populates list. view pulls TOC from bean
-			
-			//end of volume
-			JSON+="}";
-
-			if(v!=volumes.size()-1) {
+			if(y!=years.size()-1) {
 				JSON+=",";
 			}
-			
 		}
 		
 		
+	
 		
+		//end of JSON
 		JSON +="}}}";
 		
-		//System.out.println(JSON);
+		System.out.println(JSON);
 		
 		this.json = JSON;
 	}
 	
-	public void setJson() {
+	public String buildVolumeJson(Year yearObj) {
 		
-		//this seems like it might be frail. Figure out a better way, or at least test
-		//-special characters in string
-		//-escape double/single quotes
+		String JSON = "";
+		List<Volume> volumes = yearObj.getVolumes();
 		
-		String JSON = "{\"publication\":{\"name\":\"" + this.name + "\",\"pubCode\":\"mlr\",\"volumes\":{";
-		
-		List<Volume> volumes = getVolumes();
+		if(volumes.size()<1) {
+			return "";
+		}
 		
 		for(int v = 0; v<volumes.size(); v++) {
 			int volNo = volumes.get(v).getNumber();
@@ -337,8 +345,6 @@ public class Publication {
 			
 			JSON += buildIssueJson(volumes.get(v));
 			
-			//For now, I don't think I need articles in JSON, because JSON just populates list. view pulls TOC from bean
-			
 			//end of volume
 			JSON+="}";
 
@@ -347,14 +353,13 @@ public class Publication {
 			}
 			
 		}
+
 		
+
 		
+		//System.out.println("volume json: " + JSON);
 		
-		JSON +="}}}";
-		
-		//System.out.println(JSON);
-		
-		this.json = JSON;
+		return JSON;
 	}
 	
 	private String buildIssueJson(Volume volume) {
