@@ -227,19 +227,12 @@
 	        			var volArray = buildVolArray(items[prop]);
 	        			var volLable = volArray>1 ? " (volume " : " (volumes "
 	        			var volString = volLable + volArray.join(", ") + ")";
-	        					
-	        					//. " + volArray.join(", ") + ")";
+
 	        			var optionString = prop + volString;
 	        		}
 	        		
-	        		//if(type=="Volume"){
-	        		//	optionString+= " (" + items[prop].year + ")";
-	        		//}
-	        		
-	        		var volQueryString = volArray.join("-");
-	        		
 	        		option.innerHTML = optionString;
-	        		option.setAttribute("value",volQueryString);
+	        		option.setAttribute("value",volArray.join("-"));
 	        		optionArray.push(option);
 
 	            }
