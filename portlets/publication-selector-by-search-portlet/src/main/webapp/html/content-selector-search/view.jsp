@@ -210,6 +210,8 @@
 	        	var fragment = document.createDocumentFragment();
 	        	var optionArray = [];
 	        	
+	        	console.log(items);
+	        	
 	        	for(var prop in items){
 	        		
 	        		if(parseInt(items[prop].year)<startYear || parseInt(items[prop].year)>endYear){
@@ -222,15 +224,24 @@
 	        		if(type=="Issue" && items[prop].name!=""){
 	        			var optionString = items[prop].name + " " + type;
 	        		} else{
-	        			var optionString = type + " " + items[prop].number;
+	        			
+	        			
+	        			var volArray = buildVolArray(items[prop]);
+	        			var volLable = volArray>1 ? " (volume " : " (volumes "
+	        			var volString = volLable + volArray.join(", ") + ")";
+	        					
+	        					//. " + volArray.join(", ") + ")";
+	        			var optionString = prop + volString;
 	        		}
 	        		
-	        		if(type=="Volume"){
-	        			optionString+= " (" + items[prop].year + ")";
-	        		}
+	        		//if(type=="Volume"){
+	        		//	optionString+= " (" + items[prop].year + ")";
+	        		//}
+	        		
+	        		var volQueryString = volArray.join("-");
 	        		
 	        		option.innerHTML = optionString;
-	        		option.setAttribute("value",items[prop].number);
+	        		option.setAttribute("value",volQueryString);
 	        		optionArray.push(option);
 
 	            }
@@ -249,7 +260,17 @@
 	        	menu.appendChild(fragment);
 	        } 
 	        
+	        function buildVolArray(yearJson){
 	        
+	        	var volArray = [];
+	        	
+	        	for(var vol in yearJson){
+	        		volArray.push(yearJson[vol].number);	
+    			}
+	        	
+	        	//return volArray.join("-");
+	        	return volArray;
+	        }
 	        
 	        function navigate(){
 	        	var jsonData = ${pubData.getJson() };
@@ -369,7 +390,8 @@
 	        		maxInput.innerHTML = values[1];
 	        		
 	        		//re-populate volume selector, clear and disable issue selector
-	        		populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, "Volume", values[0],values[1]);
+	        		//populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, "Volume", values[0],values[1]);
+	        		populateMenu(config.volumeDropdown, config.jsonData.publication.years, "Year", values[0],values[1]);
 	        		
 	        		if(config.isSingleIssue){
 	        			clearMenu(config.issueDropdown);
