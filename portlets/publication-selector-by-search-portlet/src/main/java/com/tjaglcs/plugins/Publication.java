@@ -40,7 +40,7 @@ public class Publication {
 	private RenderRequest request;
 	private Volume mostRecentVolume;
 	private Issue mostRecentIssue;
-	private Volume selectedVolume;
+	private List<Volume> selectedVolumes = new ArrayList<>();
 	private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
@@ -240,8 +240,8 @@ public class Publication {
 		return mostRecentVolume;
 	}
 
-	public Volume getSelectedVolume() {
-		return selectedVolume;
+	public List<Volume> getSelectedVolume() {
+		return selectedVolumes;
 	}
 
 	
@@ -344,65 +344,94 @@ public class Publication {
 	//this should grab the selected content
 	public boolean setSelectedContent(RenderRequest request) {
 
-		//System.out.println("setting selected content!");
-		//String pubCode = getQueryStringValue("pub");
-		
-		//System.out.println("pub code: " + pubCode);
+		System.out.println("setting selected content!");
 		
 		String volString = this.getQueryStringValue("vol");
 		
-		//System.out.println("volString: " + volString);
+		System.out.println("volString: " + volString);
 		
 		String issueString = this.getQueryStringValue("no");
 		
-		//System.out.println("issueString: " + issueString);
+		System.out.println("issueString: " + issueString);
 		
 		int volNumber=-1;
 		int issueNum = -1;
 		
-		//System.out.println("getting volume!");
+		System.out.println("getting volume!");
 		if(volString==null) {
-			//System.out.println("no volume selected by query string. Getting most recent");
-			this.selectedVolume = this.mostRecentVolume;
+			System.out.println("no volume selected by query string. Getting most recent");
+			this.selectedVolumes.add(this.mostRecentVolume);
 		} else {
+			
 			
 			try {
 				
-				volNumber = Integer.parseInt(volString);
-				//System.out.println("trying to get volume " + volNumber);
+				String[] volStringArray = volString.split("-");
 				
-				Volume selectedVolume = getVolume(volNumber);
+				System.out.println("len: " + volStringArray.length);
 				
-				if(selectedVolume==null) {
-					SessionErrors.add(request, "no-volume-found");
-					this.selectedVolume = this.mostRecentVolume;
-				} else {
-					this.selectedVolume = selectedVolume;
+				for(int i = 0; i<volStringArray.length; i++) {
+					volNumber = Integer.parseInt(volStringArray[i]);
+					System.out.println("trying to get volume " + volNumber);
+					
+					Volume selectedVolume = getVolume(volNumber);
+					System.out.println("got volume " + volNumber + ": " + selectedVolume);
+					
+					if(selectedVolume==null) {
+						SessionErrors.add(request, "no-volume-found");
+						//if there's an error with one of the volumes, give up and just display most recent
+						
+						this.selectedVolumes.clear();
+						this.selectedVolumes.add(this.mostRecentVolume);
+						
+						System.out.println("nope! noe volume " + volNumber);
+						
+						return false;
+					} else {
+						this.selectedVolumes.add(selectedVolume);
+					}
+					
+					System.out.println("this.selectedVolumes length: " + this.selectedVolumes.size());
+					
 				}
+				
 				
 				
 			} catch (NumberFormatException e) {
 				
 				e.printStackTrace();
-				//System.out.println("couldn't get volume number from query string");
-				this.selectedVolume = this.mostRecentVolume;
+				System.out.println("couldn't get volume number from query string");
+				this.selectedVolumes.add(this.mostRecentVolume);
 				return false;
 			}
 		}
 		
-		//System.out.println("getting issue!");
-		//System.out.println("issue string: " + issueString);
-		//System.out.println("is single issue?: " + this.isSingleIssue);
-		//if(issueString==null && this.isSingleIssue==false) {
+		System.out.println("getting issue!");
+		System.out.println("issue string: " + issueString);
+		System.out.println("is single issue?: " + this.isSingleIssue);
+		
 		if(issueString==null && !this.isSingleIssue) {
-			//if issue string is null AND multi, get all issues
-			this.selectedIssues = this.selectedVolume.getIssues();
+			//if issue string is null AND multi, get all issues for all selected volumes
+			
+			for(int v = 0; v<this.selectedVolumes.size(); v++) {
+				
+				List<Issue> currentIssues = this.selectedVolumes.get(v).getIssues();
+				
+				for(int i = 0; i<currentIssues.size(); i++) {
+					this.selectedIssues.add(currentIssues.get(i));
+				}
+
+			}
+			
+			
 		} else if(issueString==null && this.isSingleIssue) { 
 			//if issue string is null AND a single issue, only get most recent single issue
 			this.selectedIssues.add(this.getMostRecentIssue());
 		} else if(issueString!=null){
+			//may want to do something else with issues
+			//instead of adding selected issue to publication object, just get from selected volume object?
 			//if query string is not null, get that issue
-			
+			/*
 			try {
 				issueNum = Integer.parseInt(issueString);
 				
@@ -418,7 +447,7 @@ public class Publication {
 			} catch (NumberFormatException e) {
 				//System.out.println("couldn't get issue number from query string");
 				e.printStackTrace();
-			}
+			}*/
 		}
 		
 		return true;
