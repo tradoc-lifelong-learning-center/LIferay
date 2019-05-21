@@ -210,11 +210,9 @@
 	        	var fragment = document.createDocumentFragment();
 	        	var optionArray = [];
 	        	
-	        	console.log(items);
-	        	
 	        	for(var prop in items){
 	        		
-	        		if(parseInt(items[prop].year)<startYear || parseInt(items[prop].year)>endYear){
+	        		if(parseInt(prop)<startYear || parseInt(prop)>endYear){
 	        			continue;
 	        		}
 	        		
