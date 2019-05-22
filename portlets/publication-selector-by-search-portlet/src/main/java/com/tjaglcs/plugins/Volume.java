@@ -20,16 +20,15 @@ public class Volume {
 		this.publicationName = publicationName;
 		this.number = number;
 		this.articles = articles;
-		//this.issues = issues;
+
 		setIssues();
 		setMostRecentIssue();
 		//by default, include all issues in selection
 		setSelectedIssues();
-		System.out.println("selected issues: " + this.selectedIssues);
 
 		setYear();
 		setEditionType();
-		//System.out.println("building volume " + this.number);
+
 	}
 	
 	public void setSelectedIssues() {
@@ -55,7 +54,6 @@ public class Volume {
 			} 
 		}
 		
-		System.out.println("Latest volume: " + latestIssueNumber);
 		this.mostRecentIssue = latestIssue;
 	}
 
@@ -67,10 +65,6 @@ public class Volume {
 		return this.selectedIssues;
 	}
 	
-
-	
-
-
 
 	public void setEditionType() {
 		String issueType = "Online"; //default
@@ -143,21 +137,13 @@ public class Volume {
 	
 	public void setIssues() throws Exception {
 		
-		//Article[] articlesArray = fetchArticlesArray(request);
-		//System.out.println("total articles: " + articlesArray.length);
-		//List<Volume> volumeList = this.volumes;
+
 		List<Article> articlesArray = this.articles;
 		HashMap<Integer, List<Article>> issuesMap = new HashMap<>();
-		
-		//for(int z = 0; z<volumeList.size(); z++) {
-			//System.out.println("ARTICLES IN VOL: " + volumeList.get(z).get);
-		//}
+
 
 		for(int i = 0; i<articlesArray.size(); i++) {
-			//System.out.println("title: " + articlesArray[i].getTitle());
-			//System.out.println("vol: " + articlesArray[i].getVolume());
-			
-			//int currentVol = articlesArray[i].getVolume();
+
 			int currentIssue = articlesArray.get(i).getIssue();
 			Article currentArticle = articlesArray.get(i);
 		
@@ -170,29 +156,11 @@ public class Volume {
 				issuesMap.get(currentIssue).add(currentArticle);
 			}
 		}
-		
-		
-		
-		//System.out.println(issuesMap);
-		//System.out.println(issuesMap.size());
+
 		
 		ArrayList<Issue> issueArray = new ArrayList<>();
-		//Issue[] issueArray = new Issue[issuesMap.size()];
 		
-		//issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.publicationName,k,v.get(k).getIssueName(),v)));
 		issuesMap.forEach((k,v) -> issueArray.add(new Issue(this.publicationName,k,v.get(0).getIssueName(),v)));
-		
-		//issuesMap.forEach((k,v) -> {
-		//	issueArray.add(new Issue(this.publicationName,k,"season",v));
-			//System.out.println("k: " + k);
-			//System.out.println("v: " + v);
-			//System.out.println(v.get(0));
-		//});
-		
-		//System.out.println("issue year: " + issueArray.get(1).getYear());
-		
-		//System.out.println("issuesMap");
-		//System.out.println(issuesMap);
 		 
 		
 		//SORT
