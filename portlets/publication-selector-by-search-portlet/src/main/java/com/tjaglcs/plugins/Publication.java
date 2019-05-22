@@ -274,7 +274,7 @@ public class Publication {
 		
 		List<Year> years = getYearsList();
 		
-		System.out.println("number of years: " + years.size());
+		//System.out.println("number of years: " + years.size());
 		
 		for(int y = 0; y<years.size(); y++) {
 			Year currentYear = years.get(y);
@@ -413,7 +413,7 @@ public class Publication {
 				
 				String[] volStringArray = volString.split("-");
 				
-				System.out.println("len: " + volStringArray.length);
+				//System.out.println("len: " + volStringArray.length);
 				
 				for(int i = 0; i<volStringArray.length; i++) {
 					volNumber = Integer.parseInt(volStringArray[i]);
