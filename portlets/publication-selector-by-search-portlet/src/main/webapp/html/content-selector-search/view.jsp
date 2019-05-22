@@ -76,22 +76,16 @@
 	<div>
 		<section class="volume-container">
 		<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/></h2>
-		
-		
-		<p class="year-label"><c:out value="${currentVolume.getYear() }"/> <c:out value="${currentVolume.getEditionType() }"/> Edition</p>
-		
-		
-		
-		
+
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
 			<c:set var="issue" value="${currentVolume.getIssue(currentIssue) }" />
 
 			<c:choose>
 				<c:when test="${issue.getName() != ''}">
-					<c:set var="issueLabel" value="${issue.getName() } Issue"/>
+					<c:set var="issueLabel" value="${issue.getName() } ${currentVolume.getYear() } Issue"/>
 				</c:when>
 				<c:otherwise>
-					<c:set var="issueLabel" value="Issue ${issue.getNumber() }"/>
+					<c:set var="issueLabel" value="${currentVolume.getYear() } Issue ${issue.getNumber() }"/>
 				</c:otherwise>
 			</c:choose>
 		
