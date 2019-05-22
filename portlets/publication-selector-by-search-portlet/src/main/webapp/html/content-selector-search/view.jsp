@@ -144,9 +144,9 @@
 	                'isSingleIssue':${isSingleIssue }
 	        } 
 	        		
-	        		console.log(config.jsonData)
+	        //console.log(config.jsonData)
 	        		
-	        //populate volume menu		
+	        //build slider and populate volume menu		
 	    	buildSlider();		
 	    	
 	    	//bind event handlers
@@ -182,28 +182,13 @@
 	        	
 	        	var yearStr = volumeDropdown.value.split(":")[0];
 	        	var yearObj = jsonData.publication.years[yearStr];
-	        	
-	        	//for(var vol in yearObj){
-	        		//console.log("volume " + yearObj[vol].issues)
-	        		//for(var issue in yearObj[vol].issues){
-	        		//	console.log(yearObj[vol].issues[issue]);
-	        		//}
-	        		
-	        		//var issues = yearObj[vol].issues;
 
-	        	//}
-	        	
-	    
-
-	        	//var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
-	        	
 	        	populateIssueMenu(issueDropdown, yearObj);
 	
 	        } 
 	        
 	        
 	        function clearMenu(menu){
-	        	//console.log("attempting to clear " + menu);
 	        	//clear existing options, skipping the first
 				while (menu.children.length > 1) {
 					menu.removeChild(menu.lastChild);
@@ -219,7 +204,6 @@
 	        	//loop volumes in year
 	        	//if single volume, add its issues to menu
 	        	//if 2+, and opt groups and add child issues
-	        	//don't forget to sort
 	        	
 	        	var volCount = 0;
 	        	
@@ -243,26 +227,18 @@
 	        		var optionArray = [];
 	        		
         			for(issue in yearObj[vol].issues){
-        				
-        				
         				var currentIssue = yearObj[vol].issues[issue];
-        				
-        				
-        				
+
         				var option = document.createElement("option");
         				option.innerHTML = "Issue " + currentIssue.number;
         				
-        				console.log(option.innerHTML)
-        				
         				option.setAttribute("value",currentIssue.number);
-        				console.log(optionArray.push(option));
+        				optionArray.push(option);
         			}
-        			console.log("optionArray " + optionArray)
         			optionArray.sort(sortByValue);
 
     	        	for(var i = 0; i<optionArray.length; i++){
     	        		optionGroup.appendChild(optionArray[i]);
-    	        		console.log("optionArray[i] " + optionArray[i])
     	        	}
 					
     	        	fragment.appendChild(optionGroup);
@@ -361,44 +337,12 @@
 	             } else {
 	            	var baseUrl = window.location.href.split('#')[0];
 	             	var url = baseUrl.split('?')[0] + queryString;
-	             	console.log("navigating to " + url);
+	             	//console.log("navigating to " + url);
 	             }
 	
 	             window.location.href = url;
 	        }
 	        
-	        /*config.submitButton.addEventListener('click', function(event){
-	        	var jsonData = ${pubData.getJson() };
-	        	var volumeDropdown = config.volumeDropdown;
-	        	
-	        	if(config.isSingleIssue){		
-	        		var issueDropdown = config.issueDropdown;
-	        		} else{
-	        		var issueDropdown = null;
-	        		}
-	        	
-	        	
-	        	//var pubCode = jsonData.publication.pubCode;
-	        	var volumeNumber = volumeDropdown.value;
-	        	if(config.isSingleIssue){		
-	        		var issueNumber = issueDropdown.value;
-	        		} else{
-	        			var issueNumber=-1;
-	        		}
-	        	
-	        	
-	        	var queryString = getQueryString(volumeNumber,issueNumber);
-	        	
-	         	if(volumeDropdown.value=="selectAVolume" || (issueDropdown && issueDropdown.value=="selectAnIssue")) {
-	             	return false;
-	             } else {
-	            	var baseUrl = window.location.href.split('#')[0];
-	             	var url = baseUrl.split('?')[0] + queryString;
-	             	console.log("navigating to " + url);
-	             }
-	
-	             window.location.href = url;
-	         }); */
 	        
 	        
 	        function getQueryString(volumeNumber,issueNumber){
