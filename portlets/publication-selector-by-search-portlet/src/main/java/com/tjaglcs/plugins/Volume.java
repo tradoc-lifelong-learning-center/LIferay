@@ -10,6 +10,7 @@ public class Volume {
 	private int number;
 	private List<Issue> issues;
 	private List<Integer> selectedIssues = new ArrayList<>();
+	private Issue mostRecentIssue;
 	private List<Article> articles;
 	private Date publishDate;
 	private int year;
@@ -21,6 +22,7 @@ public class Volume {
 		this.articles = articles;
 		//this.issues = issues;
 		setIssues();
+		setMostRecentIssue();
 		//by default, include all issues in selection
 		setSelectedIssues();
 		System.out.println("selected issues: " + this.selectedIssues);
@@ -42,8 +44,27 @@ public class Volume {
 		this.selectedIssues.add(issueNum);
 	}
 	
-	public List<Integer> getSelectedIssue() {
-		return selectedIssues;
+	public void setMostRecentIssue() {
+		int latestIssueNumber = 0;
+		Issue latestIssue = null;
+
+		for(int i = 0; i<issues.size(); i++) {
+			if(issues.get(i).getNumber()>latestIssueNumber) {
+				latestIssue = issues.get(i);
+				latestIssueNumber = latestIssue.getNumber();
+			} 
+		}
+		
+		System.out.println("Latest volume: " + latestIssueNumber);
+		this.mostRecentIssue = latestIssue;
+	}
+
+	public Issue getMostRecentIssue() {
+		return mostRecentIssue;
+	}
+
+	public List<Integer> getSelectedIssues() {
+		return this.selectedIssues;
 	}
 	
 
@@ -92,7 +113,7 @@ public class Volume {
 		System.out.println("No issue with the number " + issueNumber);
 		return null;
 	}
-	
+
 	public int getYear() {
 		return this.year;
 	}

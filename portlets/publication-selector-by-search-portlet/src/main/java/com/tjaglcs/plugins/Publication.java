@@ -40,7 +40,7 @@ public class Publication {
 	private List<Year> yearsList;
 	private RenderRequest request;
 	private Volume mostRecentVolume;
-	private Issue mostRecentIssue;
+	//private Issue mostRecentIssue;
 	private List<Volume> selectedVolumes = new ArrayList<>();
 	//private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
@@ -60,7 +60,7 @@ public class Publication {
 		groupVolumesByYear();
 
 		setMostRecentVolume();
-		setMostRecentIssue(this.mostRecentVolume);
+		//setMostRecentIssue(this.mostRecentVolume);
 		
 		//set selected volume and issue (if present)
 		setIsSingleIssue(request);
@@ -275,9 +275,9 @@ public class Publication {
 	
 	
 	
-	public Issue getMostRecentIssue() {
+	/*public Issue getMostRecentIssue() {
 		return mostRecentIssue;
-	}
+	}*/
 
 	/*public List<Issue> getSelectedIssue() {
 		return selectedIssues;
@@ -484,16 +484,27 @@ public class Publication {
 		System.out.println("issue string: " + issueString);
 		System.out.println("is single issue?: " + this.isSingleIssue);
 		
-		//for single isse, requires:
-		//only one volume selected
-		
+		//Select single issue if:
+		//--is in single mode
+		//--has issue query string
+		//--only one volume in query string
+		//default to most recent single issue if:
+		//--is in single mode
+		//--no issue query string
 		if(this.isSingleIssue && this.selectedVolumes.size()==1) {
-			this.selectedVolumes.get(0).setSelectedIssue(Integer.parseInt(issueString));
-			System.out.println("selected issues: " + this.selectedVolumes.get(0).getSelectedIssue());
+			Volume vol = this.selectedVolumes.get(0);
 			
-			//TODO got selected issue as list of numbers. Now, figure out what to do with that
-			//I think I need to work on front end next
+			if(issueString!=null) {
+				vol.setSelectedIssue(Integer.parseInt(issueString));
+			} else {
+				vol.setSelectedIssue(vol.getMostRecentIssue().getNumber());
+			}
+			
+			
 		} 
+		
+		
+		
 		/*
 		if(issueString==null && !this.isSingleIssue) {
 			//if issue string is null AND multi, get all issues for all selected volumes
@@ -555,6 +566,7 @@ public class Publication {
 		this.mostRecentVolume = latestVolume;
 	}
 	
+	/*
 	public void setMostRecentIssue(Volume volume) {
 		int latestIssueNumber = 0;
 		Issue latestIssue = null;
@@ -570,7 +582,7 @@ public class Publication {
 		
 		//System.out.println("Latest volume: " + latestVolumeNumber);
 		this.mostRecentIssue = latestIssue;
-	}
+	}*/
 	
 	public void setVolumes() throws Exception {
 			

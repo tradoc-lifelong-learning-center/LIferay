@@ -80,17 +80,20 @@
 		
 		<p class="year-label"><c:out value="${currentVolume.getYear() }"/> <c:out value="${currentVolume.getEditionType() }"/> Edition</p>
 		
-		<c:forEach items="${currentVolume.getIssues() }" var = "issue" varStatus="i">
-			
+		
+		
+		
+		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
+			<c:set var="issue" value="${currentVolume.getIssue(currentIssue) }" />
 
-				<c:choose>
-					<c:when test="${issue.getName() != ''}">
-						<c:set var="issueLabel" value="${issue.getName() } Issue"/>
-					</c:when>
-					<c:otherwise>
-						<c:set var="issueLabel" value="Issue ${issue.getNumber() }"/>
-					</c:otherwise>
-				</c:choose>
+			<c:choose>
+				<c:when test="${issue.getName() != ''}">
+					<c:set var="issueLabel" value="${issue.getName() } Issue"/>
+				</c:when>
+				<c:otherwise>
+					<c:set var="issueLabel" value="Issue ${issue.getNumber() }"/>
+				</c:otherwise>
+			</c:choose>
 		
 				
 				
