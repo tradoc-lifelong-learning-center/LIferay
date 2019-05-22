@@ -24,6 +24,7 @@ public class Article {
 	private long id;
 	private double version;
 	private int volume;
+	private String volumeName;
 	private int issue;
 	private String issueName;
 	private String type;
@@ -35,13 +36,14 @@ public class Article {
 	private String authors;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, int issue, String issueName, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(String title, String publicationName, long id, double version, int volume, String volumeName, int issue, String issueName, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
 		this.publicationName = publicationName;
 		this.id = id;
 		this.version = version;
 		this.volume = volume;
+		this.volumeName = volumeName;
 		this.issue = issue;
 		this.issueName = issueName;
 		this.type = type;
@@ -58,6 +60,18 @@ public class Article {
 		setURL(request);
 	}
 	
+	
+	
+	public String getVolumeName() {
+		return volumeName;
+	}
+
+	public void setVolumeName(String volumeName) {
+		this.volumeName = volumeName;
+	}
+
+
+
 	private String assemblePdfTitle() {
 		String pdfTitle = "";
 		

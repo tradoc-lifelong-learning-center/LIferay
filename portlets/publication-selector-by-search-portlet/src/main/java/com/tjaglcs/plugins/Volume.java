@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Volume {
 	private String publicationName;
+	private String name;
 	private int number;
 	private List<Issue> issues;
 	private List<Integer> selectedIssues = new ArrayList<>();
@@ -16,9 +17,10 @@ public class Volume {
 	private int year;
 	private String editionType;
 	
-	public Volume(String  publicationName, int number, List<Article> articles) throws Exception {
+	public Volume(String  publicationName, int number, String name, List<Article> articles) throws Exception {
 		this.publicationName = publicationName;
 		this.number = number;
+		this.name = name;
 		this.articles = articles;
 
 		setIssues();
@@ -31,6 +33,15 @@ public class Volume {
 
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 	public void setSelectedIssues() {
 		for(int i = 0; i<issues.size(); i++) {
 			this.selectedIssues.add(issues.get(i).getNumber());

@@ -310,9 +310,11 @@ public class Publication {
 		
 		for(int v = 0; v<volumes.size(); v++) {
 			int volNo = volumes.get(v).getNumber();
+			String volName = volumes.get(v).getName();
 			int year = volumes.get(v).getYear();
 			
 			JSON+="\"volume" + volNo + "\":{\"number\":\"" + volNo + "\",";
+			JSON+="\"name\":\"" + volName + "\",";
 			JSON+="\"year\":\"" + year + "\"";
 			
 			JSON += buildIssueJson(volumes.get(v));
@@ -520,7 +522,8 @@ public class Publication {
 			
 			volumeMap.forEach((k,v) -> {
 				try {
-					volumeArray.add(new Volume(this.name, Integer.parseInt(k),v));
+					//TODO probably need a better way to get volume name than just the first one?
+					volumeArray.add(new Volume(this.name, Integer.parseInt(k), v.get(0).getVolumeName(), v));
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 					System.out.println("NumberFormatException in volumeMap");
@@ -581,6 +584,7 @@ public class Publication {
 				long articleId = -1;
 				double version = -1;
 				int volume = -1;
+				String volumeName = "";
 				int issue = -1;
 				String issueName = "";
 				String type = "Type not found";
@@ -628,6 +632,16 @@ public class Publication {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 					System.out.println("volume error");
+				} 
+				
+				try {
+					if(currentDoc.getField(CustomField.PUBLICATION_VOLUME_NAME) != null) {
+						//System.out.println("int: " + currentDoc.getField(CustomField.PUBLICATION_VOLUME).getValue());
+						volumeName = currentDoc.getField(CustomField.PUBLICATION_VOLUME_NAME).getValue();
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+					System.out.println("volume name error");
 				} 
 				
 				try {
@@ -745,7 +759,7 @@ public class Publication {
 						//System.out.println("article " + title + " will not be published yet");
 						continue;
 					}
-					Article article = new Article(title, pubName, articleId, version, volume, issue, issueName, type, status, articleDate, request, authors);
+					Article article = new Article(title, pubName, articleId, version, volume, volumeName, issue, issueName, type, status, articleDate, request, authors);
 					articles.add(article);
 					
 				} catch(Exception e) {

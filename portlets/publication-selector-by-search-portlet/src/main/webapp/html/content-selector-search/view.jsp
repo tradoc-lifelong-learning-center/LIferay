@@ -71,11 +71,18 @@
 	
 	<c:forEach items="${selectedVolumes}" var = "currentVolume" varStatus="i">
 	
-	
+		<c:choose>
+			<c:when test="${currentVolume.getName() != ''}">
+				<c:set var="volumeLabel" value="${currentVolume.getName() }"/>
+			</c:when>
+			<c:otherwise>
+				<c:set var="volumeLabel" value="Volume ${currentVolume.getNumber() }"/>
+			</c:otherwise>
+		</c:choose>
 	
 	<div>
 		<section class="volume-container">
-		<h2 id="volume${currentVolume.getNumber() }">Volume <c:out value="${currentVolume.getNumber() }"/></h2>
+		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
 
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
 			<c:set var="issue" value="${currentVolume.getIssue(currentIssue) }" />
@@ -263,7 +270,6 @@
 	        		}
 	        		
 	        		var option = document.createElement("option");
-	        		
 
         			var volArray = buildVolArray(items[prop]);
         			var volLable = volArray>1 ? " (volume " : " (volumes "
