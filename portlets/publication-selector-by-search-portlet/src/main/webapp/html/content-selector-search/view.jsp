@@ -183,20 +183,21 @@
 	        	var yearStr = volumeDropdown.value.split(":")[0];
 	        	var yearObj = jsonData.publication.years[yearStr];
 	        	
-	        	for(var vol in yearObj){
-	        		console.log("volume " + yearObj[vol].issues)
-	        		for(var issue in yearObj[vol].issues){
-	        			console.log(yearObj[vol].issues[issue]);
-	        		}
+	        	//for(var vol in yearObj){
+	        		//console.log("volume " + yearObj[vol].issues)
+	        		//for(var issue in yearObj[vol].issues){
+	        		//	console.log(yearObj[vol].issues[issue]);
+	        		//}
 	        		
-	        		var issues = yearObj[vol].issues;
-	        	}
+	        		//var issues = yearObj[vol].issues;
+
+	        	//}
 	        	
 	    
 
 	        	//var issues = jsonData.publication.volumes["volume" + volumeDropdown.value].issues;
 	        	
-	        	populateMenu(issueDropdown, issues, "Issue", undefined,undefined);
+	        	populateIssueMenu(issueDropdown, yearObj);
 	
 	        } 
 	        
@@ -209,6 +210,66 @@
 				}
 	        }
 	        
+	        function populateIssueMenu(menu,yearObj){
+	        	clearMenu(menu);
+	        	
+	        	var fragment = document.createDocumentFragment();
+	        	var optionArray = [];
+	        	
+	        	//loop volumes in year
+	        	//if single volume, add its issues to menu
+	        	//if 2+, and opt groups and add child issues
+	        	//don't forget to sort
+	        	
+	        	var volCount = 0;
+	        	
+	        	for(var vol in yearObj){
+	        		volCount++;
+	        	}
+	        	
+	        	//sorter function (descending)
+	        	var sortByValue = function(a, b) {
+	        		return parseInt(b.value) - parseInt(a.value);
+	            }
+	        	
+	        	for(var vol in yearObj){
+	        		
+	        		var optionGroup = volCount==1 ? document.createDocumentFragment() : document.createElement("optgroup");
+	        		
+	        		if(volCount>1){
+	        			optionGroup.setAttribute("label", "Volume " + yearObj[vol].number);
+	        		}
+	        		
+	        		var optionArray = [];
+	        		
+        			for(issue in yearObj[vol].issues){
+        				
+        				
+        				var currentIssue = yearObj[vol].issues[issue];
+        				
+        				
+        				
+        				var option = document.createElement("option");
+        				option.innerHTML = "Issue " + currentIssue.number;
+        				
+        				console.log(option.innerHTML)
+        				
+        				option.setAttribute("value",currentIssue.number);
+        				console.log(optionArray.push(option));
+        			}
+        			console.log("optionArray " + optionArray)
+        			optionArray.sort(sortByValue);
+
+    	        	for(var i = 0; i<optionArray.length; i++){
+    	        		optionGroup.appendChild(optionArray[i]);
+    	        		console.log("optionArray[i] " + optionArray[i])
+    	        	}
+					
+    	        	fragment.appendChild(optionGroup);
+	        	}
+	        	
+	        	menu.appendChild(fragment);
+	        }
 	        
 	        function populateMenu(menu, items, type, startYear, endYear){
 	        	if(!startYear){
