@@ -271,7 +271,7 @@
 	        	menu.appendChild(fragment);
 	        }
 	        
-	        function populateMenu(menu, items, type, startYear, endYear){
+	        function populateVolumeMenu(menu, items, startYear, endYear){
 	        	if(!startYear){
 	        		startYear=0;
 	        	}
@@ -294,17 +294,13 @@
 	        		
 	        		var option = document.createElement("option");
 	        		
-	        		
-	        		if(type=="Issue" && items[prop].name!=""){
-	        			var optionString = items[prop].name + " " + type;
-	        		} else{
 
-	        			var volArray = buildVolArray(items[prop]);
-	        			var volLable = volArray>1 ? " (volume " : " (volumes "
-	        			var volString = volLable + volArray.join(", ") + ")";
+        			var volArray = buildVolArray(items[prop]);
+        			var volLable = volArray>1 ? " (volume " : " (volumes "
+        			var volString = volLable + volArray.join(", ") + ")";
 
-	        			var optionString = prop + volString;
-	        		}
+        			var optionString = prop + volString;
+
 	        		
 	        		option.innerHTML = optionString;
 	        		option.setAttribute("value",prop + ":" + volArray.join("-"));
@@ -457,7 +453,7 @@
 	        		
 	        		//re-populate volume selector, clear and disable issue selector
 	        		//populateMenu(config.volumeDropdown, config.jsonData.publication.volumes, "Volume", values[0],values[1]);
-	        		populateMenu(config.volumeDropdown, config.jsonData.publication.years, "Year", values[0],values[1]);
+	        		populateVolumeMenu(config.volumeDropdown, config.jsonData.publication.years, values[0],values[1]);
 	        		
 	        		if(config.isSingleIssue){
 	        			clearMenu(config.issueDropdown);
