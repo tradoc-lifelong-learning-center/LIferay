@@ -40,9 +40,7 @@ public class Publication {
 	private List<Year> yearsList;
 	private RenderRequest request;
 	private Volume mostRecentVolume;
-	//private Issue mostRecentIssue;
 	private List<Volume> selectedVolumes = new ArrayList<>();
-	//private List<Issue> selectedIssues = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
 	private int startYear;
@@ -60,15 +58,11 @@ public class Publication {
 		groupVolumesByYear();
 
 		setMostRecentVolume();
-		//setMostRecentIssue(this.mostRecentVolume);
 		
-		//set selected volume and issue (if present)
 		setIsSingleIssue(request);
 		setSelectedContent(this.request);
 		setJson();
 		//System.out.println("JSON: " + json);
-		
-		//System.out.print("setIsSingleIssue: " + this.isSingleIssue);
 		
 		setStartYear();
 		setEndYear();
@@ -85,8 +79,7 @@ public class Publication {
 			Volume currentVol = this.volumes.get(i);
 			int currentYearNumber = currentVol.getYear();
 			
-			//yearMap.computeIfPresent(currentYearNumber, (k, v) -> v.updateVolumes(currentVol));
-			
+		
 			if(yearMap.containsKey(currentYearNumber)) {
 				Year year = yearMap.get(currentYearNumber);
 				year.addVolume(currentVol);
@@ -100,18 +93,10 @@ public class Publication {
 				yearMap.put(currentYearNumber, currentYearObj);
 			}
 		}
-		/*
-		System.out.println("year map: ");
-		System.out.println(yearMap);
-		System.out.println("2016: ");
-		System.out.println(yearMap.get(2016).getVolumes().get(0).getNumber());
-		System.out.println(yearMap.get(2016).getVolumes().get(1).getNumber());
-		*/
+
 		
 		ArrayList<Year> yearArray = new ArrayList<>();
 
-		//yearMap.forEach((k,v) -> yearArray.add(this.publicationName,k,v.get(0).getIssueName(),v));
-		//yearMap.forEach((k,v) -> System.out.println("v: " + v));
 		yearMap.forEach((k,v) -> yearArray.add(v));
 		this.yearsList = yearArray;
 	}
@@ -155,13 +140,10 @@ public class Publication {
 				}
 			}
 		}
-		
-		//System.out.println("article filter list: " + articlesToFilter);
+
 		
 		//remove out duplicate IDs from articlesToFilter list
 		List<Long> articlesToFilterConsolidated = articlesToFilter.stream().distinct().collect(Collectors.toList());
-		
-		//System.out.println("article filter list consolidated: " + articlesToFilterConsolidated);
 		
 		List<Article> articlesToRemove = new ArrayList<>();
 		
@@ -272,16 +254,6 @@ public class Publication {
 	public List<Volume> getVolumes() {
 		return volumes;
 	}
-	
-	
-	
-	/*public Issue getMostRecentIssue() {
-		return mostRecentIssue;
-	}*/
-
-	/*public List<Issue> getSelectedIssue() {
-		return selectedIssues;
-	}*/
 
 	public Volume getMostRecentVolume() {
 		return mostRecentVolume;
@@ -480,9 +452,9 @@ public class Publication {
 			}
 		}
 		
-		System.out.println("getting issue!");
-		System.out.println("issue string: " + issueString);
-		System.out.println("is single issue?: " + this.isSingleIssue);
+		//System.out.println("getting issue!");
+		//System.out.println("issue string: " + issueString);
+		//System.out.println("is single issue?: " + this.isSingleIssue);
 		
 		//Select single issue if:
 		//--is in single mode
@@ -502,50 +474,7 @@ public class Publication {
 			
 			
 		} 
-		
-		
-		
-		/*
-		if(issueString==null && !this.isSingleIssue) {
-			//if issue string is null AND multi, get all issues for all selected volumes
-			
-			for(int v = 0; v<this.selectedVolumes.size(); v++) {
-				
-				List<Issue> currentIssues = this.selectedVolumes.get(v).getIssues();
-				
-				for(int i = 0; i<currentIssues.size(); i++) {
-					this.selectedIssues.add(currentIssues.get(i));
-				}
 
-			}
-			
-			
-		} else if(issueString==null && this.isSingleIssue) { 
-			//if issue string is null AND a single issue, only get most recent single issue
-			this.selectedIssues.add(this.getMostRecentIssue());
-		} else if(issueString!=null){
-			//may want to do something else with issues
-			//instead of adding selected issue to publication object, just get from selected volume object?
-			//also, single issue selector will only work with single volume
-			//if query string is not null, get that issue
-			
-			try {
-				issueNum = Integer.parseInt(issueString);
-				
-				Issue selectedIssue = this.selectedVolume.getIssue(issueNum);
-				
-				//if selected issue doesn't exist, present error message and get all from selected volume
-				if(selectedIssue==null) {
-					SessionErrors.add(request, "no-issue-found");
-					this.selectedIssues = this.selectedVolume.getIssues();
-				} else {
-					this.selectedIssues.add(selectedIssue);
-				}
-			} catch (NumberFormatException e) {
-				//System.out.println("couldn't get issue number from query string");
-				e.printStackTrace();
-			}
-		}*/
 		
 		return true;
 	}
@@ -566,24 +495,7 @@ public class Publication {
 		this.mostRecentVolume = latestVolume;
 	}
 	
-	/*
-	public void setMostRecentIssue(Volume volume) {
-		int latestIssueNumber = 0;
-		Issue latestIssue = null;
 		
-		List<Issue> currentIssues = volume.getIssues();
-		
-		for(int i = 0; i<currentIssues.size(); i++) {
-			if(currentIssues.get(i).getNumber()>latestIssueNumber) {
-				latestIssue = currentIssues.get(i);
-				latestIssueNumber = latestIssue.getNumber();
-			} 
-		}
-		
-		//System.out.println("Latest volume: " + latestVolumeNumber);
-		this.mostRecentIssue = latestIssue;
-	}*/
-	
 	public void setVolumes() throws Exception {
 			
 			HashMap<String, List<Article>> volumeMap = new HashMap<>();
@@ -661,8 +573,7 @@ public class Publication {
 			//System.out.println("Total hits: " + hits.getLength());
 			
 			for(int i = 0; i<hitsDocs.size(); i++) {
-				//TODO Think about error checking here. What happens if there's an error getting data? What happens after catch?
-				
+			
 				Document currentDoc = hitsDocs.get(i);
 				
 				
