@@ -59,4 +59,4 @@ if(numberOfIssues_cfg.contains("multi")){
     </aui:button-row>
 </aui:form>
 
-<p style="color:grey; font-size:.9rem; margin-top:2rem; text-align:right;">Content Selector 1.1.4</p>
+<p style="color:grey; font-size:.9rem; margin-top:2rem; text-align:right;">Content Selector 1.2.0</p>
