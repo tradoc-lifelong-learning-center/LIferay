@@ -28,7 +28,7 @@ public class Article implements Comparable<Article> {
 	private int issue;
 	private String issueName;
 	private String type;
-	int status;
+	private int status;
 	private String url;
 	private LocalDate publishDate;
 	private RenderRequest request;
