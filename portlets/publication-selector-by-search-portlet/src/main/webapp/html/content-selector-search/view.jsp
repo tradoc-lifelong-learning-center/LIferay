@@ -222,17 +222,29 @@
 	        		var optionGroup = volCount==1 ? document.createDocumentFragment() : document.createElement("optgroup");
 	        		
 	        		if(volCount>1){
-	        			optionGroup.setAttribute("label", "Volume " + yearObj[vol].number);
+	        			if(yearObj[vol].name!=""){
+	        				optionGroup.setAttribute("label", yearObj[vol].name);
+	        			} else {
+	        				optionGroup.setAttribute("label", "Volume " + yearObj[vol].number);	
+	        			}
+	        			
 	        		}
 	        		
 	        		var optionArray = [];
 	        		
         			for(issue in yearObj[vol].issues){
         				var currentIssue = yearObj[vol].issues[issue];
-
-        				var option = document.createElement("option");
-        				option.innerHTML = "Issue " + currentIssue.number;
         				
+        				var option = document.createElement("option");
+        				
+        				//display name if present
+        				if(currentIssue.name!=""){
+        					option.innerHTML = currentIssue.name + " Issue";
+        				} else{
+        					option.innerHTML = "Issue " + currentIssue.number;
+        				}
+        				
+        				//but always use number as value
         				option.setAttribute("value",currentIssue.number);
         				optionArray.push(option);
         			}
