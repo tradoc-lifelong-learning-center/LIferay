@@ -84,6 +84,7 @@ public class Volume implements Comparable<Volume> {
 
 
 	public void setSelectedIssues() {
+		//if single issue, selected issue is either query string val or most recent
 		for(int i = 0; i<issues.size(); i++) {
 			this.selectedIssues.add(issues.get(i).getNumber());
 		}

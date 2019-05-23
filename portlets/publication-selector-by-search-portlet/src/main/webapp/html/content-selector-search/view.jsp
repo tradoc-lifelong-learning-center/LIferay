@@ -256,7 +256,10 @@
         				}
         				
         				//but always use number as value
-        				option.setAttribute("value",currentIssue.number);
+        				//also include volume number so navigate can grab the correct vol
+        				var issueVal = yearObj[vol].number + ":" + currentIssue.number;
+        				
+        				option.setAttribute("value",issueVal);
         				optionArray.push(option);
         			}
         			optionArray.sort(sortByValue);
@@ -367,8 +370,11 @@
 	        	
 	        	//var pubCode = jsonData.publication.pubCode;
 	        	var volumeNumber = volumeDropdown.value.split(":")[1];
+	        	
+	        	//for single issue, use vol/issue number from issue dropdown
 	        	if(config.isSingleIssue){		
-	        		var issueNumber = issueDropdown.value;
+	        		volumeNumber = issueDropdown.value.split(":")[0];
+	        		var issueNumber = issueDropdown.value.split(":")[1];
 	        		} else{
 	        			var issueNumber=-1;
 	        		}

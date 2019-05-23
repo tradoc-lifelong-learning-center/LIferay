@@ -409,8 +409,11 @@ public class Publication {
 		int issueNum = -1;
 		
 		//System.out.println("getting volume!");
-		if(volString==null) {
+		//if there's no query string and this is in single issue mode, just get most recent volume
+		if(volString==null && this.isSingleIssue) {
 			//System.out.println("no volume selected by query string. Getting most recent");
+			this.selectedVolumes.add(this.mostRecentVolume);
+		} else if(volString==null){ //if there's no query string in multi mode, get year's worth of volumes
 			this.selectedVolumes = this.mostRecentVolumes;
 		} else {
 			
@@ -469,7 +472,7 @@ public class Publication {
 		//default to most recent single issue if:
 		//--is in single mode
 		//--no issue query string
-		if(this.isSingleIssue && this.selectedVolumes.size()==1) {
+		if(this.isSingleIssue && (this.selectedVolumes.size()==1)) {
 			Volume vol = this.selectedVolumes.get(0);
 			
 			if(issueString!=null) {
@@ -514,6 +517,7 @@ public class Publication {
 			
 			if(vol.getPublishDate().isAfter(publishDate)) {
 				latestVolume = vol;
+				publishDate = vol.getPublishDate();
 			}
 		}
 		
