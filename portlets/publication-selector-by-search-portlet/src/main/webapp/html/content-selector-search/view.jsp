@@ -271,15 +271,17 @@
 	        		
 	        		var option = document.createElement("option");
 
-        			var volArray = buildVolArray(items[prop]);
-        			var volLable = volArray>1 ? " (volume " : " (volumes "
-        			var volString = volLable + volArray.join(", ") + ")";
+        			var volNumArray = buildVolNumArray(items[prop]);
+        			var volNameArray = buildVolNameArray(items[prop]);
+        			
+        			var volLable = volNumArray>1 ? " (volume " : " (volumes "
+        			var volString = volLable + volNameArray.join(", ") + ")";
 
         			var optionString = prop + volString;
 
 	        		
 	        		option.innerHTML = optionString;
-	        		option.setAttribute("value",prop + ":" + volArray.join("-"));
+	        		option.setAttribute("value",prop + ":" + volNumArray.join("-"));
 	        		optionArray.push(option);
 
 	            }
@@ -298,7 +300,26 @@
 	        	menu.appendChild(fragment);
 	        } 
 	        
-	        function buildVolArray(yearJson){
+	        function buildVolNameArray(yearJson){
+		        
+	        	var volArray = [];
+	        	
+	        	for(var vol in yearJson){
+	        		
+	        		if(yearJson[vol].name!=""){
+	        			volArray.push(yearJson[vol].name);
+	        		} else {
+	        			volArray.push(yearJson[vol].number);
+	        		}
+	        		
+	        			
+    			}
+	        	
+	        	//return volArray.join("-");
+	        	return volArray.sort();
+	        }
+	        
+	        function buildVolNumArray(yearJson){
 	        
 	        	var volArray = [];
 	        	
@@ -307,7 +328,7 @@
     			}
 	        	
 	        	//return volArray.join("-");
-	        	return volArray;
+	        	return volArray.sort();
 	        }
 	        
 	        function navigate(){
