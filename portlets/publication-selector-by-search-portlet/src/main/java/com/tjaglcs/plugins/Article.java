@@ -18,7 +18,7 @@ import java.util.List;
 
 import javax.portlet.RenderRequest;
 
-public class Article {
+public class Article implements Comparable<Article> {
 	private String title;
 	private String publicationName;
 	private long id;
@@ -30,13 +30,13 @@ public class Article {
 	private String type;
 	int status;
 	private String url;
-	private LocalDate articleDate;
+	private LocalDate publishDate;
 	private RenderRequest request;
 	private long groupId;
 	private String authors;
 	
 	
-	public Article(String title, String publicationName, long id, double version, int volume, String volumeName, int issue, String issueName, String type, int status, LocalDate articleDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(String title, String publicationName, long id, double version, int volume, String volumeName, int issue, String issueName, String type, int status, LocalDate publishDate, RenderRequest request, String authors) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.request = request;
 		this.groupId = this.setGroupId(request);
 		this.publicationName = publicationName;
@@ -48,7 +48,7 @@ public class Article {
 		this.issueName = issueName;
 		this.type = type;
 		this.status = status;
-		this.articleDate = articleDate;
+		this.publishDate = publishDate;
 		this.authors = authors;
 		
 		if(type.contains("DLFileEntry")) {
@@ -60,7 +60,17 @@ public class Article {
 		setURL(request);
 	}
 	
-	
+	//allow volume to be sorted by date
+	public int compareTo(Article compareArticle) {
+		//ascending
+		//return (this.getPublishDate().isBefore(compareArticle.getPublishDate()) ? -1 : 
+        //    (this.getPublishDate() == compareArticle.getPublishDate() ? 0 : 1)); 
+
+		//descending
+		return (this.getPublishDate().isBefore(compareArticle.getPublishDate()) ? 1 : 
+            (this.getPublishDate() == compareArticle.getPublishDate() ? 0 : -1)); 
+		
+	}	
 	
 	public String getVolumeName() {
 		return volumeName;
@@ -75,17 +85,19 @@ public class Article {
 	private String assemblePdfTitle() {
 		String pdfTitle = "";
 		
-		pdfTitle += "View the ";
+		pdfTitle += "View the PDF";
 		
-		if(this.issueName!="") {
+		//pdfTitle += "View the ";
+		
+		/*if(this.issueName!="") {
 			pdfTitle += this.issueName;
 			pdfTitle += " Issue ";
 		} else {
 			pdfTitle += "Issue ";
 			pdfTitle += this.issue;
-		}
+		}*/
 		
-		pdfTitle += " PDF";
+		//pdfTitle += " PDF";
 
 		return pdfTitle;
 	}
@@ -111,11 +123,11 @@ public class Article {
 	public String getType() {
 		return type;
 	}
-	public LocalDate getArticleDate() {
-		return articleDate;
+	public LocalDate getPublishDate() {
+		return publishDate;
 	}
-	public void setArticleDate(LocalDate articleDate) {
-		this.articleDate = articleDate;
+	public void getPublishDate(LocalDate publishDate) {
+		this.publishDate = publishDate;
 	}
 	
 	public int getStatus() {

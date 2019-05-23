@@ -188,7 +188,7 @@ public class Publication {
 		int startYear = 9999;
 		
 		for(int i = 0; i<this.articles.size(); i++) {
-			years.add(this.articles.get(i).getArticleDate().getYear());
+			years.add(this.articles.get(i).getPublishDate().getYear());
 		}
 		
 		for(int i = 0; i<years.size(); i++) {
@@ -205,7 +205,7 @@ public class Publication {
 		int endYear = 0;
 		
 		for(int i = 0; i<this.articles.size(); i++) {
-			years.add(this.articles.get(i).getArticleDate().getYear());
+			years.add(this.articles.get(i).getPublishDate().getYear());
 		}
 		
 		for(int i = 0; i<years.size(); i++) {

@@ -2,6 +2,7 @@ package com.tjaglcs.plugins;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -39,8 +40,8 @@ public class Issue implements Comparable<Issue>{
 		for(int i = 0; i<this.articles.size(); i++) {
 			Article art = this.articles.get(i);
 			
-			if(art.getArticleDate().isAfter(publishDate)) {
-				publishDate = art.getArticleDate();
+			if(art.getPublishDate().isAfter(publishDate)) {
+				publishDate = art.getPublishDate();
 			}
 			
 			
@@ -124,6 +125,7 @@ public class Issue implements Comparable<Issue>{
 	}
 
 	public List<Article> getArticles() {
+		Collections.sort(articles);
 		return articles;
 	}
 	
@@ -142,7 +144,7 @@ public class Issue implements Comparable<Issue>{
 			
 			try {
 				//System.out.println("article year: " + articles.get(i).getArticleDate().getYear());
-				years[i] = articles.get(i).getArticleDate().getYear();
+				years[i] = articles.get(i).getPublishDate().getYear();
 			} catch (Exception e) {
 				//System.out.println("no date");
 				e.printStackTrace();
