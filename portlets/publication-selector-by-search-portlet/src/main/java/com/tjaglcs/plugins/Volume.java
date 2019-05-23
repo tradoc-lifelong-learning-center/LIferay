@@ -40,17 +40,12 @@ public class Volume implements Comparable<Volume> {
 	//allow volume to be sorted by date
 		public int compareTo(Volume compareVolume) {
 			//ascending
-			//return (this.getNumber() < compareIssue.getNumber() ? -1 : 
-	        //    (this.getNumber() == compareIssue.getNumber() ? 0 : 1));
-			
-			
-			
+			//return (this.getPublishDate().isBefore(compareVolume.getPublishDate()) ? -1 : 
+	        //    (this.getPublishDate() == compareVolume.getPublishDate() ? 0 : 1)); 
+
 			//descending
 			return (this.getPublishDate().isBefore(compareVolume.getPublishDate()) ? 1 : 
 	            (this.getPublishDate() == compareVolume.getPublishDate() ? 0 : -1)); 
-			
-			//return (this.getIndexNumber() < compareIssue.getIndexNumber() ? 1 : 
-	            //(this.getIndexNumber() == compareIssue.getIndexNumber() ? 0 : -1)); 
 			
 		}	
 	
@@ -71,7 +66,7 @@ public class Volume implements Comparable<Volume> {
 		
 		this.publishDate = publishDate;
 		
-		System.out.println("volume " + this.getNumber() +  " was published on " + this.publishDate);
+		//System.out.println("volume " + this.getNumber() +  " was published on " + this.publishDate);
 		
 	}
 	
