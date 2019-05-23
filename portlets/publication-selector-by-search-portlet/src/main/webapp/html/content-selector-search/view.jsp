@@ -84,7 +84,7 @@
 	<div>
 		<section class="volume-container">
 		
-		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/>: <c:out value="${currentVolume.getPublishDate() }"/></h2>
+		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
 		
 
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
@@ -109,9 +109,17 @@
 				 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
 				 	<h3><c:out value="${issueLabel }"/></h3>
 					 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
+					 
+					<c:choose>
+						<c:when test="${article.getType().contains('DLFileEntry') }">
+							<c:set var="tocEntryClass" value="toc-entry toc-entry--pdf"/>
+						</c:when>
+						<c:otherwise>
+							<c:set var="tocEntryClass" value="toc-entry"/>
+						</c:otherwise>
+					</c:choose>
 
-					 	<p class="toc-entry">
-					 	
+					 	<p class="${tocEntryClass }">
 					 		<c:choose>
 						 		<c:when test="${article.getURL()==null }">
 						 			<c:out value="${article.getTitle() }"/>

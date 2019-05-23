@@ -80,12 +80,23 @@
 	font-family: Adobe Caslon Pro, Times New Roman, serif;
 }
 
+.content-selector-search-portlet .year-label{
+	text-align: center; 
+	/*padding-bottom: 1rem; */
+	color:#808080;
+	text-transform:uppercase;
+	font-family: 'Open Sans', 'sans-serif';
+	/*letter-spacing: 2px;*/
+	font-size:2.5rem;
+	margin-top:2rem;
+}
+
 .content-selector-search-portlet .volume-container h2{
 	font-size:2rem;
 	font-weight:normal;
     color: #000666 !important; /*using important to override theme color*/
     text-align:center;
-    margin-top:3rem;
+    margin-top:1.5rem;
 }
 
 .content-selector-search-portlet .table-of-contents-container h3{
@@ -101,14 +112,7 @@
 	padding-top:2rem;*/
 }
 
-.content-selector-search-portlet .year-label{
-	text-align: center; 
-	padding-bottom: 1rem; 
-	color:#808080;
-	text-transform:uppercase;
-	font-family: 'Open Sans', 'sans-serif';
-	letter-spacing: 2px;
-}
+
 
 .content-selector-search-portlet .toc-entry{
 	color: #000666;
@@ -116,6 +120,9 @@
 	line-height:1.125;
 }
 
+.content-selector-search-portlet .toc-entry--pdf{
+	text-align:center;
+}
 
 .content-selector-search-portlet .toc-entry a {
 	color: #000666 !important; /*using important to override theme color*/
