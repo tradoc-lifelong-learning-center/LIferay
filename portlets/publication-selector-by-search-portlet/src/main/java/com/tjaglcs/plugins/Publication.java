@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +40,8 @@ public class Publication {
 	private List<Volume> volumes;
 	private List<Year> yearsList;
 	private RenderRequest request;
-	private List<Volume> mostRecentVolumes = new ArrayList<>();
+	private List<Volume> mostRecentVolumes = new ArrayList<>(); //all volumes in the latest year
+	private Volume mostRecentVolume; //the actual latest volume by publish date
 	private List<Volume> selectedVolumes = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
@@ -58,6 +60,7 @@ public class Publication {
 		groupVolumesByYear();
 
 		setMostRecentVolumesByYear();
+		setMostRecentVolumeByDate();
 		
 		setIsSingleIssue(request);
 		setSelectedContent(this.request);
@@ -260,6 +263,7 @@ public class Publication {
 	}
 
 	public List<Volume> getSelectedVolumes() {
+		Collections.sort(selectedVolumes);
 		return selectedVolumes;
 	}
 
@@ -497,10 +501,38 @@ public class Publication {
 		this.mostRecentVolumes.add(latestVolume);
 	}
 	
+	public void setMostRecentVolumeByDate() {
+		//get the most recent volume in the latest year
+		Volume latestVolume = null;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
+		LocalDate publishDate = LocalDate.parse("1776-07-04", formatter);
+		
+		for(int i = 0; i<this.mostRecentVolumes.size(); i++) {
+			
+			Volume vol = this.mostRecentVolumes.get(i);
+			
+			if(vol.getPublishDate().isAfter(publishDate)) {
+				latestVolume = vol;
+			}
+		}
+		
+		this.mostRecentVolume = latestVolume;
+		
+	}
+	
+	
+	
+	public Volume getMostRecentVolume() {
+		return mostRecentVolume;
+	}
+
 	public void setMostRecentVolumesByYear(){
 		//first, figure out the latest year
 		int latestYear = 0;
 		Volume latestVolume = null;
+		
+		List<Volume> latestVolumes = new ArrayList<>();
 		
 		for(int i = 0; i<this.volumes.size(); i++) {
 			Volume vol = this.volumes.get(i);
@@ -514,10 +546,14 @@ public class Publication {
 		for(int i = 0; i<this.volumes.size(); i++) {
 			Volume vol = this.volumes.get(i);
 			if(vol.getYear()==latestYear) {
-				this.mostRecentVolumes.add(vol);
+				latestVolumes.add(vol);
 			} 
 		}
 		
+		//sort by pub date
+		Collections.sort(latestVolumes);
+		
+		this.mostRecentVolumes = latestVolumes;
 
 	}
 	

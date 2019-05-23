@@ -1,6 +1,10 @@
 package com.tjaglcs.plugins;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Issue implements Comparable<Issue>{
 	private String publicationName;
@@ -8,6 +12,7 @@ public class Issue implements Comparable<Issue>{
 	private String name;
 	private List<Article> articles;
 	private int volume;
+	private LocalDate publishDate;
 	private int year;
 	private int indexNumber;
 	private String editionType; //online or PDF edition
@@ -20,9 +25,35 @@ public class Issue implements Comparable<Issue>{
 		this.articles = articles;
 		setVolume();
 		setYear();
+		setPublishDate();
 		setIndexNumber();
 		setIssueType();
 		//System.out.println("building issue " + this.number);
+	}
+	
+	public void setPublishDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
+		LocalDate publishDate = LocalDate.parse("1776-07-04", formatter);
+		
+		//publish date will be the latest date in articles
+		for(int i = 0; i<this.articles.size(); i++) {
+			Article art = this.articles.get(i);
+			
+			if(art.getArticleDate().isAfter(publishDate)) {
+				publishDate = art.getArticleDate();
+			}
+			
+			
+		}
+		
+		this.publishDate = publishDate;
+		
+		//System.out.println("issue " + this.getNumber() +  " was published on " + this.publishDate);
+		
+	}
+	
+	public LocalDate getPublishDate() {
+		return publishDate;
 	}
 	
 	public void setIssueType() {

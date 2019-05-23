@@ -1,11 +1,14 @@
 package com.tjaglcs.plugins;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
-public class Volume {
+public class Volume implements Comparable<Volume> {
 	private String publicationName;
 	private String name;
 	private int number;
@@ -13,7 +16,7 @@ public class Volume {
 	private List<Integer> selectedIssues = new ArrayList<>();
 	private Issue mostRecentIssue;
 	private List<Article> articles;
-	private Date publishDate;
+	private LocalDate publishDate;
 	private int year;
 	private String editionType;
 	
@@ -27,10 +30,53 @@ public class Volume {
 		setMostRecentIssue();
 		//by default, include all issues in selection
 		setSelectedIssues();
-
+		
+		setPublishDate();
 		setYear();
 		setEditionType();
 
+	}
+	
+	//allow volume to be sorted by date
+		public int compareTo(Volume compareVolume) {
+			//ascending
+			//return (this.getNumber() < compareIssue.getNumber() ? -1 : 
+	        //    (this.getNumber() == compareIssue.getNumber() ? 0 : 1));
+			
+			
+			
+			//descending
+			return (this.getPublishDate().isBefore(compareVolume.getPublishDate()) ? 1 : 
+	            (this.getPublishDate() == compareVolume.getPublishDate() ? 0 : -1)); 
+			
+			//return (this.getIndexNumber() < compareIssue.getIndexNumber() ? 1 : 
+	            //(this.getIndexNumber() == compareIssue.getIndexNumber() ? 0 : -1)); 
+			
+		}	
+	
+	public void setPublishDate() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
+		LocalDate publishDate = LocalDate.parse("1776-07-04", formatter);
+		
+		//publish date will be the latest date in articles
+		for(int i = 0; i<this.issues.size(); i++) {
+			Issue issue = this.issues.get(i);
+			
+			if(issue.getPublishDate().isAfter(publishDate)) {
+				publishDate = issue.getPublishDate();
+			}
+			
+			
+		}
+		
+		this.publishDate = publishDate;
+		
+		System.out.println("volume " + this.getNumber() +  " was published on " + this.publishDate);
+		
+	}
+	
+	public LocalDate getPublishDate() {
+		return publishDate;
 	}
 	
 	public String getName() {

@@ -7,7 +7,7 @@
 <portlet:defineObjects />
 
 <jsp:useBean id="st" class="com.tjaglcs.plugins.ContentSelector"/>
-
+<c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 <c:catch var ="catchException">
 	<c:set var="pubData" value="${st.fetchPublication(renderRequest) }" />
 	<c:set var="selectedVolumes" value="${pubData.getSelectedVolumes() }" />
@@ -84,7 +84,7 @@
 	<div>
 		<section class="volume-container">
 		
-		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
+		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/>: <c:out value="${currentVolume.getPublishDate() }"/></h2>
 		
 
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
