@@ -39,7 +39,7 @@ public class Publication {
 	private List<Volume> volumes;
 	private List<Year> yearsList;
 	private RenderRequest request;
-	private Volume mostRecentVolume;
+	private List<Volume> mostRecentVolumes = new ArrayList<>();
 	private List<Volume> selectedVolumes = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
@@ -57,7 +57,7 @@ public class Publication {
 		setVolumes();
 		groupVolumesByYear();
 
-		setMostRecentVolume();
+		setMostRecentVolumesByYear();
 		
 		setIsSingleIssue(request);
 		setSelectedContent(this.request);
@@ -255,8 +255,8 @@ public class Publication {
 		return volumes;
 	}
 
-	public Volume getMostRecentVolume() {
-		return mostRecentVolume;
+	public List<Volume> getMostRecentVolumes() {
+		return mostRecentVolumes;
 	}
 
 	public List<Volume> getSelectedVolumes() {
@@ -407,7 +407,7 @@ public class Publication {
 		//System.out.println("getting volume!");
 		if(volString==null) {
 			//System.out.println("no volume selected by query string. Getting most recent");
-			this.selectedVolumes.add(this.mostRecentVolume);
+			this.selectedVolumes = this.mostRecentVolumes;
 		} else {
 			
 			
@@ -429,8 +429,8 @@ public class Publication {
 						SessionErrors.add(request, "no-volume-found");
 						//if there's an error with one of the volumes, give up and just display most recent
 						
-						this.selectedVolumes.clear();
-						this.selectedVolumes.add(this.mostRecentVolume);
+						//this.selectedVolumes.clear();
+						this.selectedVolumes = this.mostRecentVolumes;
 						
 						//System.out.println("nope! no volume " + volNumber);
 						
@@ -449,7 +449,7 @@ public class Publication {
 				
 				e.printStackTrace();
 				//System.out.println("couldn't get volume number from query string");
-				this.selectedVolumes.add(this.mostRecentVolume);
+				this.selectedVolumes = this.mostRecentVolumes;
 				return false;
 			}
 		}
@@ -482,7 +482,7 @@ public class Publication {
 	}
 	
 
-	public void setMostRecentVolume(){
+	public void setMostRecentVolumeByVolNumber(){
 		int latestVolumeNumber = 0;
 		Volume latestVolume = null;
 		
@@ -494,7 +494,31 @@ public class Publication {
 		}
 		
 		//System.out.println("Latest volume: " + latestVolumeNumber);
-		this.mostRecentVolume = latestVolume;
+		this.mostRecentVolumes.add(latestVolume);
+	}
+	
+	public void setMostRecentVolumesByYear(){
+		//first, figure out the latest year
+		int latestYear = 0;
+		Volume latestVolume = null;
+		
+		for(int i = 0; i<this.volumes.size(); i++) {
+			Volume vol = this.volumes.get(i);
+			if(vol.getYear()>latestYear) {
+				latestVolume = vol;
+				latestYear = latestVolume.getYear();
+			} 
+		}
+		
+		//then, get all volumes in that year
+		for(int i = 0; i<this.volumes.size(); i++) {
+			Volume vol = this.volumes.get(i);
+			if(vol.getYear()==latestYear) {
+				this.mostRecentVolumes.add(vol);
+			} 
+		}
+		
+
 	}
 	
 		

@@ -68,12 +68,13 @@
 	<liferay-ui:error key="no-volume-found" message="no-volume-found"/>
 	<liferay-ui:error key="no-issue-found" message="no-issue-found"/>
 	
+	<p class="year-label"><c:out value="${selectedVolumes.get(0).getYear() }"/></p>
 	
 	<c:forEach items="${selectedVolumes}" var = "currentVolume" varStatus="i">
 	
 		<c:choose>
 			<c:when test="${currentVolume.getName() != ''}">
-				<c:set var="volumeLabel" value="${currentVolume.getName() }"/>
+				<c:set var="volumeLabel" value="${currentVolume.getName() } Volume"/>
 			</c:when>
 			<c:otherwise>
 				<c:set var="volumeLabel" value="Volume ${currentVolume.getNumber() }"/>
@@ -82,17 +83,19 @@
 	
 	<div>
 		<section class="volume-container">
+		
 		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
+		
 
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
 			<c:set var="issue" value="${currentVolume.getIssue(currentIssue) }" />
 
 			<c:choose>
 				<c:when test="${issue.getName() != ''}">
-					<c:set var="issueLabel" value="${issue.getName() } ${currentVolume.getYear() } Issue"/>
+					<c:set var="issueLabel" value="${issue.getName() } Issue"/>
 				</c:when>
 				<c:otherwise>
-					<c:set var="issueLabel" value="${currentVolume.getYear() } Issue ${issue.getNumber() }"/>
+					<c:set var="issueLabel" value="Issue ${issue.getNumber() }"/>
 				</c:otherwise>
 			</c:choose>
 		
