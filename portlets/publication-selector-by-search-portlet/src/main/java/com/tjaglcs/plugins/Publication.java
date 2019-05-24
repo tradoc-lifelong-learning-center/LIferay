@@ -42,6 +42,7 @@ public class Publication {
 	private RenderRequest request;
 	private List<Volume> mostRecentVolumes = new ArrayList<>(); //all volumes in the latest year
 	private Volume mostRecentVolume; //the actual latest volume by publish date
+	private boolean isPageContainesMostRecent; //if selected volume contains most recent, true, and display most recent label
 	private List<Volume> selectedVolumes = new ArrayList<>();
 	private String json;
 	private boolean isSingleIssue;
@@ -62,8 +63,10 @@ public class Publication {
 		setMostRecentVolumesByYear();
 		setMostRecentVolumeByDate();
 		
+		
 		setIsSingleIssue(request);
 		setSelectedContent(this.request);
+		this.isPageContainesMostRecent = setIsPageContainesMostRecent();
 		setJson();
 		//System.out.println("JSON: " + json);
 		
@@ -72,6 +75,21 @@ public class Publication {
 		
 	}
 	
+	public boolean setIsPageContainesMostRecent() {
+		for(int i = 0; i<this.selectedVolumes.size(); i++) {
+			if(this.selectedVolumes.get(i)==this.mostRecentVolume) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
+	public boolean getIsPageContainesMostRecent() {
+		return isPageContainesMostRecent;
+	}
+
 	public void groupVolumesByYear() {
 		//System.out.println("hash mapping!");
 		HashMap<Integer, Year> yearMap = new HashMap<>(); 

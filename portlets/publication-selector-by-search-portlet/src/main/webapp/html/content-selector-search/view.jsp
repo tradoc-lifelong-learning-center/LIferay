@@ -25,7 +25,10 @@
 	
 	<c:otherwise>
 		<aui:form cssClass="content-selector-form">
-	
+		
+		<c:if test="${pubData.getIsPageContainesMostRecent()==true }"><p class="most-recent-label">Most Recent Issue</p></c:if>
+		
+		
 		<div id="noUiSlider"  class="noUi--slider-outer-container">
 			<!-- TODO get values from bean -->
 			<span class="noUi--year-label" id="noUiSliderMin">${pubData.getStartYear() }</span>
@@ -100,12 +103,7 @@
 			</c:choose>
 		
 				
-				
-				<%-- <c:if test="${issue==pubData.getMostRecentIssue() }">Most Recent!</c:if> --%>
-				
-						
-				
-				 
+
 				 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
 				 	<h3><c:out value="${issueLabel }"/></h3>
 					 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
