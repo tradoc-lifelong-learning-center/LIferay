@@ -6,7 +6,7 @@
 	<artifactId>publication-selector-search-portlet</artifactId>
 	<packaging>war</packaging>
 	<name>Publication Selector by Search Portlet</name>
-	<version>1.3.0</version>
+	<version>1.4.0</version>
 	<build>
 		<plugins>
 			<plugin>
