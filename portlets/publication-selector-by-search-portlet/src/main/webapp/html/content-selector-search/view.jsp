@@ -73,6 +73,8 @@
 	
 	<p class="year-label"><c:out value="${selectedVolumes.get(0).getYear() }"/></p>
 	
+	<div class="volumes-container">
+	
 	<c:forEach items="${selectedVolumes}" var = "currentVolume" varStatus="i">
 	
 		<c:choose>
@@ -84,7 +86,7 @@
 			</c:otherwise>
 		</c:choose>
 	
-	<div>
+	
 		<section class="volume-container">
 		
 		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
@@ -138,10 +140,10 @@
 			    	
 		</c:forEach>
 	</section>
-	
-	</div>
+
 	
 	</c:forEach>
+	</div>
 	
 	<aui:script use="aui-base, event, node">
 	    
