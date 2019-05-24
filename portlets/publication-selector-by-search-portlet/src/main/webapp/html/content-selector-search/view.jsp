@@ -89,7 +89,7 @@
 	
 		<section class="volume-container">
 		
-		<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2>
+		<%--<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/></h2> --%>
 		
 
 		<c:forEach items="${currentVolume.getSelectedIssues() }" var = "currentIssue" varStatus="i">
@@ -107,7 +107,14 @@
 				
 
 				 <nav class="table-of-contents-container" aria-labelledby="volume${currentVolume.getNumber() }">
-				 	<h3><c:out value="${issueLabel }"/></h3>
+				 	<h2 id="volume${currentVolume.getNumber() }"><c:out value="${volumeLabel }"/>, <c:out value="${issueLabel }"/></h2>
+				 	
+				 	<c:if test="${currentVolume.getEditionType()=='Online' }">
+				 		<p class="edition-label">Online Edition</p>
+				 		<hr/>
+				 	</c:if>
+				 	
+				 	<%--<h3><c:out value="${issueLabel }"/></h3>--%>
 					 <c:forEach items="${issue.getArticles()}" var = "article" varStatus="i">
 					 
 					<c:choose>

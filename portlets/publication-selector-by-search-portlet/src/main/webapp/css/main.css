@@ -99,6 +99,16 @@
 	font-weight:bold;
 }
 
+.content-selector-search-portlet .edition-label{
+	text-align: center; 
+	/*padding-bottom: 1rem; */
+	color:#808080;
+	text-transform:uppercase;
+	font-family: 'Open Sans', 'sans-serif';
+	/*letter-spacing: 2px;*/
+	font-size:1rem;
+}
+
 .content-selector-search-portlet .volume-container h2{
 	font-size:2rem;
 	font-weight:normal;
