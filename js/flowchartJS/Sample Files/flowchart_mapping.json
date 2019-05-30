@@ -1,0 +1,42 @@
+{
+  "flowchart": {
+    "button--yes--01": [
+      "flowbox--question--01",
+	  "button--yes--02",
+	  "button--no--01"
+    ],
+	"button--yes--02": [
+      "flowbox--question--02",
+	  "answer--no--01",
+	  "button--yes--03"
+    ],
+	"button--yes--03": [
+      "answer--yes--02",
+	  "flowbox--question--04",
+	  "answer--no--03",
+	  "button--no--02"
+    ],
+	"button--yes--04": [
+      "arrow--straight--01",
+	  "flowbox--question--04",
+	  "answer--no--03",
+	  "button--no--02"
+    ],
+	"button--no--01": [
+      "answer--yes--01",
+	  "flowbox--question--04",
+	  "answer--no--03",
+	  "button--no--02"
+    ],
+	"button--no--02": [
+      "flowbox--question--03",
+	  "answer--no--02",
+	  "answer--yes--03"
+    ],
+	"button--no--03": [
+      "flowbox--question--05",
+	  "button--yes--04",
+	  "answer--yes--04"
+    ]
+  }
+}
