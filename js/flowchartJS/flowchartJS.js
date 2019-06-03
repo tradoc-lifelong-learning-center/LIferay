@@ -25,9 +25,34 @@ for(var buttonId in map.flowchart){
 
 }
 
-//set up reveal all button
+//set up reveal all/reset button
 var showAllButton = document.getElementById("button--show-all");
 showAllButton.onclick = showAll;
+
+var reloadButton = document.getElementById("button--reload");
+reloadButton.onclick = reloadChart;
+
+function reloadChart(){
+	var map = getMapping();
+	console.log(map);
+	
+	//loop through map and
+	//--remove selected from all buttons
+	//--hide everything that's in button array
+	for(var buttonId in map.flowchart){
+		var button = document.getElementById(buttonId);
+		if(!buttonElement){continue}
+		button.removeAttribute("class");
+		
+		for(var i = 0; i<map.flowchart[buttonId].length; i++){
+				var element = document.getElementById(map.flowchart[buttonId][i]);
+				if(!element){continue}
+				element.setAttribute("opacity",0);
+			}
+		}
+		
+	}
+
 
 function showAll(){
 	var allItems = [];
@@ -55,6 +80,20 @@ function showAll(){
 
 
 function revealItems(e){
+	
+	//console.log(e.currentTarget)
+
+	//if the button isn't showing, don't respond to click
+	if(e.currentTarget.getAttribute("opacity")==0){
+		return false;
+	}
+	
+	//add .selected to button
+	//no classlist on SVG in IE. This is simple enough there shouldn't be multiple classes on the
+	//svg elements, so I'll just add/remove class. Don't think it's worth adding polyfill
+	//e.currentTarget.classList.add("selected");
+	e.currentTarget.setAttribute("class", "selected");
+	
 	//getting attribute instead of dataset for IE11
 	var targetIds = e.currentTarget.getAttribute("data-target-ids").split('|');
 	for(var i = 0; i<targetIds.length; i++){
