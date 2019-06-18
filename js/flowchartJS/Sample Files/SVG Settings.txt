@@ -1,0 +1,12 @@
+https://jakearchibald.github.io/svgomg/
+
+Disabled:
+-remove xmlns
+-clean IDs
+-Round/rewrite number lists
+-remove viewBox
+-remove hidden elements
+-Remove empty containers
+-Sort attrs
+-Remove style elements
+-Remove script elements
