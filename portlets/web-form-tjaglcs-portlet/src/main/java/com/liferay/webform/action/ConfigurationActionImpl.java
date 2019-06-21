@@ -200,10 +200,10 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.ADD)) {
-			return "/edit_field.jsp";
+			return "/html/edit_field.jsp";
 		}
 		else {
-			return "/configuration.jsp";
+			return "/html/configuration.jsp";
 		}
 	}
 
