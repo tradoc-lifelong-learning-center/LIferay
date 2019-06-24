@@ -158,7 +158,7 @@ boolean ignoreRequestValue = (index != formFieldsIndex);
 						</aui:column>
 						<aui:column columnWidth="50">
 							<div class="syntax-help">
-								<liferay-util:include page="/script_help.jsp" servletContext="<%= application %>" />
+								<liferay-util:include page="/html/script_help.jsp" servletContext="<%= application %>" />
 							</div>
 						</aui:column>
 					</div>

@@ -44,7 +44,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" />
 
 		<c:if test='<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
-			<liferay-util:include page="/script_error.jsp" />
+			<liferay-util:include page="/html/script_error.jsp" />
 		</c:if>
 
 		<%
