@@ -5,8 +5,8 @@
 	<groupId>com.tjaglcs.plugins</groupId>
 	<artifactId>web-form-update-tjaglcs-portlet</artifactId>
 	<packaging>war</packaging>
-	<name>web-form-update-tjaglcs-portlet Portlet</name>
-	<version>1.0.0-SNAPSHOT</version>
+	<name>Web Form TJAGLCS Portlet</name>
+	<version>1.0.0</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -129,4 +129,6 @@
 	</properties>
 	</profile>
 </profiles>
+	<description>This is the Liferay Web Form portlet with an update CSV output:
+https://github.com/liferay/liferay-plugins/tree/6.2.x/portlets/web-form-portlet</description>
 </project>
