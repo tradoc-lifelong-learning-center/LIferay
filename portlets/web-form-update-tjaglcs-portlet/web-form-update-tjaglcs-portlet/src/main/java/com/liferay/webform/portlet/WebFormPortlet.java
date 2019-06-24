@@ -297,7 +297,7 @@ public class WebFormPortlet extends MVCPortlet {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append(CharPool.NEW_LINE);
+		sb.append(CharPool.RETURN);
 
 		if (Validator.isNotNull(databaseTableName)) {
 			List<ExpandoRow> rows = ExpandoRowLocalServiceUtil.getRows(
@@ -317,7 +317,7 @@ public class WebFormPortlet extends MVCPortlet {
 
 				sb.setIndex(sb.index() - 1);
 
-				sb.append(CharPool.NEW_LINE);
+				sb.append(CharPool.RETURN);
 			}
 		}
 
@@ -331,10 +331,15 @@ public class WebFormPortlet extends MVCPortlet {
 
 	protected String getCSVFormattedValue(String value) {
 		StringBundler sb = new StringBundler(3);
+		
+		//Replace quotes and line breaks
+		String val1 = StringUtil.replace(value, CharPool.QUOTE, CharPool.APOSTROPHE);
+		String val2 = StringUtil.replace(val1, CharPool.RETURN, CharPool.SPACE);
+		String val3 = StringUtil.replace(val2, CharPool.NEW_LINE, CharPool.SPACE);
 
 		sb.append(CharPool.QUOTE);
 		sb.append(
-			StringUtil.replace(value, CharPool.QUOTE, StringPool.DOUBLE_QUOTE));
+			StringUtil.replace(val3, CharPool.QUOTE, StringPool.DOUBLE_QUOTE));
 		sb.append(CharPool.QUOTE);
 
 		return sb.toString();
