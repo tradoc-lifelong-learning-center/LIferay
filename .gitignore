@@ -74,4 +74,5 @@ bin/
 /*/*/target/*
 !/*/*/target/*.war
 
-
+/*/*/*/target/*
+!/*/*/*/target/*.war
