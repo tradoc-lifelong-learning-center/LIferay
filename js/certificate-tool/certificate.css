@@ -1,0 +1,23 @@
+.certificate-container{
+  width:8.5in;
+  height:11in;
+  background-color:lightgrey;
+}
+
+@media print{
+  html{
+    width:8.5in;
+    height:11in;
+    margin:0;
+    padding:0;
+  }
+  
+  .certificate-container{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+  }
+  
+}
