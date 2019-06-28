@@ -24,8 +24,7 @@
 
 <#-- -->
 
-//TODO: wrapper should shrink when control panel is open, like in LR classic theme. See how their CSS is set up.
-<div class="pt-0" id="#wrapper">
+<div id="wrapper">
 	<header id="banner" role="banner">
 			<div id="heading">
 
