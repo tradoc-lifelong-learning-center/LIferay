@@ -25,54 +25,51 @@
 <#-- -->
 
 <div id="wrapper">
-	<header id="banner" role="banner">
-			<div id="heading">
 
-				<#-- TODO: Should I bother adding if to search so it can be hidden based on prefs? (#if ($show_search_field && !$default_color_scheme))-->
-				<div id="sitesearch">
-					<#-- TODO: hide "search bar" title
-					     I don't think that's available through prefs (at least it isn't through the GUI,
-					     so I may just need to do that in the CSS)
-					-->
-					<@liferay.search_bar/>
+		<header id="banner">
+			<div class="navbar navbar-classic navbar-top py-3">
+				<div class="container user-personal-bar">
+					<div class="align-items-center autofit-row">
+						<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
+							<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
+
+							<#if show_site_name>
+								<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+							</#if>
+						</a>
+
+						<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
+
+						<div class="autofit-col autofit-col-expand">
+							<#if show_header_search>
+								<div class="justify-content-md-end mr-4 navbar-form" role="search">
+									<@liferay.search_bar default_preferences="${preferences}" />
+								</div>
+							</#if>
+						</div>
+
+						<div class="autofit-col">
+							<@liferay.user_personal_bar />
+						</div>
+					</div>
 				</div>
-
-
-				<h1 class="site-title">
-					<a class="${logo_css_class}" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-						<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
-					</a>
-
-					<#if show_site_name>
-						<span class="site-name" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
-							${site_name}
-						</span>
-					</#if>
-				</h1>
 			</div>
 
+			<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
+				<div class="container">
+					<a class="${logo_css_class} align-items-center d-inline-flex d-md-none logo-xs" href="${site_default_url}" rel="nofollow">
+						<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
+						<#if show_site_name>
+							<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+						</#if>
+					</a>
 
-
-
-
-			<#-- TODO: previous template has condition #if ($has_navigation || $is_signed_in). Is this ok as is? -->
-
-			<#if has_navigation && is_setup_complete>
-				<div class="nav-wrapper">
-					<#-- <#include "${full_templates_path}/navigation.ftl" /> -->
-					<@liferay.navigation_menu />
-
-					<#if !is_signed_in>
-						<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
-					</#if>
-
-					<#if is_signed_in>
-						<@liferay.user_personal_bar />
-					</#if>
+					<#include "${full_templates_path}/navigation.ftl" />
 				</div>
-			</#if>
+			</div>
 		</header>
+
 
 
 	<#-- TODO: previous template has a div wrap here, then subbanner. Do we need either? -->
