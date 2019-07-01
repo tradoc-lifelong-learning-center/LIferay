@@ -4,6 +4,6 @@
 	</button>
 
 	<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
-		<@liferay.navigation_menu default_preferences="${preferences}" />
+		<@liferay.navigation_menu default_preferences="${headerPortletPreferences}" />
 	</div>
 </#if>
