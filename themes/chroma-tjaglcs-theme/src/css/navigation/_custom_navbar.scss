@@ -28,6 +28,9 @@
 	background-color: $colorBackgroundHeaderFooter;
 	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
 
+	h1{
+		color:$colorTextHeader;
+	}
 /*
 	&.navbar-light {
 		border-bottom: 1px solid $light-color;
@@ -76,8 +79,10 @@
 		}
 	}
 
+
+
 	.nav-link {
-		color:#E0E0E0;
+		color:$colorTextHeader;
 		font-size: 0.9375rem;
 		font-weight: normal;
 		text-transform: uppercase;

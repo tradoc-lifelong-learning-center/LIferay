@@ -40,7 +40,7 @@
 								<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
 								<#if show_site_name>
-									<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+									<h1 class="font-weight-bold h2 mb-0">${site_name}</h1>
 								</#if>
 							</a>
 						</div>
