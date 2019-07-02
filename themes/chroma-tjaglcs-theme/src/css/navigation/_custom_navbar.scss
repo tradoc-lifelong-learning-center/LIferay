@@ -1,3 +1,6 @@
+@import "../_custom_variables";
+
+
 .navbar-top {
 	padding-bottom: 0.907rem;
 	padding-top: 0.907rem;
@@ -15,7 +18,7 @@
 }
 
 .navbar-classic {
-	background-color: #fff;
+	background-color: $colorBackgroundHeaderFooter;
 
 /*
 	&.navbar-light {
@@ -66,8 +69,18 @@
 	}
 
 	.nav-link {
-		color: #6b6c7e;
+		color:#E0E0E0;
 		font-size: 0.9375rem;
 		font-weight: 600;
 	}
+
+	.navbar-toggler{
+		color: $navbar-toggler-color;
+    border-color: $navbar-toggler-color;
+	}
+
+	.navbar-toggler-icon{
+		background-image: $navbar-toggler-icon-bg;
+	}
+
 }

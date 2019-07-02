@@ -29,7 +29,7 @@
 <div id="wrapper">
 
 		<header id="banner">
-			<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
+			<div class="navbar navbar-classic navbar-dark navbar-expand-md pb-3">
 				<div class="container">
 					<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 						<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />

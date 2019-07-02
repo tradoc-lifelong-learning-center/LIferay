@@ -33,6 +33,7 @@ C:\Liferay\7.2\liferay-ce-portal-7.2.0-ga1\tomcat-9.0.17\work\Catalina\localhost
 @import "_custom_extras";
 */
 
+@import "_custom_variables";
 @import "layout/_custom_layout";
 @import "navigation/_custom_navbar";
 
@@ -44,20 +45,24 @@ C:\Liferay\7.2\liferay-ce-portal-7.2.0-ga1\tomcat-9.0.17\work\Catalina\localhost
 @import url(custom/_custom_responsive.scss);/*
 @import url(_custom_extras);*/
 /*a note in custom*/
-$colorBackgroundBody: #F9F9F9;
-$colorBackgroundHeaderFooter: #505050;
-$colorTextFooter: #FFF;
-$colorHeading: #5E60B2;
-$colorHighlightWarn: #953537;
-$colorHighlightInfo: #5CB260;
 
-$colorHudCrumbBackground: #000;
-$colorHudCrumbText: #FFF;
 
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: 400;
+	src: url('../fonts/opensans/OpenSans-Regular.eot');
+    src: local('Open Sans'),
+		 local('OpenSans'),
+    	 url('../fonts/opensans/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/opensans/OpenSans-Regular.woff') format('woff'),
+         url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 500;
 	src: url('../fonts/opensans/OpenSans-Regular.eot');
     src: local('Open Sans'),
 		 local('OpenSans'),
@@ -87,12 +92,17 @@ body{
 }
 
 #banner{
-	background-color: $colorBackgroundHeaderFooter;
+	/*background-color: $colorBackgroundHeaderFooter;
+*/
+	.portlet{
+		margin-bottom:0;
+	}
 
 	/*remove headers from banner portlets (nav, search)*/
 	.portlet-header{
 		display: none;
 	}
+
 }
 
 #content{
