@@ -46,17 +46,17 @@
 						</div>
 
 
-						<div class="col-sm">
+						<#--<div class="col-sm">
 							<#if show_header_search>
 								<div class="justify-content-md-end mr-4 navbar-form" role="search">
 									<@liferay.search_bar default_preferences="${headerPortletPreferences}" />
 								</div>
 							</#if>
-						</div>
-
-						<#-- <div class="col-sm-auto">
-							<#include "${full_templates_path}/navigation.ftl" />
 						</div>-->
+
+						 <div class="col-sm-auto">
+							<#include "${full_templates_path}/navigation.ftl" />
+						</div>
 
 						<!--Can this be added to the control menu instead?
 								Then we could have admin sign in in the footer and account controls in the menu
