@@ -45,10 +45,24 @@
 							</a>
 						</div>
 
-						<div class="col-sm-auto">
-							<#include "${full_templates_path}/navigation.ftl" />
+
+						<div class="col-sm">
+							<#if show_header_search>
+								<div class="justify-content-md-end mr-4 navbar-form" role="search">
+									<@liferay.search_bar default_preferences="${headerPortletPreferences}" />
+								</div>
+							</#if>
 						</div>
 
+						<#-- <div class="col-sm-auto">
+							<#include "${full_templates_path}/navigation.ftl" />
+						</div>-->
+
+						<!--Can this be added to the control menu instead?
+								Then we could have admin sign in in the footer and account controls in the menu
+								Should make nav bar simpler
+								https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/creating-control-menu-entries
+					 -->
 						<div class="col-sm">
 							<@liferay.user_personal_bar />
 						</div>
