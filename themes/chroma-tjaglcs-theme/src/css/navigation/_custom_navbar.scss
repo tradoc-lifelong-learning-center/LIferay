@@ -117,11 +117,19 @@ header{
 	}
 
 	.navbar-nav {
+		.nav-item{
+			border-left: thin solid $colorTextNavigation;
+			padding: 0px 6px;
+		}
+		.nav-link:hover{
+			background-color:$colorTextNavigation;
+			color: $colorBackgroundHeaderFooter;
+		}
 		.nav-item:not(:last-of-type) {
 			.nav-link {
-				@include media-breakpoint-up(lg) {
+				/*@include media-breakpoint-up(lg) {
 					margin-right: 16px;
-				}
+				}*/
 			}
 		}
 	}
