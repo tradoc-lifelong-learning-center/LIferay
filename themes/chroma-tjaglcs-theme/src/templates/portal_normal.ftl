@@ -63,9 +63,9 @@
 								Should make nav bar simpler
 								https://portal.liferay.dev/docs/7-1/tutorials/-/knowledge_base/t/creating-control-menu-entries
 					 -->
-						<div class="col-sm">
+						<#--<div class="col-sm">
 							<@liferay.user_personal_bar />
-						</div>
+						</div>-->
 
 					</div>
 
@@ -121,6 +121,15 @@
 				 <div class="col-sm-auto">
 					 <p><a href="/documents/27431/135130/Directory+2016-2017/24975c80-c9e5-4797-8659-bef0abd022dc">Directory</a></p>
 					 <p><a href="/support">Contact Us</a></p>
+
+					 <#if !is_signed_in>
+						<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
+					</#if>
+
+					<#if is_signed_in>
+						<@liferay.user_personal_bar />
+					</#if>
+
 				 </div>
 			 </div>
 		 </div>
