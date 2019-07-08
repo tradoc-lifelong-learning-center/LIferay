@@ -35,7 +35,7 @@
 			<div class="navbar navbar-classic navbar-expand-md pb-3 pt-3">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm">
+						<div class="col-sm logo-column">
 							<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 								<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
@@ -54,7 +54,7 @@
 							</#if>
 						</div>-->
 
-						 <div class="col-sm-auto">
+						 <div class="col-sm-auto nav-column">
 							<#include "${full_templates_path}/navigation.ftl" />
 						</div>
 

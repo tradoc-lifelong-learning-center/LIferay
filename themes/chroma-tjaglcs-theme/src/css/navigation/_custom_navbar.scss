@@ -6,7 +6,15 @@
 
 }
 
+header{
+	margin-bottom:1.5rem;
+}
+
 #banner {
+
+	.navbar{
+		max-height: 130px;
+	}
 
 	.navbar .row{
 		/*overrid _liferay display:block on :first-child*/
@@ -16,15 +24,31 @@
 	}
 
 
+
 	.navbar .container .row > div {
 		display: flex;
-		justify-content: center;
+		max-height: 130px;
+	}
 
 		/*remove padding from last item in nav row*/
 		> div:last-of-type{
 			padding-right:0;
 		}
-	}
+
+		.nav-column{
+			justify-content: center;
+		}
+
+		.logo-column{
+			justify-content: start;
+			flex-direction: column;
+
+			img{
+				height: 120px;
+				margin-top:30px;
+			}
+		}
+
 }
 
 
