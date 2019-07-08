@@ -13,7 +13,7 @@ header{
 #banner {
 
 	.navbar{
-		max-height: 130px;
+		max-height: 110px;
 	}
 
 	.navbar .row{
@@ -27,7 +27,7 @@ header{
 
 	.navbar .container .row > div {
 		display: flex;
-		max-height: 130px;
+		max-height: 110px;
 	}
 
 		/*remove padding from last item in nav row*/
@@ -44,8 +44,11 @@ header{
 			flex-direction: column;
 
 			img{
-				height: 120px;
-				margin-top:30px;
+				@include media-breakpoint-up(md) {
+					height: 120px;
+				}
+
+				margin-top:9px;
 			}
 		}
 
@@ -135,6 +138,7 @@ header{
 	.navbar-toggler{
 		color: $navbar-toggler-color;
     border-color: $navbar-toggler-color;
+		height:40px;
 	}
 
 	.navbar-toggler-icon{

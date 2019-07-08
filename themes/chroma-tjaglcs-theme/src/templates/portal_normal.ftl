@@ -36,7 +36,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-sm logo-column">
-							<a class="${logo_css_class} align-items-center d-md-inline-flex d-sm-none d-none logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
+							<a class="${logo_css_class} align-items-center d-md-inline-flex logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 								<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
 
 								<#if show_site_name>
