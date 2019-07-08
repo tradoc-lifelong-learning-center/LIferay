@@ -1,12 +1,26 @@
 @import "../_custom_variables";
 
+#navigationCollapse{
+	padding-right:0;
 
-#banner .navbar .row{
-	/*overrid _liferay display:block on :first-child*/
-	display:flex;
 
-	flex-wrap:nowrap;
 }
+
+#banner {
+
+	.navbar .row{
+		/*overrid _liferay display:block on :first-child*/
+		display:flex;
+	  width: 100%;
+		flex-wrap:nowrap;
+	}
+
+	.container .row div:last-of-type{
+		padding-right:0;
+	}
+
+}
+
 
 .navbar-top {
 	padding-bottom: 0.907rem;
