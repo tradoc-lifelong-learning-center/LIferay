@@ -15,10 +15,16 @@
 		flex-wrap:nowrap;
 	}
 
-	.container .row div:last-of-type{
-		padding-right:0;
-	}
 
+	.navbar .container .row > div {
+		display: flex;
+		justify-content: center;
+
+		/*remove padding from last item in nav row*/
+		> div:last-of-type{
+			padding-right:0;
+		}
+	}
 }
 
 
