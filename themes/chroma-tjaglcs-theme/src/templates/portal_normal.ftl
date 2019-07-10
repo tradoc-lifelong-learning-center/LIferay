@@ -111,25 +111,29 @@
 
 		 <div class="container">
 		 		<div class="row">
-				 <div class="col-sm">
-					 <p>The Judge Advocate General's Legal Center & School</p>
-					 <p>600 Massie Rd</p>
-					 <p>Charlottesville, VA 22903</p>
-					 <p>Main Reception Desk: <a href="tel:1-434-971-3300">(434) 971-3300</a></p>
+				 <div class="col-sm footer-address-container">
+					 <p class="mb-3">The Judge Advocate General's Legal Center & School</p>
+					 <p class="mb-1">600 Massie Rd</p>
+					 <p class="mb-3">Charlottesville, VA 22903</p>
+					 <p class="mb-1">Main Reception Desk: <a href="tel:1-434-971-3300">(434) 971-3300</a></p>
 					 <p><a href="/lodging">Lodging:</a> <a href="tel:1-434-972-6450">(434) 972-6450</a></p>
 				 </div>
-				 <div class="col-sm-auto">
+				 <div class="col-sm-auto footer-contact-container">
 					 <p><a href="/documents/27431/135130/Directory+2016-2017/24975c80-c9e5-4797-8659-bef0abd022dc">Directory</a></p>
 					 <p><a href="/support">Contact Us</a></p>
 
-					 <#if !is_signed_in>
-						<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
-					</#if>
+					 <div class="sign-in-link">
+						 <#if !is_signed_in>
 
-					<#if is_signed_in>
-						<@liferay.user_personal_bar />
-					</#if>
+							 <a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${admin_sign_in_text}</a>
 
+
+						</#if>
+
+						<#if is_signed_in>
+							<@liferay.user_personal_bar />
+						</#if>
+					</div>
 				 </div>
 			 </div>
 		 </div>
