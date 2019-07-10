@@ -90,6 +90,8 @@ body{
 	}
 }
 
+
+
 #banner{
 	.banner__background--fixed{
 		width: 100%;
@@ -99,6 +101,7 @@ body{
     left: 0;
 		right:0;
     background-color: $colorPrimary;
+		z-index: -1;
 	}
 	/*background-color: $colorBackgroundHeaderFooter;
 */
@@ -125,6 +128,14 @@ body{
 	padding: 20px;
 
 }
+
+/*
+#main-content{
+	background-color: $colorBackgroundBody;
+	border-radius: 4px;
+	padding: 20px;
+}
+*/
 
 #footer{
 	/*Don't forget to stick footer to bottom of page for short pages*/
