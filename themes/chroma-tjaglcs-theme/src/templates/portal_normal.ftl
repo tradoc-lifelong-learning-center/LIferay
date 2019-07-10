@@ -99,16 +99,6 @@
 
 
 	<footer id="footer" role="contentinfo" class="footer">
-
-		<#-- TODO: Add footer
-				 TODO: Move footer content into web article. Don't want to have to update theme for minor edits
-	   -->
-
-		 <#--Looks like footer will have address on left and contact on right
-		 		 Probably a 70/30 split
-				 Use flexbox to make responsive
-	  -->
-
 		 <div class="container">
 		 		<div class="row">
 				 <div class="col-sm footer-address-container">
@@ -126,8 +116,6 @@
 						 <#if !is_signed_in>
 
 							 <a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${admin_sign_in_text}</a>
-
-
 						</#if>
 
 						<#if is_signed_in>
