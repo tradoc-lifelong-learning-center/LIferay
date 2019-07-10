@@ -13,17 +13,70 @@
  */
 AUI().ready(
 	function(A) {
-		var showSearchButton = A.one('#show-search-button');
-		var searchBarContainer = A.one('#search-bar-container');
-
-		showSearchButton.onclick = function(){
+		/*//instead of making button and wrapper, can I intercept existing button IF the search is not expanded?
+	  var showSearchButton = A.one('#showSearchButton');
+		//var searchBarContainer = A.one('#search-bar-container');
+		//var showSearchButton = document.getElementById("showSearchButton");
+	  showSearchButton._node.onclick = function(){
 			console.log("click!");
 		};
 
-		console.log("hello world!")
+		console.log("showSearchButton: ")
+		console.log(showSearchButton)
+		console.log(showSearchButton._node)
+
 		console.log("A: ")
 		console.log(A)
+*/
 
+		var siteSearch = A.one('#siteSearch');
+		console.log("siteSearch")
+		console.log(siteSearch)
+
+		if (siteSearch) {
+			var btnSearch = siteSearch.one('button');
+
+			var searchForm = siteSearch.one('form');
+			//var searchField = searchForm.one('.site-search-field');
+			//TODO: figure out a better way to get this. Instance id will change.
+			var searchField = searchForm.one('.search-bar-keywords-input');
+
+
+
+			btnSearch.on(
+				'click',
+				function(event) {
+					event.preventDefault();
+
+					//alert("click!")
+					console.log("searchForm: ");
+					console.log(searchForm);
+					console.log("width: " + searchForm.getStyle('width'));
+					console.log("searchField: ");
+					console.log(searchField);
+					console.log("width: " + searchField.getStyle('width'));
+
+					if (searchField.getStyle('width') == '0px') {
+						//siteSearch.removeClass('site-search-collapsed');
+						searchField.setStyle('width', '160px');
+						searchField.focus();
+						//console.log("hey!")
+
+						return;
+					}
+					else {
+						if (searchField.get('value') == '') {
+							siteSearch.addClass('site-search-collapsed');
+
+
+							return;
+						}
+					}
+
+					searchForm.submit();
+				}
+			);
+		}
 
 	}
 );
