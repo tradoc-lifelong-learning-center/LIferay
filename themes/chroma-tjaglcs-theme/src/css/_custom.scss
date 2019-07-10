@@ -116,9 +116,12 @@ body{
 #content{
 	margin-left: auto;
 	margin-right: auto;
-	/*replace with bootstrap .container?*/
+	/*replace with bootstrap .container? or breakpoints*/
 	max-width: 1080px;
 	min-width: 280px;
+
+ min-height: 300px;
+
 	padding: 20px;
 
 }
@@ -190,4 +193,38 @@ body{
 .portlet-decorate,
 .portlet-decorate .portlet-content{
 	border-radius: 4px;
+}
+
+
+
+.portlet-hello-world .portlet .portlet-content {
+	background: #4885B7 url(../images/portlet_hello_world/welcome_bg.png) bottom left;
+	background-clip: padding-box;
+	background-size: cover;
+	color: $white;
+	min-height: 390px;
+	padding-top: 30px;
+
+	@include media-breakpoint-up(sm) {
+		padding-left: 50px;
+	}
+
+	.portlet-header {
+		margin-bottom: 0;
+	}
+
+	.portlet-title-text {
+		color: $white;
+		font-size: 2rem;
+		font-weight: 700;
+		text-transform: none;
+	}
+
+	.portlet-body {
+		padding-right: 30%;
+
+		@include media-breakpoint-up(sm) {
+			padding-right: 60%;
+		}
+	}
 }
