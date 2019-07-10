@@ -68,13 +68,17 @@ AUI().ready(
 					}
 					else {
 						if (searchField.get('value') == '') {
-							siteSearch.addClass('site-search-collapsed');
+							//siteSearch.addClass('site-search-collapsed');
+							searchField.setStyle('width', '0px');
+							searchField.setStyle('padding-left', '0');
+							searchField.setStyle('padding-right', '0');
 
 
 							return;
 						}
 					}
 
+					searchField.set('value','');
 					searchForm.submit();
 				}
 			);
