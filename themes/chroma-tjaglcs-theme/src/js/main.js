@@ -59,6 +59,8 @@ AUI().ready(
 					if (searchField.getStyle('width') == '0px') {
 						//siteSearch.removeClass('site-search-collapsed');
 						searchField.setStyle('width', '160px');
+						searchField.setStyle('padding-left', '.5rem');
+						searchField.setStyle('padding-right', '.5rem');
 						searchField.focus();
 						//console.log("hey!")
 

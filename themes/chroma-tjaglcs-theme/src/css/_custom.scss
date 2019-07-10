@@ -205,6 +205,8 @@ body{
 					width:0;
 					padding-left:0;
 					padding-right:0;
+
+					@include single-transition(width 0.3s ease);
 				}
 		}
 
@@ -254,7 +256,7 @@ body{
 			vertical-align: middle;*/
 			width: 100%;
 			overflow-x: hidden;
-			@include single-transition(width 0.3s ease);
+
 
 			/*.field {
 				width: 100%;
