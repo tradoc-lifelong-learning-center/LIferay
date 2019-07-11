@@ -76,3 +76,4 @@ bin/
 
 /*/*/*/target/*
 !/*/*/*/target/*.war
+!/themes/*/dist
