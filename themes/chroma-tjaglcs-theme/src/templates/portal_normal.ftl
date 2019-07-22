@@ -32,7 +32,7 @@
 
 			<div class="banner__background--fixed"></div>
 
-			<div class="banner__inner-wrapper pb-3 pt-3">
+			<div class="banner__inner-wrapper">
 				<div class="container">
 					<div class="row">
 						<div class="col-sm logo-column">
