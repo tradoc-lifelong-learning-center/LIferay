@@ -1,7 +1,12 @@
 @import "../_custom_variables";
 
-#navigationCollapse {
+#navigationCollapse:not(.show) {
 	padding-right: 0;
+
+	/*override breakpoint from liferay.css*/
+	@include media-breakpoint-down(lg) {
+		display: none;
+	}
 }
 
 header {
@@ -38,14 +43,13 @@ header {
 			display: flex;
 			max-height: 110px;
 		}
-
 		/*
 		&.navbar-light {
 			border-bottom: 1px solid $light-color;
 		}
 	*/
 		.navbar-blank {
-			@include media-breakpoint-down(sm) {
+			@include media-breakpoint-down(lg) {
 				margin-top: 1rem;
 			}
 		}
@@ -64,7 +68,7 @@ header {
 		}
 
 		.portlet-search-bar {
-			@include media-breakpoint-down(sm) {
+			@include media-breakpoint-down(lg) {
 				width: 100%;
 			}
 
@@ -118,11 +122,9 @@ header {
 	//> div:last-of-type {
 	//	padding-right: 0;
 	//}
-
 	//.nav-column {
 	//	justify-content: center;
 	//}
-
 	.logo-column {
 		justify-content: start;
 		flex-direction: column;
@@ -135,7 +137,6 @@ header {
 		}
 	}
 }
-
 /*.navbar-top {
 	padding-bottom: 0.907rem;
 	padding-top: 0.907rem;
@@ -147,7 +148,6 @@ header {
 		}
 	}
 }*/
-
 /*.navbar-blank {
 	flex-wrap: wrap;
 }*/
