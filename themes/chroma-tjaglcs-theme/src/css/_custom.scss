@@ -91,6 +91,11 @@ body{
 
 }
 
+.container{
+	//set max width to XL for container (don't like how max width decreases as window shrinks)
+	max-width:map-get($container-max-widths, "xl");
+}
+
 
 
 #banner{
@@ -152,10 +157,10 @@ body{
 
 
 
-  //clear bootstrap container max width
-	//TODO: instead of clearing width here, try to add a larger breakpoint to Bootstrap
+
 	.container{
-		max-width: none;
+		//max-width: none;
+		//max-width:map-get($container-max-widths, "xl");
 
 		.row div:last-of-type{
 			@media screen and (min-width:map-get($grid-breakpoints, "sm")){
