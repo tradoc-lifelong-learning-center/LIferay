@@ -78,7 +78,7 @@
 	<#-- TODO: previous template has a div wrap here, then subbanner. Do we need either? -->
 
 
-	<section id="content">
+	<section id="content" class="container">
 
 		<#-- TODO: add breadcrumbs -->
 

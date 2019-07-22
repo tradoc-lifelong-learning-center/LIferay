@@ -14,7 +14,7 @@ $colorTextNavigation:#E0E0E0;
 
 
 $navbar-toggler-icon-bg:       str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='#{$colorTextNavigation}' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"), "#", "%23") !default;
-$navbar-toggler-color:  $colorTextNavigation !default;
+$navbar-toggler-color:  $colorTextNavigation;
 
 // Grid breakpoints
 //
@@ -26,12 +26,14 @@ $grid-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1440px
-) !default;
+  xl: 1280px,
+  xxl: 1440px  
+);
 
 $container-max-widths: (
   sm: 540px,
   md: 720px,
   lg: 960px,
-  xl: 1400px
-) !default;
+  xl: 1248px,
+  xxl: 1400px
+);
