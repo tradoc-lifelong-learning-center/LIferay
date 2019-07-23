@@ -102,6 +102,9 @@ header {
 			}
 		}
 
+		.logo{
+			max-width: 106px;
+		}
 		.logo:hover {
 			text-decoration: none;
 		}
@@ -109,7 +112,7 @@ header {
 		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
 		.banner__nav-column{
 			justify-content: flex-end;
-			
+
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
