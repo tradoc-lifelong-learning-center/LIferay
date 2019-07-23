@@ -12,13 +12,15 @@
 /*This is the code for the mobile nav menu when it's being shown*/
 #navigationCollapse.show {
 	/*display:block !important;*/
-  position:absolute;
-  top:90px;
-  left:0;
-  right:0;
-  background-color: #3a3a3a; /*TODO: variable?*/
-  padding:1rem;
-  z-index:5;
+	@include media-breakpoint-down(md){
+	  position:absolute;
+	  top:90px;
+	  left:0;
+	  right:0;
+	  background-color: #3a3a3a; /*TODO: variable?*/
+	  padding:1rem;
+	  z-index:5;
+	}
 }
 
 header {
