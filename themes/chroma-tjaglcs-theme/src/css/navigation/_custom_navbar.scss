@@ -27,10 +27,11 @@ header {
 
 #banner {
 	.banner__inner-wrapper {
+		height: 110px;
 
-		@include media-breakpoint-up(lg){
+		/*@include media-breakpoint-up(lg){
 			max-height: 110px;
-		}
+		}*/
 
 
 		background-color: $colorBackgroundHeaderFooter;
@@ -58,15 +59,12 @@ header {
 
 		.container .row > div {
 			display: flex;
-			@include media-breakpoint-up(lg){
-				max-height: 110px; /*value used twice. Should be a variable.*/
-			}
+			height: 110px;
+			/*@include media-breakpoint-up(lg){
+				max-height: 110px;
+			}*/
 		}
-		/*
-		&.navbar-light {
-			border-bottom: 1px solid $light-color;
-		}
-	*/
+
 		.navbar-blank {
 			@include media-breakpoint-down(md) {
 				margin-top: 1rem;
@@ -183,9 +181,10 @@ header {
 		flex-direction: column;
 
 		img {
-			@include media-breakpoint-up(md) {
+			height: 120px;
+			/*@include media-breakpoint-up(md) {
 				height: 120px;
-			}
+			}*/
 			margin-top: 9px;
 			margin-bottom: 9px;
 		}
