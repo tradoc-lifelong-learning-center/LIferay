@@ -9,13 +9,14 @@
 	}
 }
 
+/*This is the code for the mobile nav menu when it's being shown*/
 #navigationCollapse.show {
 	/*display:block !important;*/
   position:absolute;
   top:70px;
   left:0;
   right:0;
-  background-color: darkgrey;
+  background-color: #3a3a3a; /*TODO: variable?*/
   padding:1rem;
   z-index:5;
 }
@@ -67,7 +68,7 @@ header {
 		}
 	*/
 		.navbar-blank {
-			@include media-breakpoint-down(lg) {
+			@include media-breakpoint-down(md) {
 				margin-top: 1rem;
 			}
 		}
@@ -124,12 +125,19 @@ header {
 				flex-direction: column;
 			}
 
+
 			.nav-item {
 				@include media-breakpoint-up(lg){
 					border-left: thin solid $colorTextNavigation;
 				}
 
 				padding: 0 6px;
+			}
+
+			.nav-item:not(:last-of-type){
+				@include media-breakpoint-down(md) {
+					border-bottom: thin solid $colorTextNavigation;
+				}
 			}
 
 			.nav-link:hover {
