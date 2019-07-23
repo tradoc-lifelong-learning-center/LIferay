@@ -51,7 +51,7 @@ header {
 		}
 
 		/*right align last dropdown so it doesn't spill off page*/
-		.dropdown-menu:last-of-type{
+		.nav-item:last-of-type .dropdown-menu{
 			left:inherit;
 			right:5px;
 		}
