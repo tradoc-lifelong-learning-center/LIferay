@@ -13,7 +13,7 @@
 #navigationCollapse.show {
 	/*display:block !important;*/
   position:absolute;
-  top:70px;
+  top:90px;
   left:0;
   right:0;
   background-color: #3a3a3a; /*TODO: variable?*/
@@ -50,6 +50,7 @@ header {
 			border-radius: 0;
 		}
 
+		/*right align last dropdown so it doesn't spill off page*/
 		.dropdown-menu:last-of-type{
 			left:inherit;
 			right:5px;
