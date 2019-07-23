@@ -9,13 +9,29 @@
 	}
 }
 
+#navigationCollapse.show {
+	/*display:block !important;*/
+  position:absolute;
+  top:70px;
+  left:0;
+  right:0;
+  background-color: darkgrey;
+  padding:1rem;
+  z-index:5;
+}
+
 header {
 	margin-bottom: 1.5rem;
 }
 
 #banner {
 	.banner__inner-wrapper {
-		max-height: 110px;
+
+		@include media-breakpoint-up(lg){
+			max-height: 110px;
+		}
+
+
 		background-color: $colorBackgroundHeaderFooter;
 		box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
 
@@ -41,7 +57,9 @@ header {
 
 		.container .row > div {
 			display: flex;
-			max-height: 110px;
+			@include media-breakpoint-up(lg){
+				max-height: 110px; /*value used twice. Should be a variable.*/
+			}
 		}
 		/*
 		&.navbar-light {
@@ -89,9 +107,28 @@ header {
 			text-decoration: none;
 		}
 
+		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
+		.nav-column{
+			@include media-breakpoint-down(md) {
+				position: static;
+			}
+		}
+		.navbar{
+			@include media-breakpoint-down(md) {
+				position: static;
+			}
+		}
+
 		.navbar-nav {
+			@include media-breakpoint-down(md) {
+				flex-direction: column;
+			}
+
 			.nav-item {
-				border-left: thin solid $colorTextNavigation;
+				@include media-breakpoint-up(lg){
+					border-left: thin solid $colorTextNavigation;
+				}
+
 				padding: 0 6px;
 			}
 
