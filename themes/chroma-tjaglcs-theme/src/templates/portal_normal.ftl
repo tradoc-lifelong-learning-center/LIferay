@@ -35,9 +35,9 @@
 			<div class="banner__inner-wrapper">
 				<div class="container">
 					<div class="row">
-						<div class="col-sm logo-column">
-							<a class="${logo_css_class} align-items-center d-md-inline-flex logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
-								<img alt="${logo_description}" class="mr-2" height="56" src="${site_logo}" />
+						<div class="col-sm banner__logo-column">
+							<a class="${logo_css_class}" href="${site_default_url}" title="Go to TJAGLCS">
+								<img alt="${logo_description}" src="${site_logo}" />
 
 								<#if show_site_name>
 									<h1 class="font-weight-bold h2 mb-0">${site_name}</h1>
@@ -54,7 +54,7 @@
 							</#if>
 						</div>-->
 
-						 <div class="col-sm-auto nav-column">
+						 <div class="col-sm-auto banner__nav-column">
 							<#include "${full_templates_path}/navigation.ftl" />
 						</div>
 

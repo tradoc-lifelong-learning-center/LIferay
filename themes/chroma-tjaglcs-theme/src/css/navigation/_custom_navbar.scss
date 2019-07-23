@@ -107,7 +107,9 @@ header {
 		}
 
 		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
-		.nav-column{
+		.banner__nav-column{
+			justify-content: flex-end;
+			
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
@@ -176,7 +178,7 @@ header {
 	//.nav-column {
 	//	justify-content: center;
 	//}
-	.logo-column {
+	.banner__logo-column {
 		justify-content: start;
 		flex-direction: column;
 
