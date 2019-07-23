@@ -61,6 +61,7 @@ header {
 			display: flex;
 			width: 100%;
 			flex-wrap: nowrap;
+			margin:0;
 		}
 
 		.container .row > div {
@@ -118,12 +119,15 @@ header {
 		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
 		.banner__nav-column{
 			justify-content: flex-end;
+			padding-right: 0;
 
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
 		}
 		.navbar{
+			padding-right: 0;
+
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
@@ -190,6 +194,7 @@ header {
 	.banner__logo-column {
 		justify-content: start;
 		flex-direction: column;
+		padding-left:0;
 
 		img {
 			height: 120px;
