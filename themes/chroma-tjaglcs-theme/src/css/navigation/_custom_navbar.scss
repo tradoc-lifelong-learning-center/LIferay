@@ -50,6 +50,11 @@ header {
 			border-radius: 0;
 		}
 
+		.dropdown-menu:last-of-type{
+			left:inherit;
+			right:5px;
+		}
+
 		.row {
 			/*overrid _liferay display:block on :first-child*/
 			display: flex;
