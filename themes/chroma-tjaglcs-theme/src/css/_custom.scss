@@ -1,10 +1,7 @@
 /* These inject tags are used for dynamically creating imports for themelet styles, you can place them where ever you like in this file. */
-
 /* inject:imports */
 /* endinject */
-
 /* This file allows you to override default styles in one central location for easier upgrade and maintenance. */
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -20,334 +17,231 @@
  */
 @import "compass";
 @import "mixins";
-
 /*NOTE!!!!: If redeploy isn't updating CSS, try removing Chroma files from here:
 C:\Liferay\7.2\liferay-ce-portal-7.2.0-ga1\tomcat-9.0.17\work\Catalina\localhost\ROOT\css
-*/
-
-
-/*
-@import "_custom_default";
-@import "_custom_dashboard";
-@import "_custom_responsive";
-@import "_custom_extras";
 */
 
 @import "_custom_variables";
 @import "layout/_custom_layout";
 @import "navigation/_custom_navbar";
 
-
-
-/*
-@import url(custom_default.scss);
-@import url(custom/_custom_dashboard.scss);
-@import url(custom/_custom_responsive.scss);/*
-@import url(_custom_extras);*/
-/*a note in custom*/
-
-
 @font-face {
 	font-family: 'Open Sans';
 	font-style: normal;
 	font-weight: 400;
-	src: url('../fonts/opensans/OpenSans-Regular.eot');
-    src: local('Open Sans'),
-		 local('OpenSans'),
-    	 url('../fonts/opensans/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/opensans/OpenSans-Regular.woff') format('woff'),
-         url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+	src: url("../fonts/opensans/OpenSans-Regular.eot");
+	src: local('Open Sans'), local('OpenSans'), url("../fonts/opensans/OpenSans-Regular.eot?#iefix") format('embedded-opentype'), url("../fonts/opensans/OpenSans-Regular.woff") format('woff'), url("../fonts/opensans/OpenSans-Regular.ttf") format('truetype');
 }
-
 @font-face {
 	font-family: 'Open Sans';
 	font-style: bold;
 	font-weight: 600;
-	src: url('../fonts/opensans/OpenSans-Bold.ttf');
+	src: url("../fonts/opensans/OpenSans-Bold.ttf");
 }
-
 @font-face {
 	font-family: 'Open Sans';
 	font-style: light;
 	font-weight: 300;
-	src: url('../fonts/opensans/OpenSans-Light.eot');
-    src: local('Open Sans Light'),
-		 local('OpenSans-Light'),
-    	 url('../fonts/opensans/OpenSans-Light.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/opensans/OpenSans-Light.woff') format('woff'),
-         url('../fonts/opensans/OpenSans-Light.ttf') format('truetype');
+	src: url("../fonts/opensans/OpenSans-Light.eot");
+	src: local('Open Sans Light'), local('OpenSans-Light'), url("../fonts/opensans/OpenSans-Light.eot?#iefix") format('embedded-opentype'), url("../fonts/opensans/OpenSans-Light.woff") format('woff'), url("../fonts/opensans/OpenSans-Light.ttf") format('truetype');
 }
-
 /* ---------- Base styles ---------- */
-
-body{
+body {
 	background-color: $colorBackgroundBody;
 	font-family: 'Open Sans';
 	font-weight: 400;
 
-	a{
+	a {
 		color: $colorPrimary;
 	}
-
 }
 
-.container{
+.container {
 	//set max width to XL for container (don't like how max width decreases as window shrinks)
-	max-width:map-get($container-max-widths, "xl");
+	max-width: map-get($container-max-widths, "xl");
 }
 
-
-
-#banner{
-	.banner__background--fixed{
+#banner {
+	.banner__background--fixed {
 		width: 100%;
-    height: 367px;
-    position: absolute;
-    top: 0;
-    left: 0;
-		right:0;
-    background-color: $colorPrimary;
+		height: 367px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		background-color: $colorPrimary;
 		z-index: -1;
 	}
 	/*background-color: $colorBackgroundHeaderFooter;
 */
-	.portlet{
-		margin-bottom:0;
+	.portlet {
+		margin-bottom: 0;
 	}
-
 	/*remove headers from banner portlets (nav, search)*/
-	.portlet-header{
+	.portlet-header {
 		display: none;
 	}
-
 }
 
-#content{
+#content {
 	margin-left: auto;
 	margin-right: auto;
-	/*replace with bootstrap .container? or breakpoints*/
-	//max-width: 1120px;
-	//min-width: 280px;
-
-	//@media screen and (min-width:map-get($grid-breakpoints, "xxl")){
-	//	color: red !important;
-	//}
-
-  min-height: 300px;
-
-	padding: 20px;
-
-}
-
-/*
-#main-content{
-	background-color: $colorBackgroundBody;
-	border-radius: 4px;
+	min-height: 300px;
 	padding: 20px;
 }
-*/
 
-#footer{
-	/*Don't forget to stick footer to bottom of page for short pages*/
+#footer {
+	/*TODO: to stick footer to bottom of page for short pages*/
 	background-color: $colorBackgroundHeaderFooter;
-	//display: flex;
-	//flex-direction: row;
-	//flex-wrap: wrap;
-	padding: 2rem 1rem 2rem 1rem;
+	padding: 2rem 1rem;
 
-
-
-
-	.container{
-		//max-width: none;
-		//max-width:map-get($container-max-widths, "xl");
-
-		.row div:last-of-type{
-			@media screen and (min-width:map-get($grid-breakpoints, "sm")){
-			  text-align:right;
-		  }
+	.container {
+		.row div:last-of-type {
+			@media screen and (min-width:map-get($grid-breakpoints, "sm")) {
+				text-align: right;
+			}
 		}
 	}
 
-
-
-
-	.footer-contact-container{
-		display:flex;
+	.footer-contact-container {
+		display: flex;
 		flex-direction: column;
 
-		p{
+		p {
 			flex: 0 0 auto;
 		}
 
-		.sign-in-link{
+		.sign-in-link {
 			flex: 1 1 auto;
-
 			/*align sign in link to bottom of parent para*/
 			display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+			flex-direction: column;
+			justify-content: flex-end;
 
+			a {
+				font-size: 0.875rem;
+			}
 		}
-
-
 	}
 
-	p{
-		color:$colorTextFooter;
-		font-size: .875rem;
-    margin: 0;
+	p {
+		color: $colorTextFooter;
+		font-size: 0.875rem;
+		margin: 0;
 	}
 
-	a{
-		color:$colorTextFooter;
+	a {
+		color: $colorTextFooter;
 	}
-
 }
 
-.portlet{
+.portlet {
 	margin-bottom: 18px;
 }
 
-.portlet-decorate{
+.portlet-decorate {
 	background-color: #FFF;
 	box-shadow: 0 0 3px #999;
 }
 
 .portlet-decorate,
-.portlet-decorate .portlet-content{
+.portlet-decorate .portlet-content {
 	border-radius: 4px;
 }
-
-
 /*site search*/
+
 #siteSearch {
-		.search-bar-keywords-input-wrapper{
-				min-width:0;
+	.search-bar-keywords-input-wrapper {
+		min-width: 0;
 
-				.search-bar-keywords-input{
-					width:0;
-					padding-left:0;
-					padding-right:0;
+		.search-bar-keywords-input {
+			width: 0;
+			padding-left: 0;
+			padding-right: 0;
+			@include single-transition(width 0.3s ease);
+		}
+	}
 
-					@include single-transition(width 0.3s ease);
-				}
+	.search-bar-search-button {
+		background-color: #6A6A6A;
+		padding: 4px 12px;
+		color: #BBBBBB;
+		border-radius: 0;
+	}
+
+	.search-bar-search-button:hover {
+		background-color: #FFFFFF;
+		text-decoration: none;
+	}
+
+	.search-bar-search-button:focus {
+		text-decoration: none;
+	}
+
+	.search-bar-search-button-wrapper {
+		padding: 0;
+		min-height: 38px;
+
+		button {
+			margin: 0;
+			height: 100%;
+		}
+	}
+
+	.form-control,
+	.search-bar-search-button-wrapper {
+		background-color: lighten($colorBackgroundHeaderFooter, 15%);
+		color: $colorTextHeader;
+		border: none;
+		border-radius: 0;
+
+		&::placeholder {
+			color: $colorTextFooter;
+		}
+	}
+	/**/
+	.form {
+		width: 100%;
+		overflow-x: hidden;
+
+		.field:focus {
+			@include box-shadow(none);
+		}
+	}
+	@include respond-to(desktop) {
+		&.search-bar-keywords-input {
+			.form {
+				width: 0;
+			}
+
+			.search-bar-search-button {
+				background: none;
+			}
+
+			.search-bar-search-button:hover {
+				background: #6A6A6A;
+			}
 		}
 
 		.search-bar-search-button {
-			background-color: #6A6A6A;
-			padding: 4px 12px;
+			background: #6A6A6A;
 			color: #BBBBBB;
-			border-radius: 0;
 		}
 
 		.search-bar-search-button:hover {
 			background-color: #FFFFFF;
-			text-decoration: none;
 		}
-
-		.search-bar-search-button:focus {
-			text-decoration: none;
-		}
-
-		.search-bar-search-button-wrapper{
-			padding: 0;
-			min-height: 38px;
-
-			button{
-				margin:0;
-				height: 100%;
-			}
-
-		}
-
-		.form-control,
-		.search-bar-search-button-wrapper{
-			background-color:lighten($colorBackgroundHeaderFooter, 15%);
-			color: $colorTextHeader;
-			border: none;
-			border-radius: 0;
-
-			&::placeholder{
-				color: $colorTextFooter;
-			}
-
-		}
-
-		/**/
-		.form {
-			/*display: table-cell;
-			vertical-align: middle;*/
-			width: 100%;
-			overflow-x: hidden;
-
-
-			/*.field {
-				width: 100%;
-				display: block;
-				@include border-radius(0);
-				margin: 0;
-				font-size: 12px;
-				line-height: 14px;
-				padding: 8px;
-				box-sizing: border-box;
-				background: #616161;
-				border: none;
-				color: #BBBBBB;
-				height: auto;
-			}*/
-
-			.field:focus {
-				@include box-shadow(none);
-			}
-		}
-
-		@include respond-to(desktop) {
-			&.search-bar-keywords-input {
-				.form {
-					width: 0px;
-				}
-
-				.search-bar-search-button {
-					background: none;
-				}
-
-				.search-bar-search-button:hover {
-					background: #6A6A6A;
-				}
-			}
-
-			.search-bar-search-button {
-				background: #6A6A6A;
-				color: #BBBBBB;
-			}
-
-			.search-bar-search-button:hover {
-				background-color: #FFFFFF;
-			}
-
-			.field {
-				/*float: right;*/
-			}
-
-			.form {
-				/*width: 160px;*/
-			}
-
-		}
-
 	}
-/*.form-control, */
-
+}
 /*Hello world portlet CSS*/
+
 .portlet-hello-world .portlet .portlet-content {
-	background: #4885B7 url(../images/portlet_hello_world/welcome_bg.png) bottom left;
+	background: #4885B7 url("../images/portlet_hello_world/welcome_bg.png") bottom left;
 	background-clip: padding-box;
 	background-size: cover;
 	color: $white;
 	min-height: 390px;
 	padding-top: 30px;
-
 	@include media-breakpoint-up(sm) {
 		padding-left: 50px;
 	}
@@ -365,7 +259,6 @@ body{
 
 	.portlet-body {
 		padding-right: 30%;
-
 		@include media-breakpoint-up(sm) {
 			padding-right: 60%;
 		}
