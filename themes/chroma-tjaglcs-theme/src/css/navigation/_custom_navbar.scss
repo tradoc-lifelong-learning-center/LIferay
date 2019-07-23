@@ -11,7 +11,7 @@
 
 /*This is the code for the mobile nav menu when it's being shown*/
 #navigationCollapse.show {
-	/*display:block !important;*/
+	/*include breakpoint so mobile nav closes after resizing past a certain point*/
 	@include media-breakpoint-down(md){
 	  position:absolute;
 	  top:90px;
