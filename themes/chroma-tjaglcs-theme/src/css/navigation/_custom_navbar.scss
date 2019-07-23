@@ -72,6 +72,14 @@ header {
 				width: 100%;
 			}
 
+			.search-bar-keywords-input{
+				@include media-breakpoint-down(md) {
+					/*add padding inside search box on smaller screens*/
+	      	padding: .75rem;
+					transition: none;
+				}
+	    }
+
 			.input-group-item {
 				margin-left: 0;
 			}
