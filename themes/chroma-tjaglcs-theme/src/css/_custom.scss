@@ -72,8 +72,7 @@ body {
 		background-color: $colorPrimary;
 		z-index: -1;
 	}
-	/*background-color: $colorBackgroundHeaderFooter;
-*/
+
 	.portlet {
 		margin-bottom: 0;
 	}
@@ -92,10 +91,10 @@ body {
 }
 
 #footer {
-	/*TODO: to stick footer to bottom of page for short pages*/
 	background-color: $colorBackgroundHeaderFooter;
 	padding: 2rem 1rem;
 
+	/*right align second column of footer when window is wide enough for 2col*/
 	.container {
 		.row div:last-of-type {
 			@media screen and (min-width:map-get($grid-breakpoints, "sm")) {
@@ -118,24 +117,18 @@ body {
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-
-			a {
-				font-size: 0.875rem;
-			}
 		}
 	}
 
-	p {
+	p, a {
 		color: $colorTextFooter;
 		font-size: 0.875rem;
 		margin: 0;
 	}
 
-	a {
-		color: $colorTextFooter;
-	}
 }
 
+/*Portlets*/
 .portlet {
 	margin-bottom: 18px;
 }
@@ -149,91 +142,8 @@ body {
 .portlet-decorate .portlet-content {
 	border-radius: 4px;
 }
-/*site search*/
 
-#siteSearch {
-	.search-bar-keywords-input-wrapper {
-		min-width: 0;
 
-		.search-bar-keywords-input {
-			width: 0;
-			padding-left: 0;
-			padding-right: 0;
-			@include single-transition(width 0.3s ease);
-		}
-	}
-
-	.search-bar-search-button {
-		background-color: #6A6A6A;
-		padding: 4px 12px;
-		color: #BBBBBB;
-		border-radius: 0;
-	}
-
-	.search-bar-search-button:hover {
-		background-color: #FFFFFF;
-		text-decoration: none;
-	}
-
-	.search-bar-search-button:focus {
-		text-decoration: none;
-	}
-
-	.search-bar-search-button-wrapper {
-		padding: 0;
-		min-height: 38px;
-
-		button {
-			margin: 0;
-			height: 100%;
-		}
-	}
-
-	.form-control,
-	.search-bar-search-button-wrapper {
-		background-color: lighten($colorBackgroundHeaderFooter, 15%);
-		color: $colorTextHeader;
-		border: none;
-		border-radius: 0;
-
-		&::placeholder {
-			color: $colorTextFooter;
-		}
-	}
-	/**/
-	.form {
-		width: 100%;
-		overflow-x: hidden;
-
-		.field:focus {
-			@include box-shadow(none);
-		}
-	}
-	@include respond-to(desktop) {
-		&.search-bar-keywords-input {
-			.form {
-				width: 0;
-			}
-
-			.search-bar-search-button {
-				background: none;
-			}
-
-			.search-bar-search-button:hover {
-				background: #6A6A6A;
-			}
-		}
-
-		.search-bar-search-button {
-			background: #6A6A6A;
-			color: #BBBBBB;
-		}
-
-		.search-bar-search-button:hover {
-			background-color: #FFFFFF;
-		}
-	}
-}
 
 /*User menu styles*/
 .portlet-user-personal-bar{
