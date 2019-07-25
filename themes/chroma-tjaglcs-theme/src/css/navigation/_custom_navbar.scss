@@ -8,6 +8,7 @@
 	}
 }
 /*This is the code for the mobile nav menu when it's being shown*/
+
 #navigationCollapse.show {
 	/*include breakpoint so mobile nav closes after resizing past a certain point*/
 	@include media-breakpoint-down(md) {
@@ -20,8 +21,6 @@
 		z-index: 5;
 	}
 }
-
-
 
 .navbar {
 	padding-right: 0;
@@ -48,8 +47,6 @@
 			margin-top: 1rem;
 		}
 	}
-
-
 
 	.navbar-nav {
 		@include media-breakpoint-down(md) {
@@ -94,9 +91,7 @@
 }
 /*site search*/
 /*(including in nav CSS because site search is neste )*/
-
 #siteSearch {
-
 	.search-bar-keywords-input-wrapper {
 		/*override min width so I can collapse box*/
 		min-width: 0;
@@ -107,7 +102,6 @@
 		padding-left: 0;
 		padding-right: 0;
 		@include single-transition(width 0.3s ease);
-
 		@include media-breakpoint-down(md) {
 			/*add padding inside search box on smaller screens*/
 			padding: 0.75rem;
@@ -124,92 +118,49 @@
 		@include media-breakpoint-down(lg) {
 			width: 100%;
 		}
-
-
-
-
-		.search-bar-search-button,
-		.search-bar-search-button-wrapper {
-			background-color: transparent;
-		}
-
-		.search-bar-search-button--selected {
-			@include search-button--selected;
-		}
-
-		.search-bar-search-button:hover {
-			@include search-button--selected;
-		}
-
-		.search-bar-search-button-wrapper {
-			padding: 0;
-			min-height: 38px;
-		}
-
-		.form-control{
-			background-color: lighten($colorBackgroundHeaderFooter, 15%);
-		}
-
-
-		.search-bar-search-button-wrapper,
-		.form-control {
-			/*styling button/input halves of the search box separately*/
-
-			color: $colorTextHeader;
-			border: none;
-			border-radius: 0;
-
-			&::placeholder {
-				color: $colorTextFooter;
-			}
-		}
-
-		.search-bar-search-button {
-			padding: 4px 12px;
-			border-radius: 0;
-			margin: 0;
-			height: 100%;
-		}
-
-		.search-bar-search-button:focus {
-			text-decoration: none;
-		}
-
 	}
 
+	.search-bar-search-button,
+	.search-bar-search-button-wrapper {
+		background-color: transparent;
+	}
 
+	.search-bar-search-button--selected {
+		@include search-button--selected;
+	}
 
-	/**/
-	.form {
-		width: 100%;
-		overflow-x: hidden;
+	.search-bar-search-button:hover {
+		@include search-button--selected;
+	}
+	/*styling button/input halves of the search box separately*/
+	.search-bar-search-button-wrapper {
+		padding: 0;
+		min-height: 38px;
+	}
 
-		.field:focus {
-			@include box-shadow(none);
+	.form-control {
+		background-color: lighten($colorBackgroundHeaderFooter, 15%);
+	}
+
+	.form-control,
+	.search-bar-search-button-wrapper {
+		color: $colorTextHeader;
+		border: none;
+		border-radius: 0;
+
+		&::placeholder {
+			color: $colorTextFooter;
 		}
 	}
-	@include respond-to(desktop) {
-		&.search-bar-keywords-input {
-			.form {
-				width: 0;
-			}
 
-			.search-bar-search-button {
-				background: none;
-			}
+	.search-bar-search-button {
+		padding: 4px 12px;
+		border-radius: 0;
+		margin: 0;
+		height: 100%;
+	}
 
-			.search-bar-search-button:hover {
-				background: #6A6A6A;
-			}
-		}
-
-		.search-bar-search-button {
-			background: #6A6A6A;
-			color: #BBBBBB;
-		}
-
-		.search-bar-search-button:hover {
-			background-color: #FFFFFF;
-		}
+	.search-bar-search-button:focus {
+		text-decoration: none;
 	}
 }
