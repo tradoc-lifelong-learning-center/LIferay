@@ -81,6 +81,7 @@ body {
 	.portlet-header {
 		display: none;
 	}
+
 }
 
 #content {
@@ -233,6 +234,13 @@ body {
 		}
 	}
 }
+
+/*User menu styles*/
+.portlet-user-personal-bar{
+	background-color:transparent;
+	box-shadow: none;
+}
+
 /*Hello world portlet CSS*/
 
 .portlet-hello-world .portlet .portlet-content {
