@@ -116,11 +116,22 @@ header {
 			.input-group-item {
 				margin-left: 0;
 			}
+
+			.search-bar-search-button-wrapper,
+			.search-bar-search-button{
+				background-color:transparent;
+			}
+
+			.search-bar-search-button:hover{
+				background-color: $colorTextNavigation;
+				color: $colorBackgroundHeaderFooter;
+			}
+
 		}
 
-		.logo{
+		/*.logo{
 			max-width: 106px;
-		}
+		}*/
 		.logo:hover {
 			text-decoration: none;
 		}
@@ -206,8 +217,15 @@ header {
 		justify-content: start;
 		flex-direction: column;
 		padding-left:0;
+		/*This is to allow the navbar to overlap the logo like in the previous version of the theme*/
+		width:auto;
+		left:0;
 		position:absolute;
 		margin-left: 15px;
+
+		h1{
+			display: inline;
+		}
 
 		img {
 			height: 120px;
