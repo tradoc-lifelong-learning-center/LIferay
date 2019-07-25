@@ -8,191 +8,125 @@
 	}
 }
 /*This is the code for the mobile nav menu when it's being shown*/
-
 #navigationCollapse.show {
 	/*include breakpoint so mobile nav closes after resizing past a certain point*/
 	@include media-breakpoint-down(md) {
 		position: absolute;
-		top: 90px;
+		top: $navbar-mobile-top-distance;
 		left: 0;
 		right: 0;
-		background-color: #3a3a3a;
-		/*TODO: variable?*/
+		background-color: $colorBackgroundNavMobile;
 		padding: 1rem;
 		z-index: 5;
 	}
 }
 
-header {
-	margin-bottom: 1.5rem;
+
+
+.navbar {
+	padding-right: 0;
+	@include media-breakpoint-down(md) {
+		position: static;
+	}
+
+	.dropdown-menu {
+		background-color: $colorBackgroundNavDropdown;
+		border: 1px solid rgba(0,0,0,0.2);
+		box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+		left: 5px;
+		margin: 0;
+		border-radius: 0;
+	}
+	/*right align last dropdown so it doesn't spill off page*/
+	.nav-item:last-of-type .dropdown-menu {
+		left: inherit;
+		right: 5px;
+	}
+
+	.navbar-blank {
+		@include media-breakpoint-down(md) {
+			margin-top: 1rem;
+		}
+	}
+
+
+
+	.navbar-nav {
+		@include media-breakpoint-down(md) {
+			flex-direction: column;
+		}
+
+		.nav-item {
+			@include media-breakpoint-up(lg) {
+				border-left: thin solid $colorTextNavigation;
+			}
+			padding: 0 6px;
+		}
+
+		.nav-item:not(:last-of-type) {
+			@include media-breakpoint-down(md) {
+				border-bottom: thin solid $colorTextNavigation;
+			}
+		}
+
+		.nav-link:hover {
+			background-color: $colorTextNavigation;
+			color: $colorBackgroundHeaderFooter;
+		}
+	}
+
+	.nav-link {
+		color: $colorTextHeader;
+		font-size: 0.9375rem;
+		font-weight: normal;
+		text-transform: uppercase;
+	}
+
+	.navbar-toggler {
+		color: $navbar-toggler-color;
+		border-color: $navbar-toggler-color;
+		height: 40px;
+	}
+
+	.navbar-toggler-icon {
+		background-image: $navbar-toggler-icon-bg;
+	}
 }
-
-#banner {
-	.banner__inner-wrapper {
-
-
-
-		.dropdown-menu {
-			background-color: #E0E0E0;
-			border: 1px solid rgba(0,0,0,0.2);
-			box-shadow: 0 5px 10px rgba(0,0,0,0.2);
-			left: 5px;
-			margin: 0;
-			border-radius: 0;
-		}
-		/*right align last dropdown so it doesn't spill off page*/
-		.nav-item:last-of-type .dropdown-menu {
-			left: inherit;
-			right: 5px;
-		}
-
-
-		.navbar-blank {
-			@include media-breakpoint-down(md) {
-				margin-top: 1rem;
-			}
-		}
-
-		.navbar-form {
-			padding: 0;
-
-			.field-wrapper {
-				right: 0;
-				top: 0;
-
-				.lfr-icon-item {
-					color: #6b6c7e;
-				}
-			}
-		}
-
-
-
-		}
-
-		.navbar {
-			padding-right: 0;
-			@include media-breakpoint-down(md) {
-				position: static;
-			}
-		}
-
-		.navbar-nav {
-			@include media-breakpoint-down(md) {
-				flex-direction: column;
-			}
-
-			.nav-item {
-				@include media-breakpoint-up(lg) {
-					border-left: thin solid $colorTextNavigation;
-				}
-				padding: 0 6px;
-			}
-
-			.nav-item:not(:last-of-type) {
-				@include media-breakpoint-down(md) {
-					border-bottom: thin solid $colorTextNavigation;
-				}
-			}
-
-			.nav-link:hover {
-				background-color: $colorTextNavigation;
-				color: $colorBackgroundHeaderFooter;
-			}
-
-			.nav-item:not(:last-of-type) {
-				.nav-link {
-					/*@include media-breakpoint-up(lg) {
-						margin-right: 16px;
-					}*/
-				}
-			}
-		}
-
-		.nav-link {
-			color: $colorTextHeader;
-			font-size: 0.9375rem;
-			font-weight: normal;
-			text-transform: uppercase;
-		}
-
-		.navbar-toggler {
-			color: $navbar-toggler-color;
-			border-color: $navbar-toggler-color;
-			height: 40px;
-		}
-
-		.navbar-toggler-icon {
-			background-image: $navbar-toggler-icon-bg;
-		}
-	}
-	/*remove padding from last item in nav row*/
-	//> div:last-of-type {
-	//	padding-right: 0;
-	//}
-	//.nav-column {
-	//	justify-content: center;
-	//}
-	.banner__logo-column {
-		justify-content: start;
-		flex-direction: column;
-		padding-left: 0;
-		/*This is to allow the navbar to overlap the logo like in the previous version of the theme*/
-		width: auto;
-		left: 0;
-		position: absolute;
-		margin-left: 15px;
-
-		h1 {
-			display: inline;
-		}
-
-		img {
-			height: 120px;
-			/*@include media-breakpoint-up(md) {
-				height: 120px;
-			}*/
-			margin-top: 9px;
-			margin-bottom: 9px;
-		}
-	}
-
-
-
-
-
 /*site search*/
 /*(including in nav CSS because site search is neste )*/
-#siteSearch {
-	.search-bar-keywords-input-wrapper {
-		min-width: 0;
 
-		.search-bar-keywords-input {
-			width: 0;
-			padding-left: 0;
-			padding-right: 0;
-			@include single-transition(width 0.3s ease);
+#siteSearch {
+
+	.search-bar-keywords-input-wrapper {
+		/*override min width so I can collapse box*/
+		min-width: 0;
+	}
+
+	.search-bar-keywords-input {
+		width: 0;
+		padding-left: 0;
+		padding-right: 0;
+		@include single-transition(width 0.3s ease);
+
+		@include media-breakpoint-down(md) {
+			/*add padding inside search box on smaller screens*/
+			padding: 0.75rem;
+			transition: none;
 		}
 	}
 
+	.search-bar-keywords-input--expanded {
+		width: 160px;
+		padding: 0 0.5rem;
+	}
 
 	.portlet-search-bar {
 		@include media-breakpoint-down(lg) {
 			width: 100%;
 		}
 
-		.search-bar-keywords-input {
-			@include media-breakpoint-down(md) {
-				/*add padding inside search box on smaller screens*/
-				padding: 0.75rem;
-				transition: none;
-			}
-		}
 
-		.search-bar-keywords-input--expanded{
-			width: 160px;
-			padding: 0 .5rem 0 .5rem;
-		}
+
 
 		.search-bar-search-button,
 		.search-bar-search-button-wrapper {
@@ -207,48 +141,44 @@ header {
 			@include search-button--selected;
 		}
 
-		.input-group-item {
-			margin-left: 0;
+		.search-bar-search-button-wrapper {
+			padding: 0;
+			min-height: 38px;
 		}
-	}
 
-	.search-bar-search-button {
-		/*background-color: #6A6A6A;*/
-		padding: 4px 12px;
-		/*color: #BBBBBB;*/
-		border-radius: 0;
-	}
+		.form-control{
+			background-color: lighten($colorBackgroundHeaderFooter, 15%);
+		}
 
-	/*.search-bar-search-button:hover {
-		background-color: #FFFFFF;
-		text-decoration: none;
-	}*/
 
-	.search-bar-search-button:focus {
-		text-decoration: none;
-	}
+		.search-bar-search-button-wrapper,
+		.form-control {
+			/*styling button/input halves of the search box separately*/
 
-	.search-bar-search-button-wrapper {
-		padding: 0;
-		min-height: 38px;
+			color: $colorTextHeader;
+			border: none;
+			border-radius: 0;
 
-		button {
+			&::placeholder {
+				color: $colorTextFooter;
+			}
+		}
+
+		.search-bar-search-button {
+			padding: 4px 12px;
+			border-radius: 0;
 			margin: 0;
 			height: 100%;
 		}
-	}
 
-	.form-control,
-	.search-bar-search-button-wrapper {
-		background-color: lighten($colorBackgroundHeaderFooter, 15%);
-		color: $colorTextHeader;
-		border: none;
-		border-radius: 0;
-
-		&::placeholder {
-			color: $colorTextFooter;
+		.search-bar-search-button:focus {
+			text-decoration: none;
 		}
+
 	}
+
+
+
 	/**/
 	.form {
 		width: 100%;

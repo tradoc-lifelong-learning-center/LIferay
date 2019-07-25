@@ -13,7 +13,7 @@
 
 			<#if show_header_search>
 
-				<div class="search-bar-container justify-content-md-end mr-2 navbar-form" role="search" id="siteSearch">
+				<div class="search-bar-container justify-content-md-end navbar-form" role="search" id="siteSearch">
 					<@liferay.search_bar default_preferences="${headerPortletPreferences}" />
 				</div>
 
