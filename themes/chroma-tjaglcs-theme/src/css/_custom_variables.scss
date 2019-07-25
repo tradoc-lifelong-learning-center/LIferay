@@ -27,7 +27,7 @@ $grid-breakpoints: (
   md: 768px,
   lg: 992px,
   xl: 1280px,
-  xxl: 1440px  
+  xxl: 1440px
 );
 
 $container-max-widths: (
@@ -37,3 +37,9 @@ $container-max-widths: (
   xl: 1248px,
   xxl: 1400px
 );
+
+/*update colors for search button when hovered or expanded*/
+@mixin search-button--selected{
+  background-color: $colorTextNavigation;
+  color: $colorBackgroundHeaderFooter;
+}

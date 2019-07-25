@@ -2,24 +2,24 @@
 
 #navigationCollapse:not(.show) {
 	padding-right: 0;
-
 	/*override breakpoint from liferay.css*/
 	@include media-breakpoint-down(lg) {
 		display: none;
 	}
 }
-
 /*This is the code for the mobile nav menu when it's being shown*/
+
 #navigationCollapse.show {
 	/*include breakpoint so mobile nav closes after resizing past a certain point*/
-	@include media-breakpoint-down(md){
-	  position:absolute;
-	  top:90px;
-	  left:0;
-	  right:0;
-	  background-color: #3a3a3a; /*TODO: variable?*/
-	  padding:1rem;
-	  z-index:5;
+	@include media-breakpoint-down(md) {
+		position: absolute;
+		top: 90px;
+		left: 0;
+		right: 0;
+		background-color: #3a3a3a;
+		/*TODO: variable?*/
+		padding: 1rem;
+		z-index: 5;
 	}
 }
 
@@ -30,12 +30,9 @@ header {
 #banner {
 	.banner__inner-wrapper {
 		min-height: 110px;
-
 		/*@include media-breakpoint-up(lg){
 			max-height: 110px;
 		}*/
-
-
 		background-color: $colorBackgroundHeaderFooter;
 		box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
 
@@ -51,11 +48,10 @@ header {
 			margin: 0;
 			border-radius: 0;
 		}
-
 		/*right align last dropdown so it doesn't spill off page*/
-		.nav-item:last-of-type .dropdown-menu{
-			left:inherit;
-			right:5px;
+		.nav-item:last-of-type .dropdown-menu {
+			left: inherit;
+			right: 5px;
 		}
 
 		.row {
@@ -65,7 +61,7 @@ header {
 			position: relative;
 			width: 100%;
 			flex-wrap: nowrap;
-			margin:0;
+			margin: 0;
 		}
 
 		.container {
@@ -105,51 +101,55 @@ header {
 				width: 100%;
 			}
 
-			.search-bar-keywords-input{
+			.search-bar-keywords-input {
 				@include media-breakpoint-down(md) {
 					/*add padding inside search box on smaller screens*/
-	      	padding: .75rem;
+					padding: 0.75rem;
 					transition: none;
 				}
-	    }
+			}
+
+			.search-bar-keywords-input--expanded{
+				width: 160px;
+				padding: 0 .5rem 0 .5rem;
+			}
+
+			.search-bar-search-button,
+			.search-bar-search-button-wrapper {
+				background-color: transparent;
+			}
+
+			.search-bar-search-button--selected {
+				@include search-button--selected;
+			}
+
+			.search-bar-search-button:hover {
+				@include search-button--selected;
+			}
 
 			.input-group-item {
 				margin-left: 0;
 			}
-
-			.search-bar-search-button-wrapper,
-			.search-bar-search-button{
-				background-color:transparent;
-			}
-
-			.search-bar-search-button:hover{
-				background-color: $colorTextNavigation;
-				color: $colorBackgroundHeaderFooter;
-			}
-
 		}
-
 		/*.logo{
 			max-width: 106px;
 		}*/
 		.logo:hover {
 			text-decoration: none;
 		}
-
 		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
-		.banner__nav-column{
+		.banner__nav-column {
 			justify-content: flex-end;
 			padding-right: 0;
 			z-index: 10;
 			margin-right: 15px;
-
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
 		}
-		.navbar{
-			padding-right: 0;
 
+		.navbar {
+			padding-right: 0;
 			@include media-breakpoint-down(md) {
 				position: static;
 			}
@@ -160,16 +160,14 @@ header {
 				flex-direction: column;
 			}
 
-
 			.nav-item {
-				@include media-breakpoint-up(lg){
+				@include media-breakpoint-up(lg) {
 					border-left: thin solid $colorTextNavigation;
 				}
-
 				padding: 0 6px;
 			}
 
-			.nav-item:not(:last-of-type){
+			.nav-item:not(:last-of-type) {
 				@include media-breakpoint-down(md) {
 					border-bottom: thin solid $colorTextNavigation;
 				}
@@ -216,14 +214,14 @@ header {
 	.banner__logo-column {
 		justify-content: start;
 		flex-direction: column;
-		padding-left:0;
+		padding-left: 0;
 		/*This is to allow the navbar to overlap the logo like in the previous version of the theme*/
-		width:auto;
-		left:0;
-		position:absolute;
+		width: auto;
+		left: 0;
+		position: absolute;
 		margin-left: 15px;
 
-		h1{
+		h1 {
 			display: inline;
 		}
 
