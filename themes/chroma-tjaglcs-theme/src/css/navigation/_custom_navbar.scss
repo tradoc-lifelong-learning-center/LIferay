@@ -29,7 +29,7 @@ header {
 
 #banner {
 	.banner__inner-wrapper {
-		height: 110px;
+		min-height: 110px;
 
 		/*@include media-breakpoint-up(lg){
 			max-height: 110px;
@@ -61,14 +61,21 @@ header {
 		.row {
 			/*overrid _liferay display:block on :first-child*/
 			display: flex;
+			justify-content: flex-end;
+			position: relative;
 			width: 100%;
 			flex-wrap: nowrap;
 			margin:0;
 		}
 
+		.container {
+			padding-left: 0;
+			padding-right: 0;
+		}
+
 		.container .row > div {
 			display: flex;
-			height: 110px;
+			min-height: 110px;
 			/*@include media-breakpoint-up(lg){
 				max-height: 110px;
 			}*/
@@ -122,6 +129,8 @@ header {
 		.banner__nav-column{
 			justify-content: flex-end;
 			padding-right: 0;
+			z-index: 10;
+			margin-right: 15px;
 
 			@include media-breakpoint-down(md) {
 				position: static;
@@ -197,6 +206,8 @@ header {
 		justify-content: start;
 		flex-direction: column;
 		padding-left:0;
+		position:absolute;
+		margin-left: 15px;
 
 		img {
 			height: 120px;
