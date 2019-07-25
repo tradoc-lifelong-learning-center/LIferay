@@ -29,16 +29,8 @@ header {
 
 #banner {
 	.banner__inner-wrapper {
-		min-height: 110px;
-		/*@include media-breakpoint-up(lg){
-			max-height: 110px;
-		}*/
-		background-color: $colorBackgroundHeaderFooter;
-		box-shadow: 0 2px 5px 0 rgba(0,0,0,0.4);
 
-		h1 {
-			color: $colorTextHeader;
-		}
+
 
 		.dropdown-menu {
 			background-color: #E0E0E0;
@@ -54,28 +46,6 @@ header {
 			right: 5px;
 		}
 
-		.row {
-			/*overrid _liferay display:block on :first-child*/
-			display: flex;
-			justify-content: flex-end;
-			position: relative;
-			width: 100%;
-			flex-wrap: nowrap;
-			margin: 0;
-		}
-
-		.container {
-			padding-left: 0;
-			padding-right: 0;
-		}
-
-		.container .row > div {
-			display: flex;
-			min-height: 110px;
-			/*@include media-breakpoint-up(lg){
-				max-height: 110px;
-			}*/
-		}
 
 		.navbar-blank {
 			@include media-breakpoint-down(md) {
@@ -97,21 +67,7 @@ header {
 		}
 
 
-		/*.logo{
-			max-width: 106px;
-		}*/
-		.logo:hover {
-			text-decoration: none;
-		}
-		/*make navbar and nav column static so mobile menu will work correctly as absolute*/
-		.banner__nav-column {
-			justify-content: flex-end;
-			padding-right: 0;
-			z-index: 10;
-			margin-right: 15px;
-			@include media-breakpoint-down(md) {
-				position: static;
-			}
+
 		}
 
 		.navbar {
@@ -200,7 +156,7 @@ header {
 			margin-bottom: 9px;
 		}
 	}
-}
+
 
 
 
