@@ -19,6 +19,21 @@
 		background-color: $colorBackgroundNavMobile;
 		padding: 1rem;
 		z-index: 5;
+
+		.nav-item.open{
+			background-color: $colorBackgroundNavDropdown;
+
+			.nav-link{
+				color: $colorTextNavigationMobileOpen;
+			}
+
+			li:hover{
+				background-color: darken($colorBackgroundNavDropdown, 15%);
+
+			}
+
+		}
+
 	}
 }
 
@@ -28,13 +43,29 @@
 		position: static;
 	}
 
+	/*In LR, .nav-item (and .dropdown) is the first level navigation*/
+	.nav-item {
+		padding: 0 6px;
+
+		@include media-breakpoint-up(lg) {
+			border-left: thin solid $colorTextNavigation;
+		}
+	}
+
+	.nav-item:not(:last-of-type) {
+		@include media-breakpoint-down(md) {
+			border-bottom: thin solid $colorTextNavigation;
+		}
+	}
+
+	/*.dropdown-menu is the second level navigation*/
 	.dropdown-menu {
-		background-color: $colorBackgroundNavDropdown;
 		border: 1px solid rgba(0,0,0,0.2);
 		box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 		left: 5px;
 		margin: 0;
 		border-radius: 0;
+
 	}
 	/*right align last dropdown so it doesn't spill off page*/
 	.nav-item:last-of-type .dropdown-menu {
@@ -42,28 +73,10 @@
 		right: 5px;
 	}
 
-	.navbar-blank {
-		@include media-breakpoint-down(md) {
-			margin-top: 1rem;
-		}
-	}
-
 	.navbar-nav {
 		@include media-breakpoint-down(md) {
 			flex-direction: column;
-		}
-
-		.nav-item {
-			@include media-breakpoint-up(lg) {
-				border-left: thin solid $colorTextNavigation;
-			}
-			padding: 0 6px;
-		}
-
-		.nav-item:not(:last-of-type) {
-			@include media-breakpoint-down(md) {
-				border-bottom: thin solid $colorTextNavigation;
-			}
+			margin-top: 1rem;
 		}
 
 		.nav-link:hover {
@@ -90,7 +103,7 @@
 	}
 }
 /*site search*/
-/*(including in nav CSS because site search is neste )*/
+/*(including in nav CSS because site search is nested with nav )*/
 #siteSearch {
 	.search-bar-keywords-input-wrapper {
 		/*override min width so I can collapse box*/
@@ -115,6 +128,7 @@
 	}
 
 	.portlet-search-bar {
+		/*full width search bar on mobile*/
 		@include media-breakpoint-down(lg) {
 			width: 100%;
 		}
