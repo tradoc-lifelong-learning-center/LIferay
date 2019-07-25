@@ -239,6 +239,21 @@ body {
 .portlet-user-personal-bar{
 	background-color:transparent;
 	box-shadow: none;
+
+	.sticker{
+		box-shadow: none;
+		border: 2px solid $white;
+		color: $white;
+		transition: all .25s ease;
+		background-color: transparent;
+		border-radius:100%;
+	}
+
+	.sticker:hover{
+		background-color: $white;
+		color: $colorBackgroundHeaderFooter;
+	}
+
 }
 
 /*Hello world portlet CSS*/
