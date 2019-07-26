@@ -6,9 +6,11 @@
 	@include media-breakpoint-down(lg) {
 		display: none;
 	}
+
+
+
 }
 /*This is the code for the mobile nav menu when it's being shown*/
-
 #navigationCollapse.show {
 	/*include breakpoint so mobile nav closes after resizing past a certain point*/
 	@include media-breakpoint-down(md) {
@@ -16,22 +18,26 @@
 		top: $navbar-mobile-top-distance;
 		left: 0;
 		right: 0;
-		background-color: $colorBackgroundNavMobile;
+		background-color: $colorBackgroundMobileNavLevelOne;
 		padding: 1rem;
 		z-index: 5;
 
+		.nav-item{
+			background-color: $colorBackgroundMobileNavLevelOne;
+		}
+
 		.nav-item.open{
-			background-color: $colorBackgroundNavDropdown;
+			background-color: $colorBackgroundMobileNavLevelOneHover;
+			color: $colorTextMobileNavLevelOneHover;
+		}
 
-			.nav-link{
-				color: $colorTextNavigationMobileOpen;
-			}
+		/*.nav-item .dropdown-item:hover{
+			background-color: $colorBackgroundMobileNavLevelOneHover;
+		}*/
 
-			li:hover{
-				background-color: darken($colorBackgroundNavDropdown, 15%);
-
-			}
-
+		.nav-item li:hover{
+			background-color: $colorBackgroundMobileNavLevelTwoHover;
+			color: $colorTextMobileNavLevelTwoHover;
 		}
 
 	}
@@ -48,25 +54,48 @@
 		padding: 0 6px;
 
 		@include media-breakpoint-up(lg) {
-			border-left: thin solid $colorTextNavigation;
+			border-left: thin solid $colorTextNavLevelOne;
 		}
 	}
 
 	.nav-item:not(:last-of-type) {
 		@include media-breakpoint-down(md) {
-			border-bottom: thin solid $colorTextNavigation;
+			border-bottom: thin solid $colorTextNavLevelOne;
 		}
 	}
 
+	.nav-item.open .nav-link{
+		background-color: $colorBackgroundNavLevelOneHover;
+		color: $colorTextNavLevelOneHover;
+	}
+
+	.nav-link{
+		/*nav link is the first level navigation item*/
+		color: $colorTextNavLevelOne;
+		font-size: 0.9375rem;
+		font-weight: normal;
+		text-transform: uppercase;
+	}
+
 	/*.dropdown-menu is the second level navigation*/
-	.dropdown-menu {
-		border: 1px solid rgba(0,0,0,0.2);
+	.nav-item .dropdown-menu {
+		background-color: $colorBackgroundNavLevelTwo;
+		color: $colorTextNavLevelTwo;
+		/*border: 1px solid rgba(0,0,0,0.2);*/
 		box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 		left: 5px;
 		margin: 0;
 		border-radius: 0;
-
 	}
+
+	.nav-item .dropdown-item:hover{
+		/*dropdown item is the second level nav item*/
+		background-color: $colorBackgroundNavLevelTwoHover;
+		color: $colorTextNavLevelTwoHover;
+	}
+
+
+
 	/*right align last dropdown so it doesn't spill off page*/
 	.nav-item:last-of-type .dropdown-menu {
 		left: inherit;
@@ -78,20 +107,9 @@
 			flex-direction: column;
 			margin-top: 1rem;
 		}
-
-		.nav-link:hover {
-			background-color: $colorTextNavigation;
-			color: $colorBackgroundHeaderFooter;
-		}
 	}
 
-	.nav-link {
-		color: $colorTextHeader;
-		font-size: 0.9375rem;
-		font-weight: normal;
-		text-transform: uppercase;
-	}
-
+	/*hamburger button*/
 	.navbar-toggler {
 		color: $navbar-toggler-color;
 		border-color: $navbar-toggler-color;
@@ -102,6 +120,9 @@
 		background-image: $navbar-toggler-icon-bg;
 	}
 }
+
+
+
 /*site search*/
 /*(including in nav CSS because site search is nested with nav )*/
 #siteSearch {
@@ -153,17 +174,17 @@
 	}
 
 	.form-control {
-		background-color: lighten($colorBackgroundHeaderFooter, 15%);
+		background-color: $colorBackgroundSearchBox;
 	}
 
 	.form-control,
 	.search-bar-search-button-wrapper {
-		color: $colorTextHeader;
+		color: $colorTextSearchBox;
 		border: none;
 		border-radius: 0;
 
 		&::placeholder {
-			color: $colorTextFooter;
+			color: $colorTextSearchBox;
 		}
 	}
 
