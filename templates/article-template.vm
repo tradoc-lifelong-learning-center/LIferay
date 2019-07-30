@@ -92,8 +92,8 @@ color: blue !important;
 </h1>
 
 #if($publicationVolume.getData()!="null" || $publicationIssue.getData()!="null")
-<p class="article--volume-info">Volume $publicationVolume.getData() 
-Issue $publicationIssue.getData() 
+<p class="article--volume-info">Volume $publicationVolume.getData()
+Issue $publicationIssue.getData()
 
 #if ($publicationPublishDate_Data > 0)
 	#set ($publicationPublishDate_DateObj = $dateUtil.newDate($publicationPublishDate_Data))
@@ -126,10 +126,6 @@ $cur_publicationAuthors.getData()##
 
 <footer class="article--footer">
 <hr/>
-#if($publicationTitleNote.getData() && $publicationTitleNote.getData()!="")
-<p class="Basic-Paragraph"><span id="endnote-title-note"><a class="_idEndnoteAnchor _idGenColorInherit" href="#endnote-title-note-backlink">1</a></span>$publicationTitleNote.getData()</p>
-#end
-
 
 #foreach ($cur_publicationAuthors in $publicationAuthors.getSiblings())
     #if($cur_publicationAuthors.getChild('publicationAuthorBio').getData() && $cur_publicationAuthors.getChild('publicationAuthorBio').getData()!="")
@@ -138,6 +134,10 @@ $cur_publicationAuthors.getData()##
         <sup><a href="#article-author-$velocityCount">[*]</a></sup>$cur_publicationAuthors.getChild('publicationAuthorBio').getData()
     </p>
     #end
+#end
+
+#if($publicationTitleNote.getData() && $publicationTitleNote.getData()!="")
+<p class="Basic-Paragraph"><span id="endnote-title-note"><a class="_idEndnoteAnchor _idGenColorInherit" href="#endnote-title-note-backlink">1</a></span>$publicationTitleNote.getData()</p>
 #end
  
 <div>
