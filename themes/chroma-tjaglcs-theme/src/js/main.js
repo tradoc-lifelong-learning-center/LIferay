@@ -14,6 +14,8 @@ AUI().ready(
       //clear search box onload. Does weird things on search page if it has a value
       searchField.set('value', '');
 
+      console.log("tjaglcs chroma 1.2.0")
+
       btnSearch.on(
         'click',
         function(event) {
