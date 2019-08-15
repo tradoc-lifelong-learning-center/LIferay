@@ -1,5 +1,6 @@
 <div class="form-container">
-<form>
+<div class="loading-animation" id="loading-animation"></div>
+<form id="generateCertForm">
 <div class="form-panel">
   <label for="name">Enter your name and rank as you'd like it to appear on your certificate: </label>
   <div class="text-input-container">
@@ -7,9 +8,12 @@
   </div>
 
 </div>
-
-<div class="form-panel"><input id="form-submit" type="submit" value="Get your certificate" /></div>
+<div class="form-panel"><input id="form-submit" type="submit" value="Generate your certificate" class="btn"/></div>
 </form>
+</div>
+
+<div class="form-panel" id="printCertForm">
+  <button id="print-cert" class="btn text-center">Print your Certificate</button>
 </div>
 
 <div class="certificate-container" id="certificate-container">

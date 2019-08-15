@@ -15,10 +15,11 @@
     var params = getParamsObj();
     if(params.name){
       createCertificate();
+    } else{
+      getElement("generateCertForm").style.display = "block";
     }
 
-    //ELSE, show form. Think I'll only need onclick binding for print
-
+    getElement("loading-animation").style.display = "none";
 
   };
 
@@ -30,13 +31,14 @@
     var params = getParamsObj();
     var nameInput = params.name;
     var nameField = getElement("name-output");
+    var printForm = getElement("printCertForm");
     //var dateField = getElement("date-output");
-    if(!container||!svg||!nameInput||!nameField){return false}
+    if(!container||!svg||!nameInput||!nameField||!printForm){return false}
 
     //show cert
-    //fadeIn(container);
     container.style.display = "flex";
     container.style.opacity = "100";
+    printForm.style.display = "block";
 
     //get date
     var date = getFormattedDate();
@@ -95,7 +97,7 @@
         console.log("Can't find output the id " + id)
         return false;
       } else{
-        console.log("output: " + output)
+        //console.log("output: " + output)
         return output;
       }
   }

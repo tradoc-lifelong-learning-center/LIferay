@@ -1,3 +1,10 @@
+/*hide forms so JS can choose which to show*/
+#generateCertForm,
+#printCertForm{
+  display:none;
+}
+
+
 .certificate-container{
   /*width:8.5in;
   height:11in;
