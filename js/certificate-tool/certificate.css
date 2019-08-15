@@ -11,7 +11,7 @@
     margin:0;
     padding:0;
   }
-  
+
   .certificate-container{
     position:fixed;
     top:0;
@@ -19,5 +19,23 @@
     bottom:0;
     right:0;
   }
-  
+
+  #header-wrapper,
+  #subbanner,
+  #breadcrumbs,
+  #footer,
+  .lfr-meta-actions,
+  .portlet-topper,
+  .form-container{
+      display:none !important;
+  }
+
+  #wrapper{
+      margin-top:0 !important;
+  }
+
+  svg{
+      display:block !important;
+  }
+
 }
