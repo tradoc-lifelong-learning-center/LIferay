@@ -1,24 +1,48 @@
 .certificate-container{
-  width:8.5in;
+  /*width:8.5in;
   height:11in;
-  background-color:lightgrey;
+  */
+  /*opacity:0;
+  transition: opacity 1s ease;*/
+  display:none;
+  align-items: center;
+  flex-direction: column;
 }
 
-@media print{
-  html{
-    width:8.5in;
-    height:11in;
-    margin:0;
-    padding:0;
-  }
+svg{
+  border: thin solid black;
+  /*margin-left: auto;
+  margin-right: auto;
+  display: block;*/
+  flex: 1 1 auto;
+  margin-bottom:2rem;
+  max-width: 816px;
+}
 
-  .certificate-container{
-    position:fixed;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-  }
+form{
+  text-align:center;
+}
+
+.form-panel{
+  margin-bottom:1rem;
+}
+
+.text-input-container{
+    display:flex;
+    justify-content: center;
+}
+
+.text-input--medium{
+  flex: 1 1 500px;
+  max-width:600px;
+}
+
+
+@media print{
+  *{
+    /*clear floats so page-break-after works*/
+    float:none;
+    }
 
   #header-wrapper,
   #subbanner,
@@ -36,6 +60,11 @@
 
   svg{
       display:block !important;
+      width:8.5in;
+      height:11in;
+
+      clear: both;
+      page-break-after: always;
   }
 
 }

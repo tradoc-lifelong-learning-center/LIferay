@@ -6,41 +6,50 @@
 
 
 (function(){
-  
-  window.onload = bindClickHandler;
-  
-  function bindClickHandler(e){
-    e.preventDefault();
-    var submitButton = document.getElementById("form-submit");
-    submitButton.onclick = createCertificate;
-    return false;
-  }
-  
+  String.prototype.replaceAll = function(target, replacement) {
+    return this.split(target).join(replacement);
+  };
+
+  window.onload = function(){
+    //IF there's a name param, generate certificate
+    var params = getParamsObj();
+    if(params.name){
+      createCertificate();
+    }
+
+    //ELSE, show form. Think I'll only need onclick binding for print
+
+
+  };
+
+
   function createCertificate(){
     //get and validate name, certificate SVG
     var container = getElement("certificate-container");
     var svg = getElement("certificate");
-    var nameInput = getInput("name-input");
+    var params = getParamsObj();
+    var nameInput = params.name;
     var nameField = getElement("name-output");
-    var dateField = getElement("date-output");
-    if(!container||!svg||!nameInput||!nameField||!dateField){return false}
-    
+    //var dateField = getElement("date-output");
+    if(!container||!svg||!nameInput||!nameField){return false}
+
     //show cert
     //fadeIn(container);
-    container.style.display = "block";
-    
+    container.style.display = "flex";
+    container.style.opacity = "100";
+
     //get date
     var date = getFormattedDate();
-    
+
     //set name
-    setCertElement(nameField, nameInput, svg);
-    
+    setCertElement(nameField, nameInput + " as of " + date, svg);
+
     //set date
-    setCertElement(dateField, date, svg);
-    
-    
+    //setCertElement(dateField, date, svg);
+
+
   }
-  
+
   /*
   function fadeIn(element){
     element.style.display = "block";
@@ -50,15 +59,15 @@
 
   function getFormattedDate(){
     var rawDate = new Date();
-    
+
     var year = rawDate.getFullYear();
     var month = getMonthName(rawDate.getMonth());
     var day = rawDate.getDate();
-    
-    return month + " " + day + ", " + year;
+
+    return  day + " " + month + " " + year;
 
   }
-  
+
   function getMonthName(num){
     var monthNames = {
       "0":"January",
@@ -74,14 +83,14 @@
       "10":"November",
       "11":"December",
     }
-    
+
     return monthNames[num];
   }
-  
-  
+
+
   function getElement(id){
     var output = document.getElementById(id);
-    
+
     if(!output){
         console.log("Can't find output the id " + id)
         return false;
@@ -90,18 +99,18 @@
         return output;
       }
   }
-  
-function getInput(id){
+
+/*function getInput(id){
   //get input (return false if empty)
     var input = document.getElementById(id).value;
-    
+
     if(!input || input==""){
       console.log("Input is empty: " + id);
       return false;
     } else {
       return input;
     }
-}
+}*/
 
 function setCertElement(element, content, svg){
     element.innerHTML = content;
@@ -114,9 +123,35 @@ function centerSvgElement(element, parentSVG){
     var textWidth = element.getBoundingClientRect().width;
     //var textWidth = svgWidth - textX * 2;
     var textXNew = (svgWidth - textWidth) / 2;
-    
+
     element.setAttribute("x", textXNew);
 }
-  
-})();
 
+
+function toObject(arr, separator) {
+  var rv = {};
+  for (var i = 0; i < arr.length; ++i)
+    if (arr[i] !== undefined) {
+      //split param key/value into object key/value, and replace + with space
+      var rvKey = arr[i].split(separator)[0];
+
+      try{
+        var rvValue = decodeURIComponent(arr[i].split(separator)[1].replaceAll("\+"," "));
+
+      } catch(e){
+        var rvValue = "ERROR";
+      }
+
+      rv[rvKey] = rvValue;
+    }
+    return rv;
+    }
+
+function getParamsObj(){
+  var paramsArr = window.location.search.replace("?","").split("&");
+
+  return toObject(paramsArr, "=");
+
+}
+
+})();
