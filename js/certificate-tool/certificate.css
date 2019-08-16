@@ -1,23 +1,91 @@
-.certificate-container{
-  width:8.5in;
-  height:11in;
-  background-color:lightgrey;
+/*hide forms so JS can choose which to show*/
+#generateCertForm,
+#printCertForm{
+  display:none;
 }
 
+
+.certificate-container{
+  /*width:8.5in;
+  height:11in;
+  */
+  /*opacity:0;
+  transition: opacity 1s ease;*/
+  display:none;
+  align-items: center;
+  flex-direction: column;
+}
+
+svg{
+  border: thin solid black;
+  /*margin-left: auto;
+  margin-right: auto;
+  display: block;*/
+  flex: 1 1 auto;
+  margin-bottom:2rem;
+  max-width: 816px;
+}
+
+.form-panel{
+  margin-bottom:1rem;
+  text-align:center;
+}
+
+.text-input-container{
+    display:flex;
+    justify-content: center;
+}
+
+.text-input--medium{
+  flex: 1 1 500px;
+  max-width:600px;
+}
+
+
 @media print{
-  html{
-    width:8.5in;
-    height:11in;
-    margin:0;
-    padding:0;
+  *{
+    /*clear floats so page-break-after works*/
+    float:none;
+    border:none;
+
+    }
+
+  #header-wrapper,
+  #subbanner,
+  #breadcrumbs,
+  #footer,
+  nav,
+  ul,
+  .lfr-meta-actions,
+  .portlet-topper,
+  .form-container,
+  .form-panel{
+      display:none !important;
   }
-  
+
+  #wrapper{
+      margin-top:0 !important;
+  }
+
   .certificate-container{
-    position:fixed;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
+    display:block!important;
+    position: absolute;
   }
   
+  svg{
+      display:block !important;
+      max-width: auto;
+      width:8.5in;
+      height:11in;
+      margin:0 0 2rem 0;
+      border:none;
+
+      page-break-after: always;
+
+  }
+
+  svg{
+    break-inside: avoid;
+  }
+
 }
