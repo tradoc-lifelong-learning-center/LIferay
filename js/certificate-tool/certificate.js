@@ -133,9 +133,13 @@ function setCertElement(element, content, svg){
 function centerSvgElement(element, parentSVG){
     var svgDimensions = parentSVG.getAttribute("viewBox").split(" ");
     var svgWidth = svgDimensions[2];
+    var svgClientWidth = parentSVG.getBoundingClientRect().width;
     var textWidth = element.getBoundingClientRect().width;
-    //var textWidth = svgWidth - textX * 2;
-    var textXNew = (svgWidth - textWidth) / 2;
+
+    //ratio to adjust X when SVG is scaled down below actual SVG dimensions
+    var ratio = svgWidth / svgClientWidth;
+
+    var textXNew = (svgWidth - (textWidth * ratio)) / 2;
 
     element.setAttribute("x", textXNew);
 }
