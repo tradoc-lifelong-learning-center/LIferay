@@ -26,12 +26,9 @@ svg{
   max-width: 816px;
 }
 
-form{
-  text-align:center;
-}
-
 .form-panel{
   margin-bottom:1rem;
+  text-align:center;
 }
 
 .text-input-container{
@@ -49,15 +46,20 @@ form{
   *{
     /*clear floats so page-break-after works*/
     float:none;
+    border:none;
+
     }
 
   #header-wrapper,
   #subbanner,
   #breadcrumbs,
   #footer,
+  nav,
+  ul,
   .lfr-meta-actions,
   .portlet-topper,
-  .form-container{
+  .form-container,
+  .form-panel{
       display:none !important;
   }
 
@@ -65,13 +67,25 @@ form{
       margin-top:0 !important;
   }
 
+  .certificate-container{
+    display:block!important;
+    position: absolute;
+  }
+  
   svg{
       display:block !important;
+      max-width: auto;
       width:8.5in;
       height:11in;
+      margin:0 0 2rem 0;
+      border:none;
 
-      clear: both;
       page-break-after: always;
+
+  }
+
+  svg{
+    break-inside: avoid;
   }
 
 }

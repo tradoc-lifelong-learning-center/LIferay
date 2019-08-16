@@ -15,14 +15,25 @@
     var params = getParamsObj();
     if(params.name){
       createCertificate();
+      bindClickHandler();
     } else{
       getElement("generateCertForm").style.display = "block";
+
     }
 
-    getElement("loading-animation").style.display = "none";
+    //getElement("loading-animation").style.display = "none";
+    getElement("loading-animation").remove();
 
   };
 
+  function bindClickHandler(){
+    var printButton = getElement("printCertButton");
+    printButton.onclick = print;
+  }
+
+  function print(){
+    window.print();
+  }
 
   function createCertificate(){
     //get and validate name, certificate SVG
