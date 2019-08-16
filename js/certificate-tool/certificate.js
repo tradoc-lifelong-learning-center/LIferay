@@ -1,10 +1,3 @@
-//TODO
-//check for text that's too long for cert and scale
-//show cert only after click
-//--done, but should this be a fade in or modal?
-//printing/downloading
-
-
 (function(){
   String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
@@ -136,12 +129,29 @@ function centerSvgElement(element, parentSVG){
     var svgClientWidth = parentSVG.getBoundingClientRect().width;
     var textWidth = element.getBoundingClientRect().width;
 
-    //ratio to adjust X when SVG is scaled down below actual SVG dimensions
+    //var ratio = svgClientWidth / svgWidth;
     var ratio = svgWidth / svgClientWidth;
 
     var textXNew = (svgWidth - (textWidth * ratio)) / 2;
 
     element.setAttribute("x", textXNew);
+
+    if(textWidth>svgClientWidth){
+        //check if text doesn't fit and resize if needed
+        resizeTextElement(element, parentSVG);
+    }
+
+}
+
+function resizeTextElement(element, parentSVG){
+    var ptSize = element.getAttribute("font-size");
+
+    if(!ptSize || ptSize<10){
+        return false;
+    }
+
+    element.setAttribute("font-size", ptSize - 1);
+    centerSvgElement(element, parentSVG)
 }
 
 
