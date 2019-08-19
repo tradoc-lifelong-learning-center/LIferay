@@ -36,7 +36,7 @@
     var nameInput = params.name;
     var nameField = getElement("name-output");
     var printForm = getElement("printCertForm");
-    //var dateField = getElement("date-output");
+    var dateField = getElement("date-output");
     if(!container||!svg||!nameInput||!nameField||!printForm){return false}
 
     //show cert
@@ -48,10 +48,10 @@
     var date = getFormattedDate();
 
     //set name
-    setCertElement(nameField, nameInput + " as of " + date, svg);
+    setCertElement(nameField, nameInput, svg);
 
     //set date
-    //setCertElement(dateField, date, svg);
+    setCertElement(dateField, date, svg);
 
 
   }
@@ -67,10 +67,12 @@
     var rawDate = new Date();
 
     var year = rawDate.getFullYear();
-    var month = getMonthName(rawDate.getMonth());
+    var monthNumber = rawDate.getMonth() + 1;
+    var monthText = getMonthName(rawDate.getMonth());
     var day = rawDate.getDate();
 
-    return  day + " " + month + " " + year;
+    //return  day + " " + monthText + " " + year;
+    return  monthNumber + "/" + day + "/" + year;
 
   }
 
@@ -146,7 +148,7 @@ function centerSvgElement(element, parentSVG){
 function resizeTextElement(element, parentSVG){
     var ptSize = element.getAttribute("font-size");
 
-    if(!ptSize || ptSize<10){
+    if(!ptSize || ptSize<=10){
         return false;
     }
 
