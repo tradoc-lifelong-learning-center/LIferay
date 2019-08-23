@@ -6,12 +6,17 @@
   window.onload = function(){
     //IF there's a name param, generate certificate
     var params = getParamsObj();
+    var formDiv = getElement("form-container");
+    var errorDiv = getElement("error-container");
+
     if(params.name){
       createCertificate();
       bindClickHandler();
-    } else{
-      getElement("generateCertForm").style.display = "block";
-
+    } else if(params.completed=="true"){
+      formDiv.style.display = "block";
+    } else {
+      //getElement("generateCertForm").style.display = "block";
+      errorDiv.style.display = "block";
     }
 
     //getElement("loading-animation").style.display = "none";

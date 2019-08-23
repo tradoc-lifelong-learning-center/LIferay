@@ -1,9 +1,9 @@
-/*hide forms so JS can choose which to show*/
-#generateCertForm,
-#printCertForm{
+/*hide by default so it can be revealed by JS*/
+#printCertForm,
+#form-container,
+#error-container{
   display:none;
 }
-
 
 .certificate-container{
   /*width:8.5in;
@@ -41,6 +41,14 @@ svg{
   max-width:600px;
 }
 
+.error-container{
+  text-align: center;
+}
+
+a.btn{
+  color: white !important;
+}
+
 
 @media print{
   *{
@@ -71,7 +79,7 @@ svg{
     display:block!important;
     position: absolute;
   }
-  
+
   svg{
       display:block !important;
       max-width: auto;
@@ -87,5 +95,20 @@ svg{
   svg{
     break-inside: avoid;
   }
+
+}
+
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 .portlet-title img {
+	display: none;
+}
+
+
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 .portlet-title-text {
+	display: none;
+}
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 {
 
 }
