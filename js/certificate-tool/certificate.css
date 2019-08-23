@@ -1,4 +1,3 @@
-
 /*hide by default so it can be revealed by JS*/
 #printCertForm,
 #form-container,
@@ -96,5 +95,20 @@ a.btn{
   svg{
     break-inside: avoid;
   }
+
+}
+
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 .portlet-title img {
+	display: none;
+}
+
+
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 .portlet-title-text {
+	display: none;
+}
+
+#portlet_56_INSTANCE_RWxnSUsnjLM6 {
 
 }
