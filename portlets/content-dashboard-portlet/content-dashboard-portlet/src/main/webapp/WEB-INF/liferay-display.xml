@@ -3,7 +3,7 @@
 
 <display>
 	
-	<category name="category.sample">
+	<category name="TJAGLCS">
 		<portlet id="content-dashboard"></portlet>
 	</category>
 </display>

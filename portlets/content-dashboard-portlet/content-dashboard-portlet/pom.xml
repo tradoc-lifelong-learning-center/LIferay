@@ -5,8 +5,8 @@
 	<groupId>com.tjaglcs.plugins</groupId>
 	<artifactId>content-dashboard-portlet</artifactId>
 	<packaging>war</packaging>
-	<name>content-dashboard-portlet Portlet</name>
-	<version>1.0.0-SNAPSHOT</version>
+	<name>Content Dashboard Portlet</name>
+	<version>1.0.0</version>
 	<build>
 		<plugins>
 			<plugin>
