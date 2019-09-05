@@ -27,7 +27,9 @@
 
         //form.innerHTML = "<div class='alert alert-danger'>Form Error!</div>"
 
-        description.insertAdjacentHTML('afterend', "<div class='alert alert-danger'>Form Error!</div>");
+        description.insertAdjacentHTML('afterend', "<div class='alert alert-danger'><p>Thank you for attempting to contact us. If you are receiving this message, there is an issue with your submission. </p><p>Please use another web browser or contact the <a href='https://athd.army.mil/app/ask'>JAGU Support Desk</a> for further assistance.</p></div>");
+
+
 
         return false;
       }
