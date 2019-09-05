@@ -91,7 +91,7 @@ table th {
    text-align:left;
   }
 
-  table td::before {
+  table td:not(.podcasts__download-container)::before {
     /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
