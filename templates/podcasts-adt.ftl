@@ -9,12 +9,12 @@ Autocomplete is also available and can be invoked by typing "${".
 
 <style>
 
-body {
+table.podcasts {
   font-family: "Open Sans", sans-serif;
   line-height: 1.25;
 }
 
-table {
+table.podcasts {
   border: 1px solid #ccc;
   border-collapse: collapse;
   margin: 0;
@@ -23,31 +23,31 @@ table {
   /*table-layout: fixed;*/
 }
 
-table caption {
+table.podcasts caption {
   font-size: 1.5em;
   margin: .5em 0 .75em;
 }
 
-table tr {
+table.podcasts tr {
   /*background-color: #f8f8f8;*/
   border: 1px solid #ddd;
   padding: .35em;
 }
 
-table th,
-table td {
+table.podcasts th,
+table.podcasts td {
   padding: .625em;
   text-align: center;
 }
 
-table th {
+table.podcasts th {
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
 
 .podcasts__stream-container{
-  min-width:300px;
+  /*min-width:300px;*/
 }
 
 .podcast__desc-title{
@@ -55,15 +55,15 @@ table th {
 }
 
 @media screen and (max-width: 1100px) {
-  table {
+  table.podcasts {
     border: 0;
   }
 
-  table caption {
+  table.podcasts caption {
     font-size: 1.3em;
   }
 
-  table thead {
+  table.podcasts thead {
     border: none;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -74,24 +74,30 @@ table th {
     width: 1px;
   }
 
-  table tr {
+  table.podcasts tr {
     border-bottom: 3px solid #ddd;
     display: block;
     margin-bottom: .625em;
   }
 
-  table td {
+  table.podcasts td {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
     text-align: right;
+
+    /*trying to fit on iphone 5*/
+    /*max-width:70vw;
+    margin-left:auto;
+    margin-right:auto;*/
+
   }
 
-  table td .podcast__desc-para{
+  table.podcasts td .podcast__desc-para{
    text-align:left;
   }
 
-  table td:not(.podcasts__download-container)::before {
+  table.podcasts td:not(.podcasts__download-container)::before {
     /*
     * aria-label has no advantage, it won't be read inside a table
     content: attr(aria-label);
@@ -102,15 +108,21 @@ table th {
     text-transform: uppercase;
   }
 
-  table td:last-child {
+  table.podcasts td:last-child {
     border-bottom: 0;
   }
+
+  audio{
+    /*transform: scale(.75);*/
+    max-width:100%;
+  }
+
 }
 
 
 </style>
 
-<table>
+<table class="podcasts">
   <thead>
     <tr>
       <th scope="col">Description</th>
