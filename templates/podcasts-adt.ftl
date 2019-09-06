@@ -84,28 +84,15 @@ table.podcasts th {
     border-bottom: 1px solid #ddd;
     display: block;
     font-size: .8em;
-    text-align: right;
-
-    /*trying to fit on iphone 5*/
-    /*max-width:70vw;
-    margin-left:auto;
-    margin-right:auto;*/
-
+    text-align:left;
   }
 
-  table.podcasts td .podcast__desc-para{
-   text-align:left;
+  table.podcasts td.podcasts__stream-container{
+   text-align:center;
   }
 
-  table.podcasts td:not(.podcasts__download-container)::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
+  table.podcasts td.podcasts__download-container{
+   text-align:right;
   }
 
   table.podcasts td:last-child {
