@@ -43,14 +43,10 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
     public void postProcessSearchQuery(BooleanQuery searchquery, SearchContext searchcontext)
             throws Exception {
     	
-		//Query stringQuery = StringQueryFactoryUtil.create("title:secret");
+		////Update the search query to exclude any content tagged as hidden
     	Query stringQuery = StringQueryFactoryUtil.create("assetTagNames:hidden");
 
 		searchquery.add(stringQuery, BooleanClauseOccur.MUST_NOT);
-    	
-    	//searchquery.addExactTerm("title", "hello world");
-    	
-    	//System.out.println("searchquery: " + searchquery);
     	
         if(_log.isDebugEnabled())
             _log.debug(" postProcessSearchQuery()");
