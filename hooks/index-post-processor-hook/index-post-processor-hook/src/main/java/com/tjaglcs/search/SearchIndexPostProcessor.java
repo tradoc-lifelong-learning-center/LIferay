@@ -23,18 +23,18 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
             _log.debug(" postProcessContextQuery()");
     }
 	
-	public void postProcessDocument(Document document, Object object)
+	/*public void postProcessDocument(Document document, Object object)
             throws Exception {
 
 		if(_log.isDebugEnabled())
             _log.debug(" postProcessDocument()"); 
-    }
+    }*/
 	
 
     public void postProcessFullQuery(BooleanQuery fullQuery, SearchContext searchcontext)
             throws Exception {
     	
-    	System.out.println("fullQuery: " + fullQuery);
+    	//System.out.println("fullQuery: " + fullQuery);
     	
         if(_log.isDebugEnabled())
             _log.debug(" postProcessFullQuery()");
@@ -50,7 +50,7 @@ public class SearchIndexPostProcessor extends BaseIndexerPostProcessor {
     	
     	//searchquery.addExactTerm("title", "hello world");
     	
-    	System.out.println("searchquery: " + searchquery);
+    	//System.out.println("searchquery: " + searchquery);
     	
         if(_log.isDebugEnabled())
             _log.debug(" postProcessSearchQuery()");
