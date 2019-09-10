@@ -5,8 +5,8 @@
 	<groupId>com.tjaglcs.plugins</groupId>
 	<artifactId>index-post-processor-hook</artifactId>
 	<packaging>war</packaging>
-	<name>index-post-processor-hook Hook</name>
-	<version>1.0.0-SNAPSHOT</version>
+	<name>Index Post Processor Hook</name>
+	<version>1.0.0</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -85,4 +85,6 @@
 	</properties>
 	</profile>
 </profiles>
+	<description>Updates global search index:
+--Allows user to hide content by adding &quot;hidden&quot; tag</description>
 </project>
