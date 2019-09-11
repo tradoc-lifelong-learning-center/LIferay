@@ -50,13 +50,16 @@ import com.liferay.util.bridges.mvc.MVCPortlet;
 import com.liferay.webform.util.PortletPropsValues;
 import com.liferay.webform.util.WebFormUtil;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
 import javax.mail.internet.InternetAddress;
 
 import javax.portlet.ActionRequest;
@@ -168,6 +171,15 @@ public class WebFormPortlet extends MVCPortlet {
 				
 				//System.out.println("error: " + SessionErrors.get(actionRequest, "bot-error"));
 				//break;
+			}
+			
+			//if there's an "Entry Date" field, add the current date/time
+			if(fieldLabel.contains("Entry Date")) {
+				Clock clock = Clock.systemUTC();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss", Locale.US);
+		        LocalDateTime date = LocalDateTime.now(clock);
+		        param = date.format(formatter).toString() + "z";
+
 			}
 
 			fieldsMap.put(fieldLabel, param);
