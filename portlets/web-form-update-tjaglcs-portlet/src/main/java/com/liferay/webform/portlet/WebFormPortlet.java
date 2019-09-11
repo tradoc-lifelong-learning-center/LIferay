@@ -145,9 +145,13 @@ public class WebFormPortlet extends MVCPortlet {
 		for (int i = 1; true; i++) {
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + i, StringPool.BLANK);
+			
+			//System.out.println("fieldLabel: " + fieldLabel);
 
 			String fieldType = preferences.getValue(
 				"fieldType" + i, StringPool.BLANK);
+			
+			//System.out.println("fieldType: " + fieldType);
 
 			if (Validator.isNull(fieldLabel)) {
 				break;
@@ -156,8 +160,23 @@ public class WebFormPortlet extends MVCPortlet {
 			if (StringUtil.equalsIgnoreCase(fieldType, "paragraph")) {
 				continue;
 			}
+			
+			String param = actionRequest.getParameter("field" + i);
+			
+			if(fieldLabel.contains("Bot Trap") && param!="") {
+				SessionErrors.add(actionRequest, "bot-error");
+				
+				//System.out.println("error: " + SessionErrors.get(actionRequest, "bot-error"));
+				//break;
+			}
 
-			fieldsMap.put(fieldLabel, actionRequest.getParameter("field" + i));
+			fieldsMap.put(fieldLabel, param);
+			
+			/*System.out.println("-----");
+			System.out.println("fieldLabel: " + fieldLabel);
+			System.out.println("param: " + param);
+			*/
+			
 		}
 
 		Set<String> validationErrors = null;
@@ -172,7 +191,7 @@ public class WebFormPortlet extends MVCPortlet {
 			return;
 		}
 
-		if (validationErrors.isEmpty()) {
+		if (validationErrors.isEmpty() && SessionErrors.get(actionRequest, "bot-error")!="bot-error") {
 			boolean emailSuccess = true;
 			boolean databaseSuccess = true;
 			boolean fileSuccess = true;
@@ -475,6 +494,15 @@ public class WebFormPortlet extends MVCPortlet {
 			String fieldLabel = preferences.getValue(
 				"fieldLabel" + (i + 1), StringPool.BLANK);
 			String fieldValue = fieldsMap.get(fieldLabel);
+			
+			/*System.out.println("fieldLabel in validator: " + fieldLabel);
+			System.out.println("fieldValue in validator: " + fieldValue);
+			
+			if(fieldLabel.contains("Bot Trap") && fieldValue!="") {
+				validationErrors.add(fieldLabel);
+				
+				continue;
+			}*/
 
 			boolean fieldOptional = GetterUtil.getBoolean(
 				preferences.getValue(

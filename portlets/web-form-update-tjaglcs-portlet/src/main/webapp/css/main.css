@@ -63,4 +63,10 @@
 	.format-paragraph {
 		margin-bottom: 30px;
 	}
+	
+	/*remove duplicate error message*/
+	.portlet-body > .alert-error{
+		display:none
+	}
 }
+

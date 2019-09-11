@@ -42,6 +42,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 		<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 		<liferay-ui:error key="error" message="an-error-occurred-while-sending-the-form-information" />
+		<liferay-ui:error key="bot-error" message="Thank you for attempting to contact us. If you are receiving this message, there is an issue with your submission. Please use another web browser or contact the <a href='https://athd.army.mil/app/ask'>JAGU Support Desk</a> for further assistance." />
+
+
 
 		<c:if test='<%= PortletPropsValues.VALIDATION_SCRIPT_ENABLED && SessionErrors.contains(renderRequest, "validationScriptError") %>'>
 			<liferay-util:include page="/html/script_error.jsp" />
