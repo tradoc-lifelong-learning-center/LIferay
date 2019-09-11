@@ -354,7 +354,7 @@ public class WebFormPortlet extends MVCPortlet {
 		//Replace quotes and line breaks
 		String val1 = StringUtil.replace(value, CharPool.QUOTE, CharPool.APOSTROPHE);
 		String val2 = StringUtil.replace(val1, CharPool.RETURN, CharPool.SPACE);
-		String val3 = StringUtil.replace(val2, CharPool.NEW_LINE, CharPool.SPACE);
+		String val3 = StringUtil.replace(val2, CharPool.NEW_LINE, ".   ");
 
 		sb.append(CharPool.QUOTE);
 		sb.append(
