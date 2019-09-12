@@ -110,6 +110,11 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="webFormFields" persistState="<%= true %>" title="form-fields">
 			<aui:fieldset cssClass="rows-container webFields">
+				<div>
+					<h5>Custom TJAGLCS Form Fields</h5>
+					<p>This portlet allows form builders to include a bot trap field to reduce spam entries. To include a bot trap, add a Text Field, name it TJAGLCS, and mark it as optional.</p>
+					<p>This portlet also allows form builders to capture the date and time the form was submitted. To capture date/time, add a Text Field, name it Entry Date, and mark it as optional.</p>
+				</div>
 				<c:if test="<%= fieldsEditingDisabled %>">
 					<div class="alert">
 						<liferay-ui:message key="there-is-existing-form-data-please-export-and-delete-it-before-making-changes-to-the-fields" />
