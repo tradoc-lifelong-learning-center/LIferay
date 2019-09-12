@@ -27,7 +27,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="saveData" />
 </portlet:actionURL>
 
-<aui:form action="<%= saveDataURL %>" method="post" name="fm">
+<div class="loading-animation" id="loading-animation">&nbsp;</div>
+
+<aui:form cssClass="hidden contact-form" action="<%= saveDataURL %>" method="post" name="fm">
 	<c:if test="<%= Validator.isNull(successURL) %>">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	</c:if>
@@ -85,6 +87,9 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			<c:choose>
 				<c:when test='<%= fieldType.equals("paragraph") %>'>
 					<p class="format-paragraph" id="<portlet:namespace /><%= fieldName %>"><%= HtmlUtil.escape(fieldParagraph) %></p>
+				</c:when>
+				<c:when test='<%= fieldType.equals("text") && (fieldLabel.contains("Bot Trap") || fieldLabel.contains("Entry Date")) %>'>
+					<aui:input data-hidden="true" autocomplete="off" label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
 					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
@@ -150,6 +155,19 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 </aui:form>
 
 <aui:script use="aui-base,selector-css3">
+	var hidden = document.querySelectorAll("[data-hidden='true']");
+	var form = document.getElementsByClassName("contact-form")[0];
+	var loader = document.getElementById("loading-animation");
+	
+	for(var i = 0; i<hidden.length; i++){
+		hidden[i].parentNode.style.display = "none";
+	}
+	
+	loader.style.display = "none";
+	form.style.display = "block";
+	form.style.visibility = "unset";
+
+
 	var keys = [];
 
 	var fieldLabels = {};
