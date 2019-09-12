@@ -166,7 +166,7 @@ public class WebFormPortlet extends MVCPortlet {
 			
 			String param = actionRequest.getParameter("field" + i);
 			
-			if(fieldLabel.contains("Bot Trap") && param!="") {
+			if(fieldLabel.contains("TJAGLCS") && param!="") {
 				SessionErrors.add(actionRequest, "bot-error");
 				
 				//System.out.println("error: " + SessionErrors.get(actionRequest, "bot-error"));
