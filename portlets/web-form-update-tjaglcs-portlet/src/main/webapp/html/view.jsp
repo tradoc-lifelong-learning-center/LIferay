@@ -89,7 +89,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 					<p class="format-paragraph" id="<portlet:namespace /><%= fieldName %>"><%= HtmlUtil.escape(fieldParagraph) %></p>
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") && (fieldLabel.contains("TJAGLCS") || fieldLabel.contains("Entry Date")) %>'>
-					<aui:input data-hidden="true" autocomplete="off" label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
+					<aui:input data-hidden="true" autocomplete="off" tabindex="-1" label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
 				</c:when>
 				<c:when test='<%= fieldType.equals("text") %>'>
 					<aui:input cssClass='<%= fieldOptional ? "optional" : StringPool.BLANK %>' label="<%= HtmlUtil.escape(fieldLabel) %>" name="<%= fieldName %>" value="<%= HtmlUtil.escape(fieldValue) %>" />
