@@ -291,3 +291,5 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 		).render();
 	</aui:script>
 </c:if>
+
+<p style="color:grey; font-size:.9rem; margin-top:2rem; text-align:right;">Web Form TJAGLCS 1.3.0</p>
