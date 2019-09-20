@@ -149,8 +149,18 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 
 			<liferay-ui:captcha url="<%= captchaURL %>" />
 		</c:if>
+		
+		<button type="button" id="showModal" class="btn btn-primary">Show Modal</button>
 
-		<aui:button onClick="" type="submit" value="send" />
+		<div class="yui3-skin-sam">
+		    <div id="modal">
+		    </div>
+		</div>
+		
+		<!--<aui:button onClick="" type="submit" value="Agree"  class="btn btn-primary"/>-->
+
+
+		
 	</aui:fieldset>
 </aui:form>
 

@@ -6,7 +6,7 @@
 	<artifactId>web-form-update-tjaglcs-portlet</artifactId>
 	<packaging>war</packaging>
 	<name>Web Form TJAGLCS Portlet</name>
-	<version>1.3.0</version>
+	<version>1.4.0</version>
 	<build>
 		<plugins>
 			<plugin>
@@ -131,8 +131,6 @@
 	</properties>
 	</profile>
 </profiles>
-	<description>This is the Liferay Web Form portlet with an update CSV output:
-https://github.com/liferay/liferay-plugins/tree/6.2.x/portlets/web-form-portlet
-
-NOTE: mail*.jar needs to be removed manually from the .war file for the email functionality to work.</description>
+	<description>This is the Liferay Web Form portlet with an update CSV output and bot trap option:
+https://github.com/liferay/liferay-plugins/tree/6.2.x/portlets/web-form-portlet</description>
 </project>
