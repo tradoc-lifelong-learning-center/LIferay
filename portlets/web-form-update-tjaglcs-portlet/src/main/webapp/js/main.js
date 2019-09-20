@@ -1,60 +1,41 @@
-YUI().use(
-  'aui-modal',
-  function(Y) {
-    var modal = new Y.Modal(
-      {
-        bodyContent: 'How many pages do you want to print?',
-        centered: true,
-        destroyOnHide: false,
-        headerContent: '<h3>Print</h3>',
-        modal: true,
-        render: '#modal',
-        resizable: {
-          handles: 'b, r'
-        },
-        toolbars: {
-          body: [
-            {
-              icon: 'glyphicon glyphicon-file',
-              label: 'Single Page'
-            },
-            {
-              icon: 'glyphicon glyphicon-book',
-              label: 'All Pages'
-            }
-          ]
-        },
-        visible: true,
-        width: 450
-      }
-    ).render();
 
-    modal.addToolbar(
-      [
-        {
-          label: 'Cancel',
-          on: {
-            click: function() {
-              modal.hide();
-            }
-          }
-        },
-        {
-          label: 'Okay',
-          on: {
-            click: function() {
-              alert('Just an example, there will be no printing here.');
-            }
-          }
-        }
-      ]
-    );
+(function(){
+	
+	window.onload = bindClickHandlers;
 
-    Y.one('#showModal').on(
-      'click',
-      function() {
-        modal.show();
-      }
-    );
-  }
-);
+	function bindClickHandlers(){
+		//buttons
+		//#modalCloser
+		//#modalLauncher
+		
+		var openButton = document.getElementById('modalLauncher');
+		var closeButton = document.getElementById('modalCloser');
+		
+		var modalId = openButton.dataset.target;
+		
+		console.log("modalId: " + modalId)
+		
+		openButton.addEventListener('click', showModal);
+		closeButton.addEventListener('click', closeModal);
+		
+		function showModal(){
+			var modal = document.getElementById(modalId);
+			modal.classList.remove("hide");
+			modal.classList.remove("fade");
+			console.log("click");
+		}
+
+		function closeModal(){
+			var modal = document.getElementById(modalId);
+			modal.classList.add("hide");
+			modal.classList.add("fade");
+		}
+		
+		
+		//modal
+		//#formModal
+	}
+
+	
+	
+})();

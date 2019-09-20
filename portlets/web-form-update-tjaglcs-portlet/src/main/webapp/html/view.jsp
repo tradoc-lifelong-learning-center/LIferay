@@ -150,12 +150,40 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			<liferay-ui:captcha url="<%= captchaURL %>" />
 		</c:if>
 		
-		<button type="button" id="showModal" class="btn btn-primary">Show Modal</button>
+		
+		<button type="button" data-target="formModal" id="modalLauncher" class="btn btn-primary">Next</button>
+		
+		<!-- TODO: 
+			if modal is open, click outside should close
+			https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/
+			x button should close
+			grey background for body (to emphasize modal)
+		-->
+		
+		<div id="formModal" class="modal hide fade">
+    
+		    <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <h3>Hey!</h3>
+		    </div>
+		    
+		    <div class="modal-body"> 
+		        <p>Stop sending us garbage.</p>
+		    </div>
+		    
+		    <div class="modal-footer">
+		    	<button type="button"  data-target="formModal" id="modalCloser" class="btn">Disagree</button>
+		    	<button type="submit" id="formSubmit" class="btn btn-primary">Agree</button>
+		    </div>
+		</div>
+		
+		<!-- <button type="button" id="showModal" class="btn btn-primary">Show Modal</button>
 
 		<div class="yui3-skin-sam">
 		    <div id="modal">
 		    </div>
 		</div>
+		 -->
 		
 		<!--<aui:button onClick="" type="submit" value="Agree"  class="btn btn-primary"/>-->
 
