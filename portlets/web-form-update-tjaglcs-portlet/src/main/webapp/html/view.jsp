@@ -153,13 +153,6 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		
 		<button type="button" data-target="formModal" id="modalLauncher" class="btn btn-primary">Next</button>
 		
-		<!-- TODO: 
-			if modal is open, click outside should close
-			https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js/
-			x button should close
-			grey background for body (to emphasize modal)
-		-->
-		
 		<div id="formModalBackground" class="modal-background">
 			<div id="formModal" class="modal hide fade">
 	    
@@ -179,18 +172,6 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			    </div>
 			</div>
 		</div>
-		
-		
-		<!-- <button type="button" id="showModal" class="btn btn-primary">Show Modal</button>
-
-		<div class="yui3-skin-sam">
-		    <div id="modal">
-		    </div>
-		</div>
-		 -->
-		
-		<!--<aui:button onClick="" type="submit" value="Agree"  class="btn btn-primary"/>-->
-
 
 		
 	</aui:fieldset>
