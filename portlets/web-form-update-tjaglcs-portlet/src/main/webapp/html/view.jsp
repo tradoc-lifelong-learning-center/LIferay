@@ -21,6 +21,10 @@ String title = LocalizationUtil.getPreferencesValue(portletPreferences, "title",
 String description = LocalizationUtil.getPreferencesValue(portletPreferences, "description", themeDisplay.getLanguageId());
 boolean requireCaptcha = GetterUtil.getBoolean(portletPreferences.getValue("requireCaptcha", StringPool.BLANK));
 String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
+
+String useModal = LocalizationUtil.getPreferencesValue(portletPreferences, "useModal", themeDisplay.getLanguageId());
+String modalTitle = LocalizationUtil.getPreferencesValue(portletPreferences, "modalTitle", themeDisplay.getLanguageId());
+String modalBody = LocalizationUtil.getPreferencesValue(portletPreferences, "modalBody", themeDisplay.getLanguageId());
 %>
 
 <portlet:actionURL var="saveDataURL">
@@ -151,18 +155,31 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		</c:if>
 		
 		
+		<%
+		if(useModal.contains("true")){
+		%>
+		
 		<button type="button" data-target="formModal" id="modalLauncher" class="btn btn-primary">Next</button>
+		
+		<%
+		} else{
+		%>
+			<button type="submit" class="btn btn-primary">Submit</button> 
+		<%
+		} 
+		%>
+	
 		
 		<div id="formModalBackground" class="modal-background">
 			<div id="formModal" class="modal hide fade">
 	    
 			    <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="modalCloserX">&times;</button>
-			        <h3>Hey!</h3>
+			        <h3><%= modalTitle %></h3>
 			    </div>
 			    
 			    <div class="modal-body"> 
-			        <p>Stop sending us garbage.</p>
+			        <p><%= modalBody %></p>
 			    </div>
 			    
 			    <div class="modal-footer">
