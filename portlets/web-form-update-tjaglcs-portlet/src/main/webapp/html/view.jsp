@@ -163,7 +163,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		<div id="formModal" class="modal hide fade">
     
 		    <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="modalCloserX">&times;</button>
 		        <h3>Hey!</h3>
 		    </div>
 		    
@@ -173,7 +173,8 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 		    
 		    <div class="modal-footer">
 		    	<button type="button"  data-target="formModal" id="modalCloser" class="btn">Disagree</button>
-		    	<button type="submit" id="formSubmit" class="btn btn-primary">Agree</button>
+		    	<!--<button type="button" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button>-->
+		    	<button type="submit" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button> 
 		    </div>
 		</div>
 		
