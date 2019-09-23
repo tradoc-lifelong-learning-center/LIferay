@@ -8,16 +8,11 @@
 		var agreeButton = document.getElementById('formSubmit');
 		var closeButton = document.getElementById('modalCloser');
 		var closeButtonX = document.getElementById('modalCloserX');
-		var form = openButton.closest("form");
 		
 		var modalId = openButton.dataset.target;
-
-
-		
-		console.log("modalId: " + modalId)
 		
 		openButton.addEventListener('click', showModal);
-		agreeButton.addEventListener('click', handleSubmit);
+		agreeButton.addEventListener('click', closeModal);
 		closeButton.addEventListener('click', closeModal);
 		closeButtonX.addEventListener('click', closeModal);
 		
@@ -32,15 +27,7 @@
 			modal.classList.add("hide");
 			modal.classList.add("fade");
 		}
-		
-		function handleSubmit(){
-			var modal = document.getElementById(modalId);
-			modal.classList.add("hide");
-			modal.classList.add("fade");
-			//form.submit();
-		}
-		
+
 	}
 
-	
 })();
