@@ -160,23 +160,26 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 			grey background for body (to emphasize modal)
 		-->
 		
-		<div id="formModal" class="modal hide fade">
-    
-		    <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="modalCloserX">&times;</button>
-		        <h3>Hey!</h3>
-		    </div>
-		    
-		    <div class="modal-body"> 
-		        <p>Stop sending us garbage.</p>
-		    </div>
-		    
-		    <div class="modal-footer">
-		    	<button type="button"  data-target="formModal" id="modalCloser" class="btn">Disagree</button>
-		    	<!--<button type="button" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button>-->
-		    	<button type="submit" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button> 
-		    </div>
+		<div id="formModalBackground" class="modal-background">
+			<div id="formModal" class="modal hide fade">
+	    
+			    <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="modalCloserX">&times;</button>
+			        <h3>Hey!</h3>
+			    </div>
+			    
+			    <div class="modal-body"> 
+			        <p>Stop sending us garbage.</p>
+			    </div>
+			    
+			    <div class="modal-footer">
+			    	<button type="button"  data-target="formModal" id="modalCloser" class="btn">Disagree</button>
+			    	<!--<button type="button" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button>-->
+			    	<button type="submit" id="formSubmit" class="btn btn-primary" id="agreeButton">Agree</button> 
+			    </div>
+			</div>
 		</div>
+		
 		
 		<!-- <button type="button" id="showModal" class="btn btn-primary">Show Modal</button>
 
