@@ -24,18 +24,18 @@ public class Article {
 	private String createDate;
 	private String modifiedDate;
 	private String type;
-	private long id;
+	//private long id;
 	private long groupId;
 	private String url;
 	
 	
-	public Article(RenderRequest request, String title, String createDate, String modifiedDate, String type, long id) throws SystemException, PortalException, UnsupportedEncodingException {
+	public Article(RenderRequest request, String title, long articleId, String createDate, String modifiedDate, String type) throws SystemException, PortalException, UnsupportedEncodingException {
 		this.title = title;
 		this.articleId = articleId;
 		this.createDate = createDate;
 		this.modifiedDate = modifiedDate;
 		this.type = type;
-		this.id = id;
+		//this.id = id;
 		this.groupId = this.setGroupId(request);
 		
 		setURL(request);
@@ -66,9 +66,9 @@ public class Article {
 		return this.groupId;
 	}
 	
-	public long getId() {
+	/*public long getId() {
 		return this.id;
-	}
+	}*/
 	
 	public String getUrl() {
 		return this.url;
@@ -91,7 +91,7 @@ public class Article {
 			
 			ThemeDisplay themeDisplay = getThemeDisplay(request);
 
-			long articleId = this.getId();
+			long articleId = this.getArticleId();
 			
 			//System.out.println("articleId: " + articleId);
 
@@ -108,7 +108,7 @@ public class Article {
 				}
 			
 		} else if(this.type.contains(documentClassName)) {
-			DLFileEntry entry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.id);
+			DLFileEntry entry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(this.articleId);
 			
 			String urlTitle = URLEncoder.encode(this.title, "UTF-8");
 			long folderId = entry.getFolderId();

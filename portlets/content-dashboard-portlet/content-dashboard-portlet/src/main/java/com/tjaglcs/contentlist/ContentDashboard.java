@@ -78,7 +78,7 @@ public class ContentDashboard extends MVCPortlet {
 		
 		List<Document> hitsDocs = hits.toList();
 		
-		List<Article> articles = new ArrayList<>();
+		//List<Article> articles = new ArrayList<>();
 		
 		//System.out.println("hits: " + hitsDocs.size());
 		//System.out.println("articles: " + articles.size());
@@ -173,7 +173,7 @@ public class ContentDashboard extends MVCPortlet {
 			}
 			
 			try {
-				Article article = new Article(request, title, createDate, modifiedDate, type, articleId);
+				Article article = new Article(request, title, articleId, createDate, modifiedDate, type);
 				//System.out.println(article.getViewCount() + " views for " + article.getTitle());
 				this.articles.addArticle(article);
 			} catch(Exception e) {
