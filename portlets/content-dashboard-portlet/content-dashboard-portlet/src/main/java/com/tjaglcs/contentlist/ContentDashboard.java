@@ -80,7 +80,7 @@ public class ContentDashboard extends MVCPortlet {
 		
 		List<Article> articles = new ArrayList<>();
 		
-		System.out.println("hits: " + hitsDocs.size());
+		//System.out.println("hits: " + hitsDocs.size());
 		//System.out.println("articles: " + articles.size());
 		
 		for(int i = 0; i<hitsDocs.size(); i++) {
@@ -128,12 +128,12 @@ public class ContentDashboard extends MVCPortlet {
 			
 			try {
 				if(currentDoc.getField(Field.CREATE_DATE) != null) {
-					System.out.println("CREATE_DATE: " + currentDoc.getField(Field.CREATE_DATE).getValue());
+					//System.out.println("CREATE_DATE: " + currentDoc.getField(Field.CREATE_DATE).getValue());
 					createDate = formatDate(currentDoc.getField(Field.CREATE_DATE).getValue());
 				}
 				
 				if(currentDoc.getField(Field.MODIFIED_DATE) != null) {
-					System.out.println("MODIFIED_DATE: " + currentDoc.getField(Field.MODIFIED_DATE).getValue());
+					//System.out.println("MODIFIED_DATE: " + currentDoc.getField(Field.MODIFIED_DATE).getValue());
 					modifiedDate = formatDate(currentDoc.getField(Field.MODIFIED_DATE).getValue());
 				}
 			} catch (Exception e1) {
@@ -148,13 +148,13 @@ public class ContentDashboard extends MVCPortlet {
 				
 				if(type.contains("Web Content Article")) {
 					if(currentDoc.get("articleId") != null) {
-						System.out.println("articleId, journal: " + Long.parseLong(currentDoc.get("articleId")));
+						//System.out.println("articleId, journal: " + Long.parseLong(currentDoc.get("articleId")));
 						articleId = Long.parseLong(currentDoc.get("articleId"));
 						//journalArticleCount++;
 					}
 				} else if(type.contains("Document")) {
 					//getting fileEntryId (NOT PK)
-					System.out.println("dlfile article id: " + currentDoc);
+					//System.out.println("dlfile article id: " + currentDoc);
 					long groupId = Long.parseLong(currentDoc.getField("groupId").getValue());						
 					long folderId = Long.parseLong(currentDoc.getField("folderId").getValue());
 					String docTitle = currentDoc.getField("title").getValue();
@@ -173,7 +173,7 @@ public class ContentDashboard extends MVCPortlet {
 			}
 			
 			try {
-				Article article = new Article(title, articleId, createDate, modifiedDate, type);
+				Article article = new Article(request, title, createDate, modifiedDate, type, articleId);
 				//System.out.println(article.getViewCount() + " views for " + article.getTitle());
 				this.articles.addArticle(article);
 			} catch(Exception e) {

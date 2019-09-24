@@ -24,6 +24,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 			<th scope="col">Type</th>
 			<th scope="col">Create Date</th>
 			<th scope="col">Modified Date</th>
+			<th scope="col">URL</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -36,6 +37,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 				<td><c:out value="${article.getType() }"/></td>
 				<td><c:out value="${article.getCreateDate() }"/></td>
 				<td><c:out value="${article.getModifiedDate() }"/></td>
+				<td style="word-break: break-word"><a href="${article.getUrl() }"><c:out value="${article.getUrl() }"/></a></td>
 			</tr>
 		</c:forEach> 
 	
