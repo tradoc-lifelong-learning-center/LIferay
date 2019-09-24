@@ -34,6 +34,11 @@ String databaseTableName = portletPreferences.getValue("databaseTableName", Stri
 boolean saveToFile = GetterUtil.getBoolean(portletPreferences.getValue("saveToFile", StringPool.BLANK));
 String fileName = portletPreferences.getValue("fileName", StringPool.BLANK);
 
+boolean useModal = GetterUtil.getBoolean(portletPreferences.getValue("useModal", StringPool.BLANK));
+String modalTitle = portletPreferences.getValue("modalTitle", StringPool.BLANK);
+String modalBody = portletPreferences.getValue("modalBody", StringPool.BLANK);
+
+
 boolean fieldsEditingDisabled = false;
 
 if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0) {
@@ -105,6 +110,12 @@ if (WebFormUtil.getTableRowsCount(company.getCompanyId(), databaseTableName) > 0
 						<liferay-ui:message arguments="<%= HtmlUtil.escape(WebFormUtil.getFileName(themeDisplay, portletResource)) %>" key="form-data-will-be-saved-to-x" />
 					</c:otherwise>
 				</c:choose>
+			</aui:fieldset>
+			
+			<aui:fieldset cssClass="handle-data" label="modal-panel-title">
+				<aui:input name="preferences--useModal--" type="checkbox" value="<%= useModal %>"  label="modal-checkbox" />
+				<aui:input name="preferences--modalTitle--" value="<%= modalTitle %>" wrapperCssClass="lfr-input-text-container"  label="modal-title" />
+				<aui:input name="preferences--modalBody--" value="<%= modalBody %>" wrapperCssClass="lfr-input-text-container"  label="modal-body" />
 			</aui:fieldset>
 		</liferay-ui:panel>
 
