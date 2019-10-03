@@ -11,6 +11,14 @@
 			</wap-template-path>
 			<thumbnail-path>/1_2_1_columns_50-50.png</thumbnail-path>
 		</layout-template>
+		<layout-template id="OneFullTwoOneColumnsHalf"
+			name="1-full-2-1 Columns (70/30)">
+			<template-path>/1-full_2-1_columns_70-30.tpl</template-path>
+			<wap-template-path>
+				/1-full_2-1_columns_70-30.wap.tpl
+			</wap-template-path>
+			<thumbnail-path>/1_2_1_columns_50-50.png</thumbnail-path>
+		</layout-template>
 		<layout-template id="TwoOneColumnsHalf"
 			name="2-1 Columns (50/50)">
 			<template-path>/2_1_columns_50-50.tpl</template-path>
