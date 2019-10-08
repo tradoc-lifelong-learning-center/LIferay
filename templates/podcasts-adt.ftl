@@ -50,6 +50,10 @@ table.podcasts th {
   /*min-width:300px;*/
 }
 
+.podcasts__audio-container{
+  display:none;
+}
+
 .podcast__desc-title{
   font-weight:bold;
 }
@@ -124,16 +128,22 @@ table.podcasts th {
 
 	<#assign url>${curEntry.getAssetRenderer().getURLDownload(themeDisplay)}</#assign>
 
+  <#assign podcastId>podcast-${curEntry.getEntryId()}</#assign>
+
   <tr>
     <td scope="row" data-label="Description" class="podcasts__description-container">
       <p class="podcast__desc-title">${curEntry.getTitle(locale)}</p>
       <p class="podcast__desc-para">${curEntry.getDescription()}</p>
     </td>
     <td data-label="Stream" class="podcasts__stream-container">
-      <audio controls>
+      <a href="javascript:;" data-podcastLink="${podcastId}">Audio</a>
+      <div class="podcasts__audio-container" data-podcastAudio="${podcastId}">
+        <audio controls>
           <source src="${url}" type="audio/mp3">
-          You browser doesn't support the HTML5 audio tag!
+          Sorry, your browser doesn't support the HTML5 audio element.
         </audio>
+      </div>
+
       </td>
     <td data-label="Download" class="podcasts__download-container">
       <a href="${url}">Download</a>
@@ -146,3 +156,29 @@ table.podcasts th {
 
     </tbody>
 </table>
+
+<script>
+(function(){
+  var audioLinks = document.querySelectorAll('[data-podcastlink]');
+
+  for(var i = 0; i<audioLinks.length; i++){
+    audioLinks[i].onclick = newTabFunction;
+  }
+
+
+  function newTabFunction(e) {
+    var linkId = e.target.dataset.podcastlink;
+    if(!linkId) return false;
+
+    var html = document.querySelector("[data-podcastaudio=" + linkId + "]").outerHTML;
+
+    if(!html) return false;
+
+    var w = window.open();
+    w.document.body.innerHTML = html;
+
+  }
+
+
+})();
+</script>
