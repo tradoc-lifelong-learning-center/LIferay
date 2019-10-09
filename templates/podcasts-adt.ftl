@@ -123,15 +123,25 @@ table.podcasts th {
   </thead>
   <tbody>
 
+
+
 <#if entries?has_content>
 	<#list entries as curEntry>
 
-	<#assign url>${curEntry.getAssetRenderer().getURLDownload(themeDisplay)}</#assign>
+<#attempt>
+  <#assign url>${curEntry.getAssetRenderer().getURLDownload(themeDisplay)}</#assign>
+<#recover>
+  <#assign url>https://www.tjaglcspublic.army.mil</#assign>
+</#attempt>
+
 
   <#assign podcastId>podcast-${curEntry.getEntryId()}</#assign>
 
+
+
   <tr>
     <td scope="row" data-label="Description" class="podcasts__description-container">
+
       <p class="podcast__desc-title">${curEntry.getTitle(locale)}</p>
       <p class="podcast__desc-para">${curEntry.getDescription()}</p>
     </td>
