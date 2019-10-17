@@ -134,8 +134,7 @@ table.podcasts th {
   <#assign url>https://www.tjaglcspublic.army.mil</#assign>
 </#attempt>
 
-
-  <#assign podcastId>podcast-${curEntry.getEntryId()}</#assign>
+<#assign podcastId>podcast-${curEntry.getEntryId()}</#assign>
 
 
 
@@ -143,7 +142,10 @@ table.podcasts th {
     <td scope="row" data-label="Description" class="podcasts__description-container">
 
       <p class="podcast__desc-title">${curEntry.getTitle(locale)}</p>
-      <p class="podcast__desc-para">${curEntry.getDescription()}</p>
+      <div id="${podcastId}-desc-container" data-podcastid="${podcastId}">
+          <p id="${podcastId}-desc-para" class="podcast__desc-para" data-fulldescription="${curEntry.getDescription()}" data-togglestate="partial">${curEntry.getDescription()}</p>
+          <button data-podcastid="${podcastId}" data-togglebutton="true">More</button>
+      </div>
     </td>
     <td data-label="Stream" class="podcasts__stream-container">
       <a href="javascript:;" data-podcastLink="${podcastId}">Audio</a>
@@ -191,4 +193,56 @@ table.podcasts th {
 
 
 })();
+</script>
+
+<script>
+    (function(){
+  var toggleButtons = document.querySelectorAll("[data-togglebutton='true']");
+
+
+  for(var i = 0; i<toggleButtons.length; i++){
+    toggleButtons[i].onclick = toggleDescription;
+  }
+
+  function toggleDescription(e){
+    var id = e.currentTarget.dataset.podcastid;
+    console.log("podcastid: "  + id)
+    var descParaId = id + "-desc-para";
+    var descriptionElement = document.getElementById(descParaId);
+    var currentState = descriptionElement.dataset.togglestate;
+    var fullDescription = descriptionElement.dataset.fulldescription;
+    var partialDescription = getPartialDescription(fullDescription);
+    console.log("currentState: "  + currentState)
+
+    if(currentState=="partial"){
+      descriptionElement.innerHTML = fullDescription;
+      descriptionElement.dataset.togglestate="full";
+      e.currentTarget.innerHTML = "More";
+    } else if(currentState=="full"){
+      descriptionElement.innerHTML = partialDescription;
+      descriptionElement.dataset.togglestate="partial";
+      e.currentTarget.innerHTML = "Less";
+    }
+  }
+
+  function getPartialDescription(fullDesc){
+    var wordLimit = 30;
+
+    var descriptionArray = fullDesc.split(' ');
+
+    for(var i = descriptionArray.length - wordLimit; i>0; i--){
+      descriptionArray.pop();
+    }
+
+    partialDescription = descriptionArray.join(' ') + '...';
+
+    return partialDescription;
+  }
+
+
+
+
+})();
+
+
 </script>
