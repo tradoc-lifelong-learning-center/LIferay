@@ -40,11 +40,21 @@ table.podcasts td {
   text-align: center;
 }
 
+table.podcasts th:first-of-type{
+    text-align:left;
+}
+
 table.podcasts th {
   font-size: .85em;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
+
+table.podcasts tbody tr td a{
+    color:blue !important;
+}
+
+
 
 .podcasts__stream-container{
   /*min-width:300px;*/
@@ -54,8 +64,28 @@ table.podcasts th {
   display:none;
 }
 
+.podcast__desc-container{
+text-align:right;
+}
+
 .podcast__desc-title{
   font-weight:bold;
+  text-align:left;
+}
+
+.podcast__desc-para{
+    text-align:left;
+}
+
+button.podcast__toggle-button{
+    background: none;
+    border: none;
+    color: blue;
+    margin-right:2rem;
+}
+
+.podcast__toggle-button:hover{
+    text-decoration:underline;
 }
 
 @media screen and (max-width: 1100px) {
@@ -91,10 +121,12 @@ table.podcasts th {
     text-align:left;
   }
 
-  table.podcasts td.podcasts__stream-container{
-   text-align:center;
+  button.podcast__toggle-button{
+    font-size: 11.2px;
+    padding:0;
   }
 
+  table.podcasts td.podcasts__stream-container,
   table.podcasts td.podcasts__download-container{
    text-align:right;
   }
@@ -107,6 +139,11 @@ table.podcasts th {
     /*transform: scale(.75);*/
     max-width:100%;
   }
+
+
+button.podcast__toggle-button{
+    margin-right:0;
+}
 
 }
 
@@ -142,7 +179,7 @@ table.podcasts th {
     <td scope="row" data-label="Description" class="podcasts__description-container">
 
       <p class="podcast__desc-title">${curEntry.getTitle(locale)}</p>
-      <div id="${podcastId}-desc-container" data-podcastid="${podcastId}">
+      <div id="${podcastId}-desc-container" class="podcast__desc-container" data-podcastid="${podcastId}">
           <p id="${podcastId}-desc-para" data-podcastpara="true" class="podcast__desc-para" data-fulldescription="${curEntry.getDescription()}" data-togglestate="partial"></p>
 
       </div>
@@ -214,19 +251,15 @@ table.podcasts th {
                 var splitId = fullId.split("-")
                 var id = splitId[0] + "-" + splitId[1]
 
-                console.log("id: " + id)
-                console.log(descParas[i])
-
 
                 var container = document.getElementById(id + "-desc-container");
-                console.log("container")
-                console.log(container)
 
                 var button = document.createElement("button");
                 var buttonContent = document.createTextNode("More");
                 button.appendChild(buttonContent);
                 button.dataset.podcastid = id;
                 button.dataset.togglebutton = "true";
+                button.setAttribute("class","podcast__toggle-button");
 
                 container.appendChild(button);
             }
