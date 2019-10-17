@@ -143,8 +143,8 @@ table.podcasts th {
 
       <p class="podcast__desc-title">${curEntry.getTitle(locale)}</p>
       <div id="${podcastId}-desc-container" data-podcastid="${podcastId}">
-          <p id="${podcastId}-desc-para" class="podcast__desc-para" data-fulldescription="${curEntry.getDescription()}" data-togglestate="partial">${curEntry.getDescription()}</p>
-          <button data-podcastid="${podcastId}" data-togglebutton="true">More</button>
+          <p id="${podcastId}-desc-para" data-podcastpara="true" class="podcast__desc-para" data-fulldescription="${curEntry.getDescription()}" data-togglestate="partial"></p>
+
       </div>
     </td>
     <td data-label="Stream" class="podcasts__stream-container">
@@ -195,9 +195,55 @@ table.podcasts th {
 })();
 </script>
 
+
+
 <script>
     (function(){
+
+    loadDescription()
+    function loadDescription(){
+        var descParas = document.querySelectorAll("[data-podcastpara='true']");
+        for(var i = 0; i<descParas.length; i++){
+            var fullDescription = descParas[i].dataset.fulldescription;
+            var partialDescription = getPartialDescription(fullDescription);
+            descParas[i].innerHTML = partialDescription;
+
+            //if there's enough text to trigger more/less, add button here
+            if(fullDescription!=partialDescription) {
+                var fullId = descParas[i].id;
+                var splitId = fullId.split("-")
+                var id = splitId[0] + "-" + splitId[1]
+
+                console.log("id: " + id)
+                console.log(descParas[i])
+
+
+                var container = document.getElementById(id + "-desc-container");
+                console.log("container")
+                console.log(container)
+
+                var button = document.createElement("button");
+                var buttonContent = document.createTextNode("More");
+                button.appendChild(buttonContent);
+                button.dataset.podcastid = id;
+                button.dataset.togglebutton = "true";
+
+                container.appendChild(button);
+            }
+
+
+
+            //<button data-podcastid="podcast-25230" data-togglebutton="true" id="yui_patched_v3_11_0_1_1571318982679_796">More</button>
+        }
+
+
+
+      }
+
   var toggleButtons = document.querySelectorAll("[data-togglebutton='true']");
+
+
+
 
 
   for(var i = 0; i<toggleButtons.length; i++){
@@ -217,11 +263,11 @@ table.podcasts th {
     if(currentState=="partial"){
       descriptionElement.innerHTML = fullDescription;
       descriptionElement.dataset.togglestate="full";
-      e.currentTarget.innerHTML = "More";
+      e.currentTarget.innerHTML = "Less";
     } else if(currentState=="full"){
       descriptionElement.innerHTML = partialDescription;
       descriptionElement.dataset.togglestate="partial";
-      e.currentTarget.innerHTML = "Less";
+      e.currentTarget.innerHTML = "More";
     }
   }
 
@@ -229,6 +275,10 @@ table.podcasts th {
     var wordLimit = 30;
 
     var descriptionArray = fullDesc.split(' ');
+
+    if(descriptionArray.length<=wordLimit){
+        return fullDesc;
+    }
 
     for(var i = descriptionArray.length - wordLimit; i>0; i--){
       descriptionArray.pop();
