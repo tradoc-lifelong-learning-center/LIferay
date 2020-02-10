@@ -28,7 +28,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 		</tr>
 	</thead>
 	<tbody>
-	
+		<c:set var = "total" value="" scope="session" />
 		<c:forEach items="${articles }" var = "article" varStatus="i">
 	
 			<tr>
@@ -38,9 +38,13 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 				<td><c:out value="${article.getCreateDate() }"/></td>
 				<td><c:out value="${article.getModifiedDate() }"/></td>
 				<td style="word-break: break-word"><a href="${article.getUrl() }"><c:out value="${article.getUrl() }"/></a></td>
+				<c:set var = "total" value = "${varStatus}" />
 			</tr>
 		</c:forEach> 
-	
+			<tr>
+				<td><c:out value="Total"/></td>
+				<td><c:out value="${total}" /></td>
+			</tr>
 	
 	</tbody>
 
